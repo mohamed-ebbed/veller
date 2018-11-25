@@ -1,4 +1,11 @@
-CREATE TABLE User_account(
+<?php
+$host = "localhost";
+$user = "root";
+$password = "";
+$dbname = "veller";
+$conn = new mysqli($host , $user , $password , $dbname);
+
+$sql = "CREATE TABLE User_account(
     id INT NOT NULL, 
     name varchar(50) NOT NULL,
     email varchar(50) NOT NULL,
@@ -11,9 +18,10 @@ CREATE TABLE User_account(
     about TEXT NOT NULL,
     
     PRIMARY KEY (id)
-);
+)";
+$conn->query($sql);
 
-create table Applicant(
+$sql = "create table Applicant(
     id INT NOT NULL,
     gender varchar(6) NOT NULL,
     day INT NOT NULL,
@@ -22,18 +30,22 @@ create table Applicant(
     
     PRIMARY KEY(id),
     FOREIGN KEY(id) REFERENCES User_account(id) ON DELETE CASCADE ON UPDATE RESTRICT
-);
+)";
 
-CREATE TABLE Organization(
+$conn->query($sql);
+
+$sql = "CREATE TABLE Organization(
     id INT NOT NULL,
     field varchar(25) NOT NULL,
     type varchar(25) NOT NULL,
     
     PRIMARY KEY(id),
     FOREIGN KEY(id) REFERENCES User_account(id) ON DELETE CASCADE ON UPDATE RESTRICT
-);
+)";
 
-create table message(
+$conn->query($sql);
+
+$sql = "create table message(
     sent_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     sent_by INT NOT NULL,
     content TEXT NOT NULL,
@@ -42,9 +54,11 @@ create table message(
     PRIMARY KEY(sent_at),
     FOREIGN KEY(sent_by) REFERENCES user_account(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY(recieved_by) REFERENCES user_account(id) ON DELETE CASCADE ON UPDATE RESTRICT
-);
+)";
 
-create table education(
+$conn->query($sql);
+
+$sql = "create table education(
     applicant_id INT NOT NULL,
     start_date INT NOT NULL,
     end_date INT NOT NULL,
@@ -53,12 +67,20 @@ create table education(
     
     PRIMARY KEY(applicant_id),
     FOREIGN KEY(applicant_id) REFERENCES applicant(id) ON DELETE CASCADE ON UPDATE RESTRICT
-);
+);";
 
-CREATE TABLE interests(
+$conn->query($sql);
+
+$sql = "CREATE TABLE interests(
     applicant_id INT NOT NULL,
     interest varchar(20) NOT NULL,
     PRIMARY KEY(applicant_id),
     FOREIGN KEY(applicant_id) references applicant(id)
-);
+)";
 
+$conn->query($sql);
+
+
+
+
+?>
