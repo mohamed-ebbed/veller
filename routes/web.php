@@ -17,5 +17,5 @@ Route::get('/', function () {
 
 Route::resource("support_tickets" , "supportTicketController");
 Route::resource("users" , "userController");
-Route::resource("contests" , "contestController");
+Route::resource("contests" , "contestController")->except(["show" , "create" , "edit"]);
 Route::resource("supervisors" , "supervisorController");

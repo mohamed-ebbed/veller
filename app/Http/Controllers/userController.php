@@ -14,7 +14,19 @@ class userController extends Controller
      */
     public function index()
     {
-        $model = new Model("user");
+        $model = new Model("user_account");
+        $values = array(
+            "id",
+            "name",
+            "email",
+            "country",
+            "city",
+            "zip", 
+            "phone_number"
+        );
+        $users = $model.select($values);
+        return view("users.index" , compact('users'));
+
     }
 
     /**
@@ -24,7 +36,7 @@ class userController extends Controller
      */
     public function create()
     {
-        //
+        return view("users.create");
     }
 
     /**
@@ -35,7 +47,46 @@ class userController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "id" => "required",
+            "name" => "required",
+            "email" => "required",
+            "country" => "required",
+            "city" => "required",
+            "zip" => "required",
+            "password" => "required",
+            "phone_number" => "required",
+            "about" => "required"
+        ]);
+
+        $model = new Model("user_account");
+        $requestData = $request->all();
+        $id = $requestData["id"];
+        $name = "'".$requestData["name"]."'";
+        $email = "'" . $requestData["email"] . "'";
+        $country = "'" . $requestData["country"] . "'";
+        $city = "'" . $requestData["city"] . "'";
+        $zip = "'" . $requestData["zip"] . "'";
+        $password = "'" . $requestData["password"] . "'";
+        $phone_number = "'" . $requestData["phone_number"] . "'";
+        $about = "'" . $requestData["about"] . "'";
+
+
+        $values = array(
+            "id" => $id,
+            "name" => $name,
+            "email" => $email,
+            "country" => $country,
+            "city" => $city,
+            "zip" => $zip,
+            "password" => $password,
+            "phone_number" => $phone_number,
+            "about" => $about
+        )
+
+        $model->insert($values);
+        return redirect("users")->with("status" , "User added successfully");
+        
     }
 
     /**
@@ -46,7 +97,10 @@ class userController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = new Model("user_account");
+        $conditions = array("id = " . $id)
+        $user = $model->select("*" , $conditions);
+        return view("users.show" , compact('user'));
     }
 
     /**
@@ -57,7 +111,7 @@ class userController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view("users.edit")
     }
 
     /**
@@ -69,7 +123,46 @@ class userController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            "id" => "required",
+            "name" => "required",
+            "email" => "required",
+            "country" => "required",
+            "city" => "required",
+            "zip" => "required",
+            "password" => "required",
+            "phone_number" => "required",
+            "about" => "required"
+        ]);
+
+        $model = new Model("user_account");
+        $requestData = $request->all();
+        $id = $requestData["id"];
+        $name = "'".$requestData["name"]."'";
+        $email = "'" . $requestData["email"] . "'";
+        $country = "'" . $requestData["country"] . "'";
+        $city = "'" . $requestData["city"] . "'";
+        $zip = "'" . $requestData["zip"] . "'";
+        $password = "'" . $requestData["password"] . "'";
+        $phone_number = "'" . $requestData["phone_number"] . "'";
+        $about = "'" . $requestData["about"] . "'";
+
+
+        $values = array(
+            "id" => $id,
+            "name" => $name,
+            "email" => $email,
+            "country" => $country,
+            "city" => $city,
+            "zip" => $zip,
+            "password" => $password,
+            "phone_number" => $phone_number,
+            "about" => $about
+        )
+
+        $conditions = array("id = ".$id);
+        $model->update($values , $conditions);
+        return redirect("users/".$id)->with("status" , "User updated successfully");
     }
 
     /**
@@ -80,6 +173,9 @@ class userController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $model = new Model("user_account");
+        $conditions = array("id = " . $id);
+        $model->delete($conditions);
+        return redirect("users")->with('status' , 'user deleted successfully');
     }
 }

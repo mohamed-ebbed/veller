@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model;
 
 class supportTicketController extends Controller
 {
@@ -11,9 +12,26 @@ class supportTicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
+
     {
-        
+        $model = new Model("support_tickets");
+        $toJoin = array("supervisor" , "user_account");
+        $conditions = array(
+            "supervisor.id = solved_by",
+            "user_account.id = sent_by"
+        );
+        $values = array(
+            "ticket_id" , 
+            "sent_at" , 
+            "content" , 
+            "solved" ,
+            "supervisor.id" ,
+            "user_account.id"
+        );
+        $support_tickets = $model.select($values , $conditions , $toJoin);
+        return view("support_tickets.index" , compact('support_tickets'));
     }
 
     /**
@@ -23,7 +41,7 @@ class supportTicketController extends Controller
      */
     public function create()
     {
-        //
+        return view("support_tickets.create");
     }
 
     /**
@@ -34,7 +52,15 @@ class supportTicketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'content' => 'required'
+        ]);
+
+        $model = new Model("support_tickets");
+        $requestData = $request->all();
+        $model->insert($requestData);
+
+        return redirect("support_tickets")->with('status' , 'ticket added successfully');
     }
 
     /**
@@ -45,7 +71,10 @@ class supportTicketController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = new Model("support_tickets");
+        $conditions = array("ticket_id = " . $id)
+        $support_ticket = $model->select("*" , $conditions);
+        return view("support_tickets.show" , compact('support_ticket'));
     }
 
     /**
@@ -56,7 +85,7 @@ class supportTicketController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view("support_tickets.edit");
     }
 
     /**
@@ -68,7 +97,15 @@ class supportTicketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            "content" => 'required'
+        ]);
+
+        $model = new Model("support_tickets");
+        $requestData = $request->all();
+        $conditions = array("ticket_id = " . $id);
+        $model->update($requestData , $conditions);
+        return redirect("support_tickets/".$id)->with('status' , 'ticket updated successfully');
     }
 
     /**
@@ -79,6 +116,9 @@ class supportTicketController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $model = new Model("support_tickets");
+        $conditions = array("ticket_id = " . $id);
+        $model->delete($conditions);
+        return redirect("support_tickets")->with('status' , 'ticket deleted successfully');
     }
 }
