@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource("support_tickets" , "supportTicketController");
+Route::resource("users" , "userController");
+Route::resource("contests" , "contestController");
+Route::resource("supervisors" , "supervisorController");
