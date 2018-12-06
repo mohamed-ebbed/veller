@@ -56,7 +56,6 @@ class Model{
 	}
 
 	public function update($values, $conditions){
-
 	}
 
 
