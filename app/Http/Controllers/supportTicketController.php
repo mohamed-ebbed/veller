@@ -55,7 +55,7 @@ class supportTicketController extends Controller
         $request->validate([
             'content' => 'required'
         ]);
-
+        
         $model = new Model("support_tickets");
         $requestData = $request->all();
         $model->insert($requestData);
