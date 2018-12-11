@@ -22,7 +22,7 @@
     <!-- Custom styles for this template -->
     <link href="{{ URL::asset('Ayat_web/css/creative.min.css') }}" rel="stylesheet">
   </head>
-  <body @yield('back')>
+  <body id="page-top" @yield('back')>
         @include('inc.navbar')
         @yield('content')
         
