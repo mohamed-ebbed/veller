@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model;
 
-class supervisorController extends Controller
+class opportunityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +13,15 @@ class supervisorController extends Controller
      */
     public function index()
     {
-        $model = new Model("supervisor");
+        $opportunityModel = new Model("opportunity");
+        
+        $conditions = array("opportunity.posted_by = user_account.id");
 
-        $supervisors = $model->select("*");
+        $tojoin = array("user_account");
 
-        return view("supervisors.index" , compact('supervisors'));
+        $opportunitys = $opportunityModel->select("*" , $conditions , $tojoin);
+
+        return view("opportunity.index" , compact('opportunitys'));
     }
 
     /**
@@ -28,7 +31,7 @@ class supervisorController extends Controller
      */
     public function create()
     {
-        return view("supervisors.create");
+        return view("opportunity.create");
     }
 
     /**
@@ -40,20 +43,17 @@ class supervisorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "name" => "required",
-            "email" => "required",
-            "phone_number" => "required",
-            "country" => "required", 
-            "city" => "required",
-            "zip" => "required",
-            "password" => "required"
+            "expiration_date" => "required",
+            "description" => "required",
+            "duration" => "required",
+            "funded" => "required",
+            "requirements" => "required"
         ]);
 
-        $model = new Model("supervisor");
+        $model = new Model("opportunity");
         $requestData = $request->all();
         $model->insert($requestData);
-
-        return redirect("supervisor")->with("status" , "supervisor added successfully");
+        //return redirect("opportunity")->with("status" , "Opportunity added successfully");
     }
 
     /**
@@ -64,11 +64,7 @@ class supervisorController extends Controller
      */
     public function show($id)
     {
-        $model = new Model("supervisor");
-        $conditions = array("id = ".$id);
-        $supervisor = $model->select("*" , $conditions);
-
-        return view("supervisor.show" , compact("supervisor"));
+        //
     }
 
     /**
@@ -79,7 +75,7 @@ class supervisorController extends Controller
      */
     public function edit($id)
     {
-        return view("supervisor.edit");
+        //
     }
 
     /**
@@ -92,20 +88,18 @@ class supervisorController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            "name" => "required",
-            "email" => "required",
-            "phone_number" => "required",
-            "country" => "required", 
-            "city" => "required",
-            "zip" => "required",
-            "password" => "required"
+            "expiration_date" => "required",
+            "description" => "required",
+            "duration" => "required",
+            "funded" => "required",
+            "requirements" => "required"
         ]);
 
-        $model = new Model("supervisor");
+        $model = new Model("opportunity");
         $requestData = $request->all();
-        $conditions = array("id = ".$id);
+        $conditions = array("post_id = ".$id);
         $model->update($requestData , $conditions);
-        return redirect("supervisors/".$id)->with("status" , "Supervisor updated successfully");
+        //return redirect("opportunity/".$id)->with("status" , "opportunity updated successfully");
     }
 
     /**
@@ -116,9 +110,9 @@ class supervisorController extends Controller
      */
     public function destroy($id)
     {
-        $model = new Model("supervisor");
-        $conditions = array("id = ".$id);
+        $model = new Model("opportunity");
+        $conditions = array("post_id = ".$id);
         $model->delete($conditions);
-        return redirect("supervisors")->with("status" , "supervisor deleted successfully");
+        //return redirect("opportunity/".$id)->with("status" , "opportunity deleted successfully");
     }
 }

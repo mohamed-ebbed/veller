@@ -72,7 +72,7 @@ class supportTicketController extends Controller
     public function show($id)
     {
         $model = new Model("support_tickets");
-        $conditions = array("ticket_id = " . $id)
+        $conditions = array("ticket_id = " . $id);
         $support_ticket = $model->select("*" , $conditions);
         return view("support_tickets.show" , compact('support_ticket'));
     }

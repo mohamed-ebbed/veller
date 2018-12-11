@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model;
 
-class supervisorController extends Controller
+class InterestsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +13,7 @@ class supervisorController extends Controller
      */
     public function index()
     {
-        $model = new Model("supervisor");
-
-        $supervisors = $model->select("*");
-
-        return view("supervisors.index" , compact('supervisors'));
+        //
     }
 
     /**
@@ -28,7 +23,7 @@ class supervisorController extends Controller
      */
     public function create()
     {
-        return view("supervisors.create");
+        //
     }
 
     /**
@@ -40,20 +35,13 @@ class supervisorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "name" => "required",
-            "email" => "required",
-            "phone_number" => "required",
-            "country" => "required", 
-            "city" => "required",
-            "zip" => "required",
-            "password" => "required"
+            "applicant_id" => "required",
+            "interests" => "required"
         ]);
 
-        $model = new Model("supervisor");
+        $model = new Model("interests");
         $requestData = $request->all();
         $model->insert($requestData);
-
-        return redirect("supervisor")->with("status" , "supervisor added successfully");
     }
 
     /**
@@ -64,11 +52,7 @@ class supervisorController extends Controller
      */
     public function show($id)
     {
-        $model = new Model("supervisor");
-        $conditions = array("id = ".$id);
-        $supervisor = $model->select("*" , $conditions);
-
-        return view("supervisor.show" , compact("supervisor"));
+        //
     }
 
     /**
@@ -79,7 +63,7 @@ class supervisorController extends Controller
      */
     public function edit($id)
     {
-        return view("supervisor.edit");
+        //
     }
 
     /**
@@ -92,20 +76,14 @@ class supervisorController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            "name" => "required",
-            "email" => "required",
-            "phone_number" => "required",
-            "country" => "required", 
-            "city" => "required",
-            "zip" => "required",
-            "password" => "required"
+            "applicant_id" => "required",
+            "interests" => "required"
         ]);
 
-        $model = new Model("supervisor");
+        $model = new Model("interests");
         $requestData = $request->all();
-        $conditions = array("id = ".$id);
+        $conditions = array("applicant_id = ".$id);
         $model->update($requestData , $conditions);
-        return redirect("supervisors/".$id)->with("status" , "Supervisor updated successfully");
     }
 
     /**
@@ -116,9 +94,8 @@ class supervisorController extends Controller
      */
     public function destroy($id)
     {
-        $model = new Model("supervisor");
-        $conditions = array("id = ".$id);
+        $model = new Model("interests");
+        $conditions = array("applicant_id = ".$id);
         $model->delete($conditions);
-        return redirect("supervisors")->with("status" , "supervisor deleted successfully");
     }
 }
