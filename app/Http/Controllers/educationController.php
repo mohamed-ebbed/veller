@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Model;
 class educationController extends Controller
 {
     /**
@@ -34,6 +34,7 @@ class educationController extends Controller
      */
     public function store(Request $request)
     {
+        //input names
         $request->validate([
             "id" => "required",
             "start_date" => "required",
@@ -49,13 +50,14 @@ class educationController extends Controller
         $degree = "'".$requestData["degree"]."'";
         $inst = "'".$requestData["institution"]."'";
         
+        //column names
         $values = array(
             "applicant_id" => $id,
             "start_date" => $start_Date,
             "end_date" => $end_Date,
             "degree" => $degree,
             "institution" => $inst
-        )
+        );
         $model->insert($values);
     }
 
@@ -111,7 +113,7 @@ class educationController extends Controller
             "end_date" => $end_Date,
             "degree" => $degree,
             "institution" => $inst
-        )
+        );
         $conditions = array("id = ".$id);
         $model->update($values,$conditions);
     }
