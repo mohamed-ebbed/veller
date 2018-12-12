@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Model;
 class scholarshipController extends Controller
 {
     /**
@@ -51,8 +51,8 @@ class scholarshipController extends Controller
             "post_id" => $id,
             "specialization" => $spec,
             "paid" => $paid,
-            "type" => $type,
-        )
+            "type" => $type
+        );
         $model->insert($values);
     }
 
@@ -104,8 +104,8 @@ class scholarshipController extends Controller
             "post_id" => $id,
             "specialization" => $spec,
             "paid" => $paid,
-            "type" => $type,
-        )
+            "type" => $type
+        );
         $conditions = array("id = ".$id);
         $model->update($values,$conditions);
     }

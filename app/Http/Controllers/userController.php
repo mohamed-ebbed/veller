@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class userController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +37,7 @@ class userController extends Controller
      */
     public function create()
     {
-        return view("users.create");
+        return view("auth.RegisterAsUser");
     }
 
     /**
@@ -82,7 +83,7 @@ class userController extends Controller
             "password" => $password,
             "phone_number" => $phone_number,
             "about" => $about
-        )
+        );
 
         $model->insert($values);
         return redirect("users")->with("status" , "User added successfully");
@@ -98,7 +99,7 @@ class userController extends Controller
     public function show($id)
     {
         $model = new Model("user_account");
-        $conditions = array("id = " . $id)
+        $conditions = array("id = " . $id);
         $user = $model->select("*" , $conditions);
         return view("users.show" , compact('user'));
     }
@@ -111,7 +112,7 @@ class userController extends Controller
      */
     public function edit($id)
     {
-        return view("users.edit")
+        return view("users.edit");
     }
 
     /**
@@ -158,7 +159,7 @@ class userController extends Controller
             "password" => $password,
             "phone_number" => $phone_number,
             "about" => $about
-        )
+        );
 
         $conditions = array("id = ".$id);
         $model->update($values , $conditions);

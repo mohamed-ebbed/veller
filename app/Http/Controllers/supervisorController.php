@@ -68,7 +68,7 @@ class supervisorController extends Controller
         $conditions = array("id = ".$id);
         $supervisor = $model->select("*" , $conditions);
 
-        return view("supervisor.show" , compact("supervisor");
+        return view("supervisor.show" , compact("supervisor"));
     }
 
     /**
