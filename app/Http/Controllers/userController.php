@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\applicantController;
 class userController extends Controller
 {
     
@@ -25,7 +25,7 @@ class userController extends Controller
             "zip", 
             "phone_number"
         );
-        $users = $model.select($values);
+        $users = $model->select($values);
         return view("users.index" , compact('users'));
 
     }
@@ -48,8 +48,8 @@ class userController extends Controller
      */
     public function store(Request $request)
     {
+        
         $request->validate([
-            "id" => "required",
             "name" => "required",
             "email" => "required",
             "country" => "required",
@@ -57,9 +57,20 @@ class userController extends Controller
             "zip" => "required",
             "password" => "required",
             "phone_number" => "required",
-            "about" => "required"
+            "about" => "required",
+            "resume" => "required",
+            "profile_picture" => "required",
+            "gender" => "required",
+            "day" => "required",
+            "month" => "required",
+            "resume" => "required",
+            "start_date" => "required",
+            "end_date" => "required",
+            "degree" => "required",
+            "institution" => "required",
+            "interests" => "required"
         ]);
-
+        
         $model = new Model("user_account");
         $requestData = $request->all();
         $id = $requestData["id"];
@@ -71,12 +82,13 @@ class userController extends Controller
         $password = "'" . $requestData["password"] . "'";
         $phone_number = "'" . $requestData["phone_number"] . "'";
         $about = "'" . $requestData["about"] . "'";
-
+        $profile_picture = "'" . $requestData["profile_picture"] . "'";
 
         $values = array(
             "id" => $id,
             "name" => $name,
             "email" => $email,
+            "profile_picture" => $profile_picture,
             "country" => $country,
             "city" => $city,
             "zip" => $zip,
@@ -86,6 +98,7 @@ class userController extends Controller
         );
 
         $model->insert($values);
+        applicantController::store($request);
         return redirect("users")->with("status" , "User added successfully");
         
     }

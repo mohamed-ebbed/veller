@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model;
+use App\Http\Controllers\educationController;
+use App\Http\Controllers\interestsController;
 class applicantController extends Controller
 {
     /**
@@ -34,13 +36,7 @@ class applicantController extends Controller
      */
     public function store(Request $request)
     {
-         $request->validate([
-            "id" => "required",
-            "gender" => "required",
-            "day" => "required",
-            "month" => "required",
-            "resume" => "required"
-        ]);
+        
         $model = new Model("applicant");
         $requestData = $request->all();
         $id = $requestData["id"];
@@ -57,6 +53,8 @@ class applicantController extends Controller
             "resume" => $inst
         );
         $model->insert($values);
+        educationController::store($request);
+        interestsController::store($request);
     }
 
     /**

@@ -35,13 +35,6 @@ class educationController extends Controller
     public function store(Request $request)
     {
         //input names
-        $request->validate([
-            "id" => "required",
-            "start_date" => "required",
-            "end_date" => "required",
-            "degree" => "required",
-            "institution" => "required"
-        ]);
         $model = new Model("education");
         $requestData = $request->all();
         $id = $requestData["id"];
