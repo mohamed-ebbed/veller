@@ -1,4 +1,5 @@
 @extends('layouts.app')
+<title>Register | Organization</title>
 @section('back')
   style="background-image:url('{{ URL::asset('Ayat_web/img/header.jpg') }}'); background-size:cover;"
 @endsection

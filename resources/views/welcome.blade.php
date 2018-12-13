@@ -1,4 +1,5 @@
 @extends('layouts.app')
+<title>Veller | Homepage</title>
 @section('content')
   <header class="masthead text-center text-white d-flex">
       <div class="container my-auto">
