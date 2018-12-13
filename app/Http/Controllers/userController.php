@@ -179,7 +179,8 @@ class userController extends Controller
         return redirect("users/".$id)->with("status" , "User updated successfully");
     }
 
-    /**
+    /*
+    *
      * Remove the specified resource from storage.
      *
      * @param  int  $id
