@@ -24,6 +24,10 @@ Route::get('/RegisterAsUser', function(){
 	return view('auth.RegisterAsUser');
 });
 
+Route::get('/message', function(){
+	return view('message');
+});
+
 //Route::get('/RegisterAsUser', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 
