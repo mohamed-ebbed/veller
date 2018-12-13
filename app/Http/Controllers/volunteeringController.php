@@ -13,7 +13,20 @@ class volunteeringController extends Controller
      */
     public function index()
     {
-        //
+        $volunteeringModel = new Model("volunteering");
+        $values = "*";
+
+        $conditions = array(
+            "volunteering.post_id = Opportunity.id"
+        );
+
+        $tojoin = array(
+            "Opportunity"
+        );
+
+        $Data = $volunteeringModel->select($values , $conditions , $tojoin);
+
+        return view("volunteering.index" , compact('Data'));
     }
 
     /**
@@ -48,6 +61,7 @@ class volunteeringController extends Controller
             "previous_experince" => $p_exp
         );
         $model->insert($values);
+        return redirect("volunteering")->with("status" , "Volunteering added successfully");
     }
 
     /**
@@ -58,7 +72,9 @@ class volunteeringController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = new Model("volunteering");
+        $data = $model->select("*", "Internship.post_id = ".$id);
+        return view("volunteering.show", compact('data'));
     }
 
     /**
@@ -69,7 +85,9 @@ class volunteeringController extends Controller
      */
     public function edit($id)
     {
-        //
+        $model = new Model("volunteering");
+        $data = $model->select("*", "Internship.post_id = ".$id);
+        return view("volunteering.edit", compact('data'));
     }
 
     /**
@@ -96,6 +114,7 @@ class volunteeringController extends Controller
         );
         $conditions = array("id = ".$id);
         $model->update($values,$conditions);
+        return redirect("volunteering/".$id)->with("status" , "Volunteering updated successfully");
     }
 
     /**
@@ -109,5 +128,6 @@ class volunteeringController extends Controller
         $model = new Model("volunteering");
         $conditions = array("id = " . $id);
         $model->delete($conditions);
+        return redirect("volunteering")->with("status" , "Volunteering deleted successfully");
     }
 }

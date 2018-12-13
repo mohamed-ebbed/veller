@@ -14,7 +14,7 @@ class contestController extends Controller
      */
     public function index()
     {
-        $contestModel = new Model("contest");
+        $contestModel = new Model("Contest");
         $values = array(
             "post_id",
             "prizes",
@@ -88,7 +88,9 @@ class contestController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = new Model("contest");
+        $data = $model->select("*", "contest.post_id = ".$id);
+        return view("contests.show", compact('data'));
     }
 
     /**
@@ -99,7 +101,9 @@ class contestController extends Controller
      */
     public function edit($id)
     {
-        //
+        $model = new Model("contest");
+        $data = $model->select("*", "contest.post_id = ".$id);
+        return view("contests.edit", compact('data'));
     }
 
     /**
@@ -141,6 +145,6 @@ class contestController extends Controller
         $model = new Model("contest");
         $conditions = array("post_id = ".$id);
         $model->delete($conditions);
-        return redirect("contests/".$id)->with("status" , "Contest deleted successfully");
+        return redirect("contests")->with("status" , "Contest deleted successfully");
     }
 }
