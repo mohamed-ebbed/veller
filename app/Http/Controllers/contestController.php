@@ -29,7 +29,7 @@ class contestController extends Controller
 
         $conditions = array(
             "contest.post_id = opportunity.post_id",
-            "opportunity.post_id = user_account.id"
+            "opportunity.posted_by = user_account.id"
         );
 
         $tables = array(
