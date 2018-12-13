@@ -38,4 +38,8 @@ Route::resource("volunteering" , "volunteeringController")->except(["index","sho
 Route::resource("scholarship" , "scholarshipController")->except(["index","show" , "create" , "edit"]);
 
 
-
+Route::resource("applicable_countries" , "ApplicableCountriesController")->except(["index","show" , "create" , "edit"]);
+Route::resource("apply_for" , "ApplyForController")->except(["index","show" , "create" , "edit"]);
+Route::resource("interests" , "InterestsController")->except(["index","show" , "create" , "edit"]);
+Route::resource("internship" , "InternshipController")->except(["create"]);
+Route::resource("opportunity" , "opportunityController")->except(["show", "edit"]);
