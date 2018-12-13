@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Model;
 class applicantController extends Controller
 {
     /**
@@ -55,7 +55,7 @@ class applicantController extends Controller
             "day" => $end_Date,
             "month" => $degree,
             "resume" => $inst
-        )
+        );
         $model->insert($values);
     }
 
@@ -111,7 +111,7 @@ class applicantController extends Controller
             "day" => $end_Date,
             "month" => $degree,
             "resume" => $inst
-        )
+        );
         $conditions = array("id = ".$id);
         $model->update($values,$conditions);
     }

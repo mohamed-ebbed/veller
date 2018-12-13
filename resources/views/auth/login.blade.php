@@ -1,11 +1,12 @@
 @extends('layouts.app')
-
+@section('back')
+  style="background-image:url('{{ URL::asset('Ayat_web/img/header.jpg') }}'); background-size:cover;"
+@endsection
 @section('content')
-<div class="container">
+<div class="container" style="margin-top:5%">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+            <div class="card border border-warning shadow p-3 mb-5 bg-white rounded">
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Model;
 class volunteeringController extends Controller
 {
     /**
@@ -45,8 +45,8 @@ class volunteeringController extends Controller
         
         $values = array(
             "post_id" => $id,
-            "previous_experince" => $p_exp,
-        )
+            "previous_experince" => $p_exp
+        );
         $model->insert($values);
     }
 
@@ -92,8 +92,8 @@ class volunteeringController extends Controller
         
         $values = array(
             "post_id" => $id,
-            "previous_experince" => $p_exp,
-        )
+            "previous_experince" => $p_exp
+        );
         $conditions = array("id = ".$id);
         $model->update($values,$conditions);
     }
