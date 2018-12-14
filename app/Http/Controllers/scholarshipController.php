@@ -13,20 +13,7 @@ class scholarshipController extends Controller
      */
     public function index()
     {
-        $scholarModel = new Model("scholarship");
-        $values = "*";
-
-        $conditions = array(
-            "scholarship.post_id = Opportunity.id"
-        );
-
-        $tojoin = array(
-            "Opportunity"
-        );
-
-        $schoalrsData = $scholarModel->select($values , $conditions , $tojoin);
-
-        return view("scholarship.index" , compact('schoalrsData'));
+        //
     }
 
     /**
@@ -67,7 +54,6 @@ class scholarshipController extends Controller
             "type" => $type
         );
         $model->insert($values);
-        return redirect("schoalrships")->with("status" , "Scholarship added successfully");
     }
 
     /**
@@ -78,9 +64,7 @@ class scholarshipController extends Controller
      */
     public function show($id)
     {
-        $model = new Model("Scholarship");
-        $data = $model->select("*", "scholarship.post_id = ".$id);
-        return view("scholarship.show", compact('data'));
+        //
     }
 
     /**
@@ -91,9 +75,7 @@ class scholarshipController extends Controller
      */
     public function edit($id)
     {
-        $model = new Model("Scholarship");
-        $data = $model->select("*", "scholarship.post_id = ".$id);
-        return view("scholarship.edit", compact('data'));
+        //
     }
 
     /**
@@ -126,7 +108,6 @@ class scholarshipController extends Controller
         );
         $conditions = array("id = ".$id);
         $model->update($values,$conditions);
-        return redirect("scholarship/".$id)->with("status" , "Scholarship updated successfully");
     }
 
     /**
@@ -140,6 +121,5 @@ class scholarshipController extends Controller
         $model = new Model("scholarship");
         $conditions = array("id = " . $id);
         $model->delete($conditions);
-        return redirect("scholarship")->with("status" , "Scholarship deleted successfully");
     }
 }

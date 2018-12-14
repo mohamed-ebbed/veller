@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model;
 
 class exchangeController extends Controller
 {
@@ -14,20 +13,7 @@ class exchangeController extends Controller
      */
     public function index()
     {
-        $Model = new Model("Exchange_Program");
-        $values = "*";
-
-        $conditions = array(
-            "Exchange_Program.post_id = Opportunity.id"
-        );
-
-        $tojoin = array(
-            "Opportunity"
-        );
-
-        $Data = $Model->select($values , $conditions , $tojoin);
-
-        return view("exchange_program.index" , compact('Data'));
+        //
     }
 
     /**
@@ -63,7 +49,6 @@ class exchangeController extends Controller
             "specialization" => $spec
         );
         $model->insert($values);
-        return redirect("exchange_program")->with("status" , "Exchange Program added successfully");
     }
 
     /**
@@ -74,9 +59,7 @@ class exchangeController extends Controller
      */
     public function show($id)
     {
-        $model = new Model("Exchange_Program");
-        $data = $model->select("*", "Exchange_Program.post_id = ".$id);
-        return view("exchange_program.show", compact('data'));
+        //
     }
 
     /**
@@ -87,9 +70,7 @@ class exchangeController extends Controller
      */
     public function edit($id)
     {
-        $model = new Model("Exchange_Program");
-        $data = $model->select("*", "Exchange_Program.post_id = ".$id);
-        return view("exchange_program.edit", compact('data'));
+        //
     }
 
     /**
@@ -117,7 +98,6 @@ class exchangeController extends Controller
         );
         $conditions = array("id = ".$id);
         $model->update($values,$conditions);
-        return redirect("exchange_program/".$id)->with("status" , "Exchange Program updated successfully");
     }
 
     /**
@@ -132,6 +112,5 @@ class exchangeController extends Controller
         $model = new Model("Exchange_Program");
         $conditions = array("id = " . $id);
         $model->delete($conditions);
-        return redirect("exchange_program")->with("status" , "Exchange Program deleted successfully");
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model;
 
 class InternshipController extends Controller
 {
@@ -27,7 +26,7 @@ class InternshipController extends Controller
 
         $internstsData = $internstsModel->select($values , $conditions , $tojoin);
 
-        return view("internship.index" , compact('internstsData'));
+        return view("Internship.index" , compact('internstsData'));
     }
 
     /**
@@ -57,7 +56,7 @@ class InternshipController extends Controller
         $model = new Model("Internship");
         $requestData = $request->all();
         $model->insert($requestData);
-        return redirect("internship")->with("status" , "Internship added successfully");
+        return redirect("Internship")->with("status" , "Internship added successfully");
     }
 
     /**
@@ -70,7 +69,7 @@ class InternshipController extends Controller
     {
         $model = new Model("Internship");
         $data = $model->select("*", "Internship.post_id = ".$id);
-        return view("internship.show", compact('data'));
+        return view("Internship.show", compact('data'));
     }
 
     /**
@@ -81,9 +80,7 @@ class InternshipController extends Controller
      */
     public function edit($id)
     {
-        $model = new Model("Internship");
-        $data = $model->select("*", "Internship.post_id = ".$id);
-        return view("internship.edit", compact('data'));
+        return view("Internship.edit");
     }
 
     /**
@@ -105,7 +102,7 @@ class InternshipController extends Controller
         $requestData = $request->all();
         $conditions = array("post_id = ".$id);
         $model->update($requestData , $conditions);
-        return redirect("internship/".$id)->with("status" , "internship updated successfully");
+        return redirect("Internship/".$id)->with("status" , "Internship updated successfully");
     }
 
     /**
@@ -119,6 +116,6 @@ class InternshipController extends Controller
         $model = new Model("Internship");
         $conditions = array("applicant_id = ".$id);
         $model->delete($conditions);
-        return redirect("internship")->with("status" , "internship deleted successfully");
+        return redirect("Internship/".$id)->with("status" , "Internship deleted successfully");
     }
 }
