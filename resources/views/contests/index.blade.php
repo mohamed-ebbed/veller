@@ -1,8 +1,8 @@
 @extends('layouts.opporunitiesIndexLayout')
 
-<title>Veller | Volunteering</title>
+<title>Veller | Contests</title>
 
-@section('volunteering_tab')
+@section('contests_tab')
 	active
 @endsection
 

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model;
-class volunteeringController extends Controller
+
+class messageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,20 +14,7 @@ class volunteeringController extends Controller
      */
     public function index()
     {
-        $volunteeringModel = new Model("volunteering");
-        $values = "*";
-
-        $conditions = array(
-            "volunteering.post_id = Opportunity.id"
-        );
-
-        $tojoin = array(
-            "Opportunity"
-        );
-
-        $Data = $volunteeringModel->select($values , $conditions , $tojoin);
-
-        return view("volunteering.index" , compact('Data'));
+        //
     }
 
     /**
@@ -37,6 +25,7 @@ class volunteeringController extends Controller
     public function create()
     {
         //
+        return view("message");
     }
 
     /**
@@ -47,21 +36,27 @@ class volunteeringController extends Controller
      */
     public function store(Request $request)
     {
+        //
         $request->validate([
-            "post_id" => "required",
-            "previous_experince" => "required"
+            "sent_at" => "required",
+            "sent_by" => "required",
+            "content" => "required",
+            "recieved_by" => "required"
         ]);
-        $model = new Model("volunteering");
+        $model = new Model("message");
         $requestData = $request->all();
-        $id = $requestData["post_id"];
-        $p_exp = "'".$requestData["previous_experince"]."'";
+        $sent_by = $requestData["sent_by"];
+        $recieved_by = $requestData["recieved_by"];
+        $sent_at = "'".date("Y-m-d h:i:sa")."'";
+        $content = "'".$requestData["content"]."'";
         
         $values = array(
-            "post_id" => $id,
-            "previous_experince" => $p_exp
+            "sent_at" => $sent_at,
+            "sent_by" => $sent_by,
+            "content" => $content,
+            "recieved_by" => $recieved_by
         );
         $model->insert($values);
-        return redirect("volunteering")->with("status" , "Volunteering added successfully");
     }
 
     /**
@@ -72,9 +67,12 @@ class volunteeringController extends Controller
      */
     public function show($id)
     {
-        $model = new Model("volunteering");
-        $data = $model->select("*", "Internship.post_id = ".$id);
-        return view("volunteering.show", compact('data'));
+        //
+        $model = new Model("message");
+        $conditions = array("sent_by = " . $id);
+        $columns = array('recieved_by','content','sent_at');
+        $user = $model->select($columns , $conditions);
+        return view("message" , compact('user'));
     }
 
     /**
@@ -85,9 +83,7 @@ class volunteeringController extends Controller
      */
     public function edit($id)
     {
-        $model = new Model("volunteering");
-        $data = $model->select("*", "Internship.post_id = ".$id);
-        return view("volunteering.edit", compact('data'));
+        //
     }
 
     /**
@@ -99,22 +95,28 @@ class volunteeringController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //
         $request->validate([
-            "post_id" => "required",
-            "previous_experince" => "required"
+            "sent_at" => "required",
+            "sent_by" => "required",
+            "content" => "required",
+            "recieved_by" => "required"
         ]);
-        $model = new Model("volunteering");
+        $model = new Model("message");
         $requestData = $request->all();
-        $id = $requestData["post_id"];
-        $p_exp = "'".$requestData["previous_experince"]."'";
+        $sent_by = $requestData["sent_by"];
+        $recieved_by = $requestData["recieved_by"];
+        $sent_at = "'".$requestData["sent_at"]."'";
+        $content = "'".$requestData["content"]."'";
         
         $values = array(
-            "post_id" => $id,
-            "previous_experince" => $p_exp
+            "sent_at" => $sent_at,
+            "sent_by" => $sent_by,
+            "content" => $content,
+            "recieved_by" => $recieved_by
         );
-        $conditions = array("id = ".$id);
+        $conditions = array("sent_by = ".$sent_by);
         $model->update($values,$conditions);
-        return redirect("volunteering/".$id)->with("status" , "Volunteering updated successfully");
     }
 
     /**
@@ -125,9 +127,9 @@ class volunteeringController extends Controller
      */
     public function destroy($id)
     {
-        $model = new Model("volunteering");
-        $conditions = array("id = " . $id);
+        //
+        $model = new Model("message");
+        $conditions = array("sent_by = " . $sent_by);
         $model->delete($conditions);
-        return redirect("volunteering")->with("status" , "Volunteering deleted successfully");
     }
 }

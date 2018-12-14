@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Model;
 
 use Illuminate\Http\Request;
+use App\Model;
 
-class opportunityController extends Controller
+class tagsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,15 +14,7 @@ class opportunityController extends Controller
      */
     public function index()
     {
-        $opportunityModel = new Model("Opportunity");
-        
-        $conditions = array("opportunity.posted_by = user_account.id");
-
-        $tojoin = array("user_account");
-
-        $opportunitys = $opportunityModel->select("*" , $conditions , $tojoin);
-
-        return view("opportunity.index" , compact('opportunitys'));
+        //
     }
 
     /**
@@ -32,7 +24,7 @@ class opportunityController extends Controller
      */
     public function create()
     {
-        return view("opportunity.create");
+        //
     }
 
     /**
@@ -43,18 +35,21 @@ class opportunityController extends Controller
      */
     public function store(Request $request)
     {
+        //
         $request->validate([
-            "expiration_date" => "required",
-            "description" => "required",
-            "duration" => "required",
-            "funded" => "required",
-            "requirements" => "required"
+            "post_id" => "required",
+            "tag" => "required"
         ]);
-
-        $model = new Model("opportunity");
+        $model = new Model("Tags");
         $requestData = $request->all();
-        $model->insert($requestData);
-        //return redirect("opportunity")->with("status" , "Opportunity added successfully");
+        $id = $requestData["post_id"];
+        $tag = "'".$requestData["tag"]."'";
+        
+        $values = array(
+            "post_id" => $id,
+            "tag" => $tag
+        );
+        $model->insert($values);
     }
 
     /**
@@ -88,18 +83,22 @@ class opportunityController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //
         $request->validate([
-            "expiration_date" => "required",
-            "description" => "required",
-            "duration" => "required",
-            "funded" => "required",
-            "requirements" => "required"
+            "post_id" => "required",
+            "tag" => "required"
         ]);
-
-        $model = new Model("opportunity");
+        $model = new Model("Tags");
         $requestData = $request->all();
-        $conditions = array("post_id = ".$id);
-        $model->update($requestData , $conditions);
+        $id = $requestData["post_id"];
+        $tag = "'".$requestData["tag"]."'";
+        
+        $values = array(
+            "post_id" => $id,
+            "tag" => $tag
+        );
+        $conditions = array("id = ".$id);
+        $model->update($values,$conditions);
     }
 
     /**
@@ -110,8 +109,9 @@ class opportunityController extends Controller
      */
     public function destroy($id)
     {
-        $model = new Model("opportunity");
-        $conditions = array("post_id = ".$id);
+        //
+        $model = new Model("Tags");
+        $conditions = array("id = " . $id);
         $model->delete($conditions);
     }
 }

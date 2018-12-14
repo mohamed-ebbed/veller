@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model;
-class volunteeringController extends Controller
+
+class exchangeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,20 +14,20 @@ class volunteeringController extends Controller
      */
     public function index()
     {
-        $volunteeringModel = new Model("volunteering");
+        $Model = new Model("Exchange_Program");
         $values = "*";
 
         $conditions = array(
-            "volunteering.post_id = Opportunity.id"
+            "Exchange_Program.post_id = Opportunity.id"
         );
 
         $tojoin = array(
             "Opportunity"
         );
 
-        $Data = $volunteeringModel->select($values , $conditions , $tojoin);
+        $Data = $Model->select($values , $conditions , $tojoin);
 
-        return view("volunteering.index" , compact('Data'));
+        return view("exchange_program.index" , compact('Data'));
     }
 
     /**
@@ -47,21 +48,22 @@ class volunteeringController extends Controller
      */
     public function store(Request $request)
     {
+        //
         $request->validate([
             "post_id" => "required",
-            "previous_experince" => "required"
+            "specialization" => "required"
         ]);
-        $model = new Model("volunteering");
+        $model = new Model("Exchange_Program");
         $requestData = $request->all();
         $id = $requestData["post_id"];
-        $p_exp = "'".$requestData["previous_experince"]."'";
+        $spec = "'".$requestData["Exchange_Program"]."'";
         
         $values = array(
             "post_id" => $id,
-            "previous_experince" => $p_exp
+            "specialization" => $spec
         );
         $model->insert($values);
-        return redirect("volunteering")->with("status" , "Volunteering added successfully");
+        return redirect("exchange_program")->with("status" , "Exchange Program added successfully");
     }
 
     /**
@@ -72,9 +74,9 @@ class volunteeringController extends Controller
      */
     public function show($id)
     {
-        $model = new Model("volunteering");
-        $data = $model->select("*", "Internship.post_id = ".$id);
-        return view("volunteering.show", compact('data'));
+        $model = new Model("Exchange_Program");
+        $data = $model->select("*", "Exchange_Program.post_id = ".$id);
+        return view("exchange_program.show", compact('data'));
     }
 
     /**
@@ -85,9 +87,9 @@ class volunteeringController extends Controller
      */
     public function edit($id)
     {
-        $model = new Model("volunteering");
-        $data = $model->select("*", "Internship.post_id = ".$id);
-        return view("volunteering.edit", compact('data'));
+        $model = new Model("Exchange_Program");
+        $data = $model->select("*", "Exchange_Program.post_id = ".$id);
+        return view("exchange_program.edit", compact('data'));
     }
 
     /**
@@ -99,22 +101,23 @@ class volunteeringController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //
         $request->validate([
             "post_id" => "required",
-            "previous_experince" => "required"
+            "specialization" => "required"
         ]);
-        $model = new Model("volunteering");
+        $model = new Model("Exchange_Program");
         $requestData = $request->all();
         $id = $requestData["post_id"];
-        $p_exp = "'".$requestData["previous_experince"]."'";
+        $spec = "'".$requestData["specialization"]."'";
         
         $values = array(
             "post_id" => $id,
-            "previous_experince" => $p_exp
+            "specialization" => $spec
         );
         $conditions = array("id = ".$id);
         $model->update($values,$conditions);
-        return redirect("volunteering/".$id)->with("status" , "Volunteering updated successfully");
+        return redirect("exchange_program/".$id)->with("status" , "Exchange Program updated successfully");
     }
 
     /**
@@ -125,9 +128,10 @@ class volunteeringController extends Controller
      */
     public function destroy($id)
     {
-        $model = new Model("volunteering");
+        //
+        $model = new Model("Exchange_Program");
         $conditions = array("id = " . $id);
         $model->delete($conditions);
-        return redirect("volunteering")->with("status" , "Volunteering deleted successfully");
+        return redirect("exchange_program")->with("status" , "Exchange Program deleted successfully");
     }
 }

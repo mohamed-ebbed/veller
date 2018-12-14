@@ -24,22 +24,28 @@ Route::get('/RegisterAsUser', function(){
 	return view('auth.RegisterAsUser');
 });
 
+Route::get('/message', function(){
+	return view('message');
+});
+
 //Route::get('/RegisterAsUser', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource("support_tickets" , "supportTicketController");
 Route::resource("users" , "userController");
-Route::resource("contests" , "contestController")->except(["show" , "create" , "edit"]);
 Route::resource("supervisors" , "supervisorController");
 
 Route::resource("education" , "educationController")->except(["index","show" , "create" , "edit"]);
 Route::resource("applicant" , "applicantController")->except(["index","show" , "create" , "edit"]);
-Route::resource("volunteering" , "volunteeringController")->except(["index","show" , "create" , "edit"]);
-Route::resource("scholarship" , "scholarshipController")->except(["index","show" , "create" , "edit"]);
-
 
 Route::resource("applicable_countries" , "ApplicableCountriesController")->except(["index","show" , "create" , "edit"]);
 Route::resource("apply_for" , "ApplyForController")->except(["index","show" , "create" , "edit"]);
 Route::resource("interests" , "InterestsController")->except(["index","show" , "create" , "edit"]);
+
+Route::resource("opportunity" , "opportunityController")->only(["index", "create"]);
+ 
 Route::resource("internship" , "InternshipController")->except(["create"]);
-Route::resource("opportunity" , "opportunityController")->except(["show", "edit"]);
+Route::resource("volunteering" , "volunteeringController")->except(["create"]);
+Route::resource("scholarship" , "scholarshipController")->except(["create"]);
+Route::resource("exchange_programs" , "exchangeController")->except(["create"]);
+Route::resource("contests" , "contestController")->except(["create"]);
