@@ -1,4 +1,10 @@
 @extends('layouts.app')
+@section('mainstyle')
+    @include('inc.mainstyle')
+@endsection
+@section('mainscript')
+    @include('inc.mainscript')
+@endsection
 @section('back')
   style="background-image:url('{{ URL::asset('Ayat_web/img/header.jpg') }}'); background-size:cover;"
 @endsection

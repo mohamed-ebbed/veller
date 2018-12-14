@@ -40,7 +40,7 @@ class ApplicableCountriesController extends Controller
         ])
 
         $model = new Model("Applicable_Countries");
-        $data = request->all();
+        $data = $request->all();
         $model->insert($data);
     }
 
@@ -81,7 +81,7 @@ class ApplicableCountriesController extends Controller
         ])
 
         $model = new Model("Applicable_Countries");
-        $data = request->all();
+        $data = $request->all();
         $conditions = array("post_id = ".$id, "country = ".$country);
         $model->update($data, $conditions);
     }

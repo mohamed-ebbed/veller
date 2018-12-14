@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
   <div class="container">
-    <a class="navbar-brand js-scroll-trigger" href="/#page-top">Veller</a>
+    <a class="navbar-brand js-scroll-trigger" href="/">Veller</a>
     
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -28,7 +28,7 @@
                             {{ __('Register As') }}
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="/RegisterAsOrg">Organization</a>
+                            <a class="dropdown-item" href="{{route('org.create')}}">Organization</a>
                             <a class="dropdown-item" href="{{route('users.create')}}">Applicant</a>
                           </div>
                     </div>

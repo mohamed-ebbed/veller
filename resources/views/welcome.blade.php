@@ -1,4 +1,10 @@
 @extends('layouts.app')
+@section('mainstyle')
+  @include('inc.mainstyle')
+@endsection
+@section('mainscript')
+  @include('inc.mainscript')
+@endsection
 @section('content')
   <header class="masthead text-center text-white d-flex">
       <div class="container my-auto">

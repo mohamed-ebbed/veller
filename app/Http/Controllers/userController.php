@@ -138,7 +138,6 @@ class userController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            "id" => "required",
             "name" => "required",
             "email" => "required",
             "country" => "required",
@@ -146,7 +145,18 @@ class userController extends Controller
             "zip" => "required",
             "password" => "required",
             "phone_number" => "required",
-            "about" => "required"
+            "about" => "required",
+            "resume" => "required",
+            "profile_picture" => "required",
+            "gender" => "required",
+            "day" => "required",
+            "month" => "required",
+            "resume" => "required",
+            "start_date" => "required",
+            "end_date" => "required",
+            "degree" => "required",
+            "institution" => "required",
+            "interests" => "required"
         ]);
 
         $model = new Model("user_account");
@@ -176,6 +186,7 @@ class userController extends Controller
 
         $conditions = array("id = ".$id);
         $model->update($values , $conditions);
+        applicantController::update($request,$id);
         return redirect("users/".$id)->with("status" , "User updated successfully");
     }
 
