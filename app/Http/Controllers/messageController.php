@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\model;
+use mysqli_functions;
 
 class messageController extends Controller
 {
@@ -14,6 +16,13 @@ class messageController extends Controller
     public function index()
     {
         //
+        $id=1;
+        $model = new Model("message");
+        $conditions = array("sent_by = " . $id , "user_account.id = message.sent_by");
+        $columns = array('email','content','sent_at');
+        $tables = array('user_account');
+        $messages = $model->select($columns , $conditions , $tables);
+        return view("tableOfMessage")->with('message',$messages);
     }
 
     /**
@@ -67,11 +76,12 @@ class messageController extends Controller
     public function show($id)
     {
         //
+        $id=2;
         $model = new Model("message");
         $conditions = array("sent_by = " . $id);
-        $columns = array('recieved_by','content','sent_at');
-        $user = $model->select($columns , $conditions);
-        return view("message" , compact('user'));
+        $columns = array('email','content','sent_at');
+        $messages = $model->select($columns , $conditions , 'User_account');
+        return view("tableOfMessage")->with('message',$messages);
     }
 
     /**

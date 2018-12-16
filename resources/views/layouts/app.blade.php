@@ -44,6 +44,8 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('Ayat_web2/css/util.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('Ayat_web2/css/main.css') }}">
 
+   
+
   </head>
   <body id="page-top" @yield('back')>
         @include('inc.navbar')
@@ -63,7 +65,7 @@
 
 
     <!-- message scripts -->
-     <script src="{{ URL::asset('Ayat_web2/vendor2/jquery/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ URL::asset('Ayat_web2/vendor2/jquery/jquery-3.2.1.min.js') }}"></script>
 
     <script src="{{ URL::asset('Ayat_web2/vendor2/animsition/js/animsition.min.js') }}"></script>
 
@@ -72,7 +74,7 @@
 
     <script src="{{ URL::asset('Ayat_web2/vendor2/select2/select2.min.js') }}"></script>
     <script src="{{ URL::asset('Ayat_web2/vendor2/daterangepicker/moment.min.js') }}"></script>
-    <script src="vendor/daterangepicker/daterangepicker.js"></script>
+    <script src="{{ URL::asset('Ayat_web2/vendor2/daterangepicker/daterangepicker.js') }}"></script>
 
     <script src="{{ URL::asset('Ayat_web2/vendor2/countdowntime/countdowntime.js') }}"></script>
 

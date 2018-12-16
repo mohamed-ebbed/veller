@@ -167,7 +167,8 @@ iframe {
 
 .container-contact100 {
   width: 100%;  
-  min-height: 100vh;
+ /* min-height: 100vh;  change blsatr ely ta7t */
+  height: 90vh; 
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -192,7 +193,7 @@ iframe {
 }
 
 .wrap-contact100 {
-  width: 1170px;
+  width: 900px;   /*kant 1170px */
   background: #fff;
   border-radius: 10px;
   padding: 82px 180px 33px 180px;

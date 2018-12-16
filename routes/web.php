@@ -28,6 +28,10 @@ Route::get('/message', function(){
 	return view('message');
 });
 
+//Route::get('/tableOfMessage', function(){
+//	return view('tableOfMessage');
+//}); 
+
 //Route::get('/RegisterAsUser', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -41,5 +45,5 @@ Route::resource("applicant" , "applicantController")->except(["index","show" , "
 Route::resource("volunteering" , "volunteeringController")->except(["index","show" , "create" , "edit"]);
 Route::resource("scholarship" , "scholarshipController")->except(["index","show" , "create" , "edit"]);
 
-
-
+Route::resource("message" , "messageController");
+Route::resource("tableOfMessage" ,"index");

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('content')
-	<div class="container-contact100">
-		<div class="contact100-map" id="google_map" data-map-x="40.722047" data-map-y="-73.986422" data-pin="{{URL::asset('Ayat_web2/images/icons/map-marker.png')}}" data-scrollwhell="0" data-draggable="1"></div>
-        
-        <img  class="contact100-map" id="google_map" data-map-x="40.722047" data-map-y="-73.986422" src="{{URL::asset('Ayat_web2/images/icons/bg-01.jpg')}}" data-scrollwhell="0" data-draggable="1">
 
-		<button class="contact100-btn-show">
-			<i class="fa fa-envelope-o" aria-hidden="true"></i>
+	<img  class="contact100-map" id="google_map" data-map-x="40.722047" data-map-y="-73.986422" src="{{URL::asset('Ayat_web2/images/icons/bg-01.jpg')}}" data-scrollwhell="0" data-draggable="1"> 
+     
+	<div class="container-contact100">
+		<button class="btn btn-light" type="button" onclick="window.location.href='{{route('tableOfMessage.index')}}'" style="color:red ;margin-top:500px ">View my messages</button> 
+	    <button class="contact100-btn-show">
+				<i class="fa fa-envelope-o" aria-hidden="true"></i>
 		</button>
 
 		<div class="wrap-contact100"  style="margin-top: 50px">
@@ -18,7 +18,6 @@
 				<span class="contact100-form-title">
 					New Message
 				</span>
-
 
 				<div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 					<span class="label-input100">Email</span>
@@ -43,9 +42,4 @@
 			</form>
 		</div>
 	</div>
-
-
-
-	
-
 @endsection
