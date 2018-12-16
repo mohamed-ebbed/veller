@@ -30,7 +30,7 @@ class supportTicketController extends Controller
             "supervisor.id" ,
             "user_account.id"
         );
-        $support_tickets = $model.select($values , $conditions , $toJoin);
+        $support_tickets = $model->select($values , $conditions , $toJoin);
         return view("support_tickets.index" , compact('support_tickets'));
     }
 
@@ -85,7 +85,10 @@ class supportTicketController extends Controller
      */
     public function edit($id)
     {
-        return view("support_tickets.edit");
+        $model = new Model("support_tickets");
+        $conditions = array("ticket_id = " . $id);
+        $support_ticket = $model->select("*" , $conditions);
+        return view("support_tickets.edit" , compact("support_tickets"));
     }
 
     /**
