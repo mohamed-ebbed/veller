@@ -17,13 +17,21 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+/*
 Route::get('/RegisterAsOrg', function(){
 	return view('auth.RegisterAsOrg');
 });
 Route::get('/RegisterAsUser', function(){
 	return view('auth.RegisterAsUser');
 });
+
+*/
+
+
+Route::get('/message', function(){
+	return view('message');
+});
+
 
 //Route::get('/RegisterAsUser', 'HomeController@index');
 Route::get('/home', 'HomeController@index')->name('home');
@@ -37,6 +45,9 @@ Route::resource("education" , "educationController")->except(["index","show" , "
 Route::resource("applicant" , "applicantController")->except(["index","show" , "create" , "edit"]);
 Route::resource("volunteering" , "volunteeringController")->except(["index","show" , "create" , "edit"]);
 Route::resource("scholarship" , "scholarshipController")->except(["index","show" , "create" , "edit"]);
+Route::resource("org" , "organizationController");
+Route::resource("scholarship" , "scholarshipController")->except(["index","show" , "create" , "edit"]);
+
 
 
 
