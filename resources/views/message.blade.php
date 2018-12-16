@@ -1,4 +1,13 @@
 @extends('layouts.app')
+@section('messageStyle')
+	@include('inc.messagestyle')
+@endsection
+@section('messageScript')
+	@include('inc.messagescript')
+@endsection
+@section('mainstyle')
+	@include('inc.mainstyle')
+@endsection
 @section('content')
 	<div class="container-contact100">
 		<div class="contact100-map" id="google_map" data-map-x="40.722047" data-map-y="-73.986422" data-pin="{{URL::asset('Ayat_web2/images/icons/map-marker.png')}}" data-scrollwhell="0" data-draggable="1"></div>
@@ -43,9 +52,4 @@
 			</form>
 		</div>
 	</div>
-
-
-
-	
-
 @endsection

@@ -1,5 +1,14 @@
 @extends('layouts.app')
+
 <title>Register | User</title>
+
+@section('mainstyle')
+    @include('inc.mainstyle')
+@endsection
+@section('mainscript')
+    @include('inc.mainscript')
+@endsection
+
 @section('back')
   style="background-image:url('{{ URL::asset('Ayat_web/img/header.jpg') }}'); background-size:cover;"
 @endsection
@@ -10,9 +19,9 @@
             <div class="card border border-warning shadow p-3 mb-5 bg-white rounded">
 
                 <div class="card-body">
-                    <form method="POST" action="userController@store">
+                    <form method="POST" action="{{route('users.store')}}">
                         @csrf
-
+                        <input hidden value="1" name = "id">
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
@@ -66,7 +75,7 @@
                             <label for="number" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
 
                             <div class="col-md-6">
-                                <input id="Number" type="number" class="form-control{{ $errors->has('number') ? ' is-invalid' : '' }}" name="number" value="{{ old('number') }}" required autofocus>
+                                <input id="Number" type="number" class="form-control{{ $errors->has('number') ? ' is-invalid' : '' }}" name="phone_number" value="{{ old('number') }}" required autofocus>
 
                                 @if ($errors->has('number'))
                                     <span class="invalid-feedback" role="alert">
@@ -137,7 +146,7 @@
                         </div>
                         <div class="form-group row">
                             <label for="bio" class="col-md-4 col-form-label text-md-right">{{ __('Your Biography') }}</label>
-                            <textarea name="bio" class="form-control" rows="5" style="width: 46%; margin-left: 2%"></textarea>
+                            <textarea name="about" class="form-control" rows="5" style="width: 46%; margin-left: 2%"></textarea>
                         </div>
                         <div class="form-group row">
                             <label for="resume" class="col-md-4 col-form-label text-md-right">{{ __('A link to your CV') }}</label>
@@ -151,6 +160,14 @@
                                     </span>
                                 @endif
                             </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="int" class="col-md-4 col-form-label text-md-right">{{ __('Your interests') }}</label>
+                            <textarea name="interests" class="form-control" rows="2" style="width: 46%; margin-left: 2%"></textarea>
+                        </div>
+                        <div class="form-group row">
+                            <label for="edu" class="col-md-4 col-form-label text-md-right">{{ __('Your Education information') }}</label>
+                            <textarea name="education" class="form-control" rows="5" style="width: 46%; margin-left: 2%" placeholder="This Order (Start Year , End Year , Degree , institution) if there are multiple Education insert in separate lines"></textarea>
                         </div>
                         <div class="input-group">
 
