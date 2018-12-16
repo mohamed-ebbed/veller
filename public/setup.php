@@ -10,7 +10,7 @@ $conn->close();
 $conn = new mysqli($host , $user , $password , $dbname);
 
 $sql = "CREATE TABLE User_account(
-    id INT NOT NULL, 
+    id INT NOT NULL AUTO_INCREMENT, 
     name varchar(50) NOT NULL,
     email varchar(50) NOT NULL,
     profile_picture varchar(15) NOT NULL DEFAULT 'default.png',
@@ -25,7 +25,7 @@ $sql = "CREATE TABLE User_account(
 )";
 $conn->query($sql);
 
-$sql = "create table Applicant(
+$sql = "CREATE table Applicant(
     id INT NOT NULL,
     gender varchar(6) NOT NULL,
     day INT NOT NULL,
@@ -49,7 +49,7 @@ $sql = "CREATE TABLE Organization(
 
 $conn->query($sql);
 
-$sql = "create table message(
+$sql = "CREATE table message(
     sent_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     sent_by INT NOT NULL,
     content TEXT NOT NULL,
@@ -62,7 +62,7 @@ $sql = "create table message(
 
 $conn->query($sql);
 
-$sql = "create table education(
+$sql = "CREATE table education(
     applicant_id INT NOT NULL,
     start_date INT NOT NULL,
     end_date INT NOT NULL,
@@ -88,7 +88,7 @@ echo $conn->error;
 
 
 $sql = "CREATE TABLE Opportunity (
-	post_id INT NOT NULL,
+	post_id INT NOT NULL AUTO_INCREMENT,
 	post_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	expiration_date DATE NOT NULL,
 	description TEXT NOT NULL,
@@ -98,6 +98,8 @@ $sql = "CREATE TABLE Opportunity (
 	funded VARCHAR(20) NOT NULL,
 	requirements TEXT NOT NULL,
 	posted_by INT NOT NULL,
+	type VARCHAR(15) NOT NULL,
+	title VARCHAR(50) NOT NULL,
 	PRIMARY KEY (post_id),
 	FOREIGN KEY (posted_by) REFERENCES Organization(id) ON DELETE CASCADE ON UPDATE RESTRICT
 )";
@@ -208,7 +210,7 @@ $conn->query($sql);
 echo $conn->error;
 
 $sql = "CREATE TABLE Support_Tickets(
-	ticket_id INT NOT NULL,
+	ticket_id INT NOT NULL AUTO_INCREMENT,
 	sent_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	content TEXT NOT NULL,
 	solved BIT NOT NULL DEFAULT 0,

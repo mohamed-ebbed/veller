@@ -13,7 +13,22 @@ class scholarshipController extends Controller
      */
     public function index()
     {
-        //
+        $scholarModel = new Model("scholarship");
+        $values = "*";
+
+        $conditions = array(
+            "scholarship.post_id = Opportunity.post_id",
+            "opportunity.posted_by = user_account.id"
+        );
+
+        $tojoin = array(
+            "Opportunity",
+            "user_account"
+        );
+
+        $posts = $scholarModel->select($values , $conditions , $tojoin);
+
+        return view("scholarship.index" , compact('posts'));
     }
 
     /**
@@ -32,7 +47,7 @@ class scholarshipController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         $request->validate([
             "post_id" => "required",
@@ -41,8 +56,8 @@ class scholarshipController extends Controller
             "type" => "required"
         ]);
         $model = new Model("scholarship");
+
         $requestData = $request->all();
-        $id = $requestData["post_id"];
         $spec = "'".$requestData["specialization"]."'";
         $paid = "'".$requestData["paid"]."'";
         $type = "'".$requestData["type"]."'";
@@ -54,6 +69,7 @@ class scholarshipController extends Controller
             "type" => $type
         );
         $model->insert($values);
+        show($id);
     }
 
     /**
@@ -64,7 +80,9 @@ class scholarshipController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = new Model("Scholarship");
+        $data = $model->select("*", "scholarship.post_id = ".$id);
+        return view("scholarship.show/".$id, compact('data'));
     }
 
     /**
@@ -75,7 +93,9 @@ class scholarshipController extends Controller
      */
     public function edit($id)
     {
-        //
+        $model = new Model("Scholarship");
+        $data = $model->select("*", "scholarship.post_id = ".$id);
+        return view("scholarship.edit/".$id, compact('data'));
     }
 
     /**
@@ -95,19 +115,19 @@ class scholarshipController extends Controller
         ]);
         $model = new Model("scholarship");
         $requestData = $request->all();
-        $id = $requestData["post_id"];
+
         $spec = "'".$requestData["specialization"]."'";
         $paid = "'".$requestData["paid"]."'";
         $type = "'".$requestData["type"]."'";
         
         $values = array(
-            "post_id" => $id,
             "specialization" => $spec,
             "paid" => $paid,
             "type" => $type
         );
         $conditions = array("id = ".$id);
         $model->update($values,$conditions);
+        show($id);
     }
 
     /**
@@ -121,5 +141,6 @@ class scholarshipController extends Controller
         $model = new Model("scholarship");
         $conditions = array("id = " . $id);
         $model->delete($conditions);
+        return redirect("scholarship.index")->with("status" , "Scholarship deleted successfully");
     }
 }
