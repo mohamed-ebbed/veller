@@ -53,7 +53,7 @@ class Model{
 
 	public function delete($conditions){
 		if (!$conditions) return;
-		$conditions = implode(" AND ", $conditions)
+		$conditions = implode(" AND ", $conditions);
 		$sql = "DELETE FROM ".$this->tablename." WHERE ".$conditions;
 		return $this->conn->query($sql);
 	}
