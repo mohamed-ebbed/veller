@@ -35,14 +35,16 @@ class InterestsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            "applicant_id" => "required",
-            "interests" => "required"
-        ]);
-
+        
         $model = new Model("interests");
         $requestData = $request->all();
-        $model->insert($requestData);
+        $id = $requestData["id"];
+        $int = "'".$requestData["interests"]."'";
+         $values = array(
+            "applicant_id" => $id,
+            "interest" => $int
+        );
+        $model->insert($values);
     }
 
     /**
@@ -76,15 +78,16 @@ class InterestsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            "applicant_id" => "required",
-            "interests" => "required"
-        ]);
-
         $model = new Model("interests");
         $requestData = $request->all();
+        $id = $requestData["id"];
+        $int = "'".$requestData["interests"]."'";
+         $values = array(
+            "applicant_id" => $id,
+            "interest" => $int
+        );
         $conditions = array("applicant_id = ".$id);
-        $model->update($requestData , $conditions);
+        $model->update($values , $conditions);
     }
 
     /**
