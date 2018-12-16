@@ -1,4 +1,13 @@
 @extends('layouts.app')
+@section('messageStyle')
+	@include('inc.messagestyle')
+@endsection
+@section('messageScript')
+	@include('inc.messagescript')
+@endsection
+@section('mainstyle')
+	@include('inc.mainstyle')
+@endsection
 @section('content')
 
 	<img  class="contact100-map" id="google_map" data-map-x="40.722047" data-map-y="-73.986422" src="{{URL::asset('Ayat_web2/images/icons/bg-01.jpg')}}" data-scrollwhell="0" data-draggable="1"> 

@@ -76,12 +76,13 @@ class messageController extends Controller
     public function show($id)
     {
         //
-        $id=2;
+
+        $id=1;
         $model = new Model("message");
         $conditions = array("sent_by = " . $id);
-        $columns = array('email','content','sent_at');
-        $messages = $model->select($columns , $conditions , 'User_account');
-        return view("tableOfMessage")->with('message',$messages);
+        $columns = array('recieved_by','content','sent_at');
+        $user = $model->select($columns , $conditions);
+        return view("message")->with('message',$user);
     }
 
     /**
