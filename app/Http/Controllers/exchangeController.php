@@ -78,7 +78,9 @@ class exchangeController extends Controller
     public function show($id)
     {
         $model = new Model("Exchange_Program");
-        $data = $model->select("*", "Exchange_Program.post_id = ".$id);
+        $values = array('*');
+        $conditions = array('Exchange_Program.post_id = '.$id);
+        $data = $model->select($values, $conditions);
         return view("exchange_program.show", compact('data'));
     }
 
@@ -91,7 +93,9 @@ class exchangeController extends Controller
     public function edit($id)
     {
         $model = new Model("Exchange_Program");
-        $data = $model->select("*", "Exchange_Program.post_id = ".$id);
+        $values = array('*');
+        $conditions = array('Exchange_Program.post_id = '.$id);
+        $data = $model->select($values, $conditions);
         return view("exchange_program.edit/".$id, compact('data'));
     }
 
