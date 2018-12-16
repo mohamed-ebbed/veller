@@ -18,7 +18,7 @@
 			@endwhile	
 		@else
 			<div class="jumbotron">
-				<p>Sorry! There is no Exchange Programs at the moment.</p>
+				<p>Sorry! There is no exchange programs at the moment.</p>
 			</div>
 		@endif
 	</div>
