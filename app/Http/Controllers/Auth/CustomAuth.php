@@ -48,6 +48,13 @@ class CustomAuth{
 			return 0;
 		}
 	}
+
+	public function logout(){
+		$type = $this->loggedInType();
+		if($type){
+			setcookie($type , "" , time() - 3600);
+		}
+	}
 }
 
 ?>
