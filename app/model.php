@@ -52,7 +52,7 @@ class Model{
 	}
 
 	public function delete($conditions){
-		if (!$conditions){
+		if(!$conditions){
 			return;
 		}
 		$conditions = implode(" AND ", $conditions);
