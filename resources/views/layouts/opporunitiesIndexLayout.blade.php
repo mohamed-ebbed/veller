@@ -32,7 +32,7 @@
 		</div>
 
 		<div class="card-body">
-			@yield('posts')
+			@yield('postsArea')
 		</div>
 	</div>
 </div>	

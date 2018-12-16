@@ -20,9 +20,9 @@ class opportunityController extends Controller
 
         $tojoin = array("user_account");
 
-        $opportunitys = $opportunityModel->select("*" , $conditions , $tojoin);
-
-        return view("opportunity.index" , compact('opportunitys'));
+        $posts = $opportunityModel->select("*" , $conditions , $tojoin);
+        
+        return view("opportunity.index" , compact('posts'));
     }
 
     /**

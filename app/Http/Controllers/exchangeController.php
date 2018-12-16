@@ -18,16 +18,18 @@ class exchangeController extends Controller
         $values = "*";
 
         $conditions = array(
-            "Exchange_Program.post_id = Opportunity.id"
+            "Exchange_Program.post_id = Opportunity.post_id",
+            "opportunity.posted_by = user_account.id"
         );
 
         $tojoin = array(
-            "Opportunity"
+            "Opportunity",
+            "user_account"
         );
 
-        $Data = $Model->select($values , $conditions , $tojoin);
+        $posts = $Model->select($values , $conditions , $tojoin);
 
-        return view("exchange_program.index" , compact('Data'));
+        return view("exchange_program.index" , compact('posts'));
     }
 
     /**
@@ -46,7 +48,7 @@ class exchangeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         //
         $request->validate([
@@ -55,15 +57,15 @@ class exchangeController extends Controller
         ]);
         $model = new Model("Exchange_Program");
         $requestData = $request->all();
-        $id = $requestData["post_id"];
-        $spec = "'".$requestData["Exchange_Program"]."'";
+        $spec = "'".$requestData["specialization"]."'";
         
         $values = array(
             "post_id" => $id,
             "specialization" => $spec
         );
         $model->insert($values);
-        return redirect("exchange_program")->with("status" , "Exchange Program added successfully");
+
+        show($id);
     }
 
     /**
@@ -89,7 +91,7 @@ class exchangeController extends Controller
     {
         $model = new Model("Exchange_Program");
         $data = $model->select("*", "Exchange_Program.post_id = ".$id);
-        return view("exchange_program.edit", compact('data'));
+        return view("exchange_program.edit/".$id, compact('data'));
     }
 
     /**
@@ -108,16 +110,15 @@ class exchangeController extends Controller
         ]);
         $model = new Model("Exchange_Program");
         $requestData = $request->all();
-        $id = $requestData["post_id"];
+
         $spec = "'".$requestData["specialization"]."'";
         
         $values = array(
-            "post_id" => $id,
             "specialization" => $spec
         );
         $conditions = array("id = ".$id);
         $model->update($values,$conditions);
-        return redirect("exchange_program/".$id)->with("status" , "Exchange Program updated successfully");
+        show($id);
     }
 
     /**
@@ -132,6 +133,6 @@ class exchangeController extends Controller
         $model = new Model("Exchange_Program");
         $conditions = array("id = " . $id);
         $model->delete($conditions);
-        return redirect("exchange_program")->with("status" , "Exchange Program deleted successfully");
+        return redirect("exchange_program.index")->with("status" , "Exchange Program deleted successfully");
     }
 }

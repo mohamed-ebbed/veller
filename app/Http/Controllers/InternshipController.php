@@ -18,16 +18,18 @@ class InternshipController extends Controller
         $values = "*";
 
         $conditions = array(
-            "Internship.post_id = Opportunity.id"
+            "Internship.post_id = Opportunity.post_id",
+            "opportunity.posted_by = user_account.id"
         );
 
         $tojoin = array(
-            "Opportunity"
+            "Opportunity",
+            "user_account"
         );
 
-        $internstsData = $internstsModel->select($values , $conditions , $tojoin);
+        $posts = $internstsModel->select($values , $conditions , $tojoin);
 
-        return view("internship.index" , compact('internstsData'));
+        return view("internship.index" , compact('posts'));
     }
 
     /**
@@ -46,7 +48,7 @@ class InternshipController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         $request->validate([
             "post_id" => "required",
@@ -56,8 +58,18 @@ class InternshipController extends Controller
 
         $model = new Model("Internship");
         $requestData = $request->all();
-        $model->insert($requestData);
-        return redirect("internship")->with("status" , "Internship added successfully");
+
+        $spec = "'".$requestData["specialization"]."'";
+        $paid = "'".$requestData["paid"]."'";
+        
+        $values = array(
+            "specialization" => $spec,
+            "paid" => $paid
+        );
+
+        $model->insert($values);
+
+        show($id);
     }
 
     /**
@@ -70,7 +82,7 @@ class InternshipController extends Controller
     {
         $model = new Model("Internship");
         $data = $model->select("*", "Internship.post_id = ".$id);
-        return view("internship.show", compact('data'));
+        return view("internship.show/".$id, compact('data'));
     }
 
     /**
@@ -83,7 +95,7 @@ class InternshipController extends Controller
     {
         $model = new Model("Internship");
         $data = $model->select("*", "Internship.post_id = ".$id);
-        return view("internship.edit", compact('data'));
+        return view("internship.edit/".$id, compact('data'));
     }
 
     /**
@@ -103,9 +115,21 @@ class InternshipController extends Controller
 
         $model = new Model("Internship");
         $requestData = $request->all();
+
+        $spec = "'".$requestData["specialization"]."'";
+        $paid = "'".$requestData["paid"]."'";
+        
+        $values = array(
+            "post_id" => $id,
+            "specialization" => $spec,
+            "paid" => $paid
+        );
+
         $conditions = array("post_id = ".$id);
+
         $model->update($requestData , $conditions);
-        return redirect("internship/".$id)->with("status" , "internship updated successfully");
+
+        show($id);
     }
 
     /**
@@ -119,6 +143,6 @@ class InternshipController extends Controller
         $model = new Model("Internship");
         $conditions = array("applicant_id = ".$id);
         $model->delete($conditions);
-        return redirect("internship")->with("status" , "internship deleted successfully");
+        return redirect("internship.index")->with("status" , "internship deleted successfully");
     }
 }

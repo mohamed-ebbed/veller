@@ -74,6 +74,8 @@ CREATE TABLE Opportunity (
 	funded VARCHAR(20) NOT NULL,
 	requirements TEXT NOT NULL,
 	posted_by INTEGER  NOT NULL,
+	type VARCHAR(15) NOT NULL,
+	title VARCHAR(50) NOT NULL,
 	PRIMARY KEY (post_id),
 	FOREIGN KEY (posted_by) REFERENCES Organization ON DELETE CASCADE ON UPDATE RESTRICT
 );
