@@ -52,7 +52,9 @@ class Model{
 	}
 
 	public function delete($conditions){
-		if (!$conditions) return;
+		if (!$conditions){
+			return;
+		}
 		$conditions = implode(" AND ", $conditions);
 		$sql = "DELETE FROM ".$this->tablename." WHERE ".$conditions;
 		return $this->conn->query($sql);
@@ -63,7 +65,7 @@ class Model{
 		if (!$values){
 			return;
 		}
-		$values = implode(", ", $values);
+		$values = implode(",", $values);
 		$conditions = implode(" AND ", $conditions);
 		$sql = "UPDATE ".$this->tablename." SET ".$values." WHERE ".$conditions;
 		return $this->conn->query($sql);
