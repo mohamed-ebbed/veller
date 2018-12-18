@@ -28,8 +28,8 @@ class CustomAuth{
 	}
 
 	public function validate($type){
-		if(type){
-			$cookie_data = explode($_COOKIE[$type] , "-");
+		if($type){
+			$cookie_data = explode("-" , $_COOKIE[$type]);
 			$user = $cookie_data[0];
 			$encrypted_val = $cookie_data[1];
 			if(hash_hmac("md5" , $user , $this->key) != $encrypted_val){
@@ -43,7 +43,7 @@ class CustomAuth{
 		$type = $this->loggedInType();
 		if($type){
 			$this->validate($type);
-			return explode($_COOKIE[$type] , "-")[0];
+			return explode("-" , $_COOKIE[$type])[0];
 		}
 		else{
 			return 0;

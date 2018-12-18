@@ -11,11 +11,6 @@
 |
 */
 
-Route::get('/', function () {
- 	$x = "";
-    return view('welcome');
-});
-
 Auth::routes();
 /*
 Route::get('/RegisterAsOrg', function(){
@@ -34,7 +29,7 @@ Route::get('/message', function(){
 
 
 //Route::get('/RegisterAsUser', 'HomeController@index');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 Route::post('validate_user', ['as' => 'validate_user', 'uses' => 'loginController@user_login']);
 Route::post('validate_org', ['as' => 'validate_org', 'uses' => 'loginController@org_login']);
 Route::post('validate_sup', ['as' => 'validate_sup', 'uses' => 'loginController@sup_login']);
