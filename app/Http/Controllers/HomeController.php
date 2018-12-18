@@ -23,7 +23,7 @@ class HomeController extends Controller
     public function index()
     {
         $auth = new CustomAuth();
-        return view('home');
+        return view('welcome');
     }
     
 }
