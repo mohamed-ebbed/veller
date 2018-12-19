@@ -12,8 +12,6 @@
     @yield('mainstyle')
     @yield('messageStyle')
 
-   
-
   </head>
   <body id="page-top" @yield('back')>
         @include('inc.navbar')

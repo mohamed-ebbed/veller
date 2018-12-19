@@ -52,5 +52,5 @@ Route::resource("org" , "organizationController");
 Route::resource("scholarship" , "scholarshipController")->except(["index","show" , "create" , "edit"]);
 
 
-Route::resource("message" , "messageController");
-Route::resource("tableOfMessage" ,"index");
+//Route::resource("message" , "messageController");
+Route::resource("tableOfMessage" ,"messageController");
