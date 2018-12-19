@@ -75,7 +75,9 @@ class volunteeringController extends Controller
     public function show($id)
     {
         $model = new Model("volunteering");
-        $data = $model->select("*", "Internship.post_id = ".$id);
+        $values = array('*');
+        $conditions = array('Internship.post_id = '.$id);
+        $data = $model->select($values, $conditions);
         return view("volunteering.show/".$id, compact('data'));
     }
 
@@ -88,7 +90,9 @@ class volunteeringController extends Controller
     public function edit($id)
     {
         $model = new Model("volunteering");
-        $data = $model->select("*", "Internship.post_id = ".$id);
+        $values = array('*');
+        $conditions = array('Internship.post_id = '.$id);
+        $data = $model->select($values, $conditions);
         return view("volunteering.edit/".$id, compact('data'));
     }
 

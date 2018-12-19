@@ -18,8 +18,8 @@ class InternshipController extends Controller
         $values = "*";
 
         $conditions = array(
-            "Internship.post_id = Opportunity.post_id",
-            "opportunity.posted_by = user_account.id"
+            'Internship.post_id = Opportunity.post_id',
+            'opportunity.posted_by = user_account.id'
         );
 
         $tojoin = array(
@@ -81,7 +81,9 @@ class InternshipController extends Controller
     public function show($id)
     {
         $model = new Model("Internship");
-        $data = $model->select("*", "Internship.post_id = ".$id);
+        $values = array('*');
+        $conditions = array('Internship.post_id = '.$id);
+        $data = $model->select($values, $conditions);
         return view("internship.show/".$id, compact('data'));
     }
 
@@ -94,7 +96,9 @@ class InternshipController extends Controller
     public function edit($id)
     {
         $model = new Model("Internship");
-        $data = $model->select("*", "Internship.post_id = ".$id);
+        $values = array('*');
+        $conditions = array('Internship.post_id = '.$id);
+        $data = $model->select($values, $conditions);
         return view("internship.edit/".$id, compact('data'));
     }
 
