@@ -81,7 +81,9 @@ class scholarshipController extends Controller
     public function show($id)
     {
         $model = new Model("Scholarship");
-        $data = $model->select("*", "scholarship.post_id = ".$id);
+        $values = array('*');
+        $conditions = array('scholarship.post_id = '.$id);
+        $data = $model->select($values, $conditions);
         return view("scholarship.show/".$id, compact('data'));
     }
 
@@ -94,7 +96,9 @@ class scholarshipController extends Controller
     public function edit($id)
     {
         $model = new Model("Scholarship");
-        $data = $model->select("*", "scholarship.post_id = ".$id);
+        $values = array('*');
+        $conditions = array('scholarship.post_id = '.$id);
+        $data = $model->select($values, $conditions);
         return view("scholarship.edit/".$id, compact('data'));
     }
 
