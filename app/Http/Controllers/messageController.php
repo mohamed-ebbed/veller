@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\model;
 use mysqli_functions;
-
 class messageController extends Controller
 {
     /**

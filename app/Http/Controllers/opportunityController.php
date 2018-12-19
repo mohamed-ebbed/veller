@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Model;
 
 use Illuminate\Http\Request;
 
@@ -13,15 +14,15 @@ class opportunityController extends Controller
      */
     public function index()
     {
-        $opportunityModel = new Model("opportunity");
+        $opportunityModel = new Model("Opportunity");
         
         $conditions = array("opportunity.posted_by = user_account.id");
 
         $tojoin = array("user_account");
 
-        $opportunitys = $opportunityModel->select("*" , $conditions , $tojoin);
-
-        return view("opportunity.index" , compact('opportunitys'));
+        $posts = $opportunityModel->select("*" , $conditions , $tojoin);
+        
+        return view("opportunity.index" , compact('posts'));
     }
 
     /**
@@ -99,7 +100,6 @@ class opportunityController extends Controller
         $requestData = $request->all();
         $conditions = array("post_id = ".$id);
         $model->update($requestData , $conditions);
-        //return redirect("opportunity/".$id)->with("status" , "opportunity updated successfully");
     }
 
     /**
@@ -113,6 +113,5 @@ class opportunityController extends Controller
         $model = new Model("opportunity");
         $conditions = array("post_id = ".$id);
         $model->delete($conditions);
-        //return redirect("opportunity/".$id)->with("status" , "opportunity deleted successfully");
     }
 }

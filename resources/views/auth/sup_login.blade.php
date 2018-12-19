@@ -1,10 +1,14 @@
 @extends('layouts.app')
+
+<title>Veller | Login</title>
+
 @section('mainstyle')
     @include('inc.mainstyle')
 @endsection
 @section('mainscript')
     @include('inc.mainscript')
 @endsection
+
 @section('back')
   style="background-image:url('{{ URL::asset('Ayat_web/img/header.jpg') }}'); background-size:cover;"
 @endsection
@@ -15,7 +19,7 @@
             <div class="card border border-warning shadow p-3 mb-5 bg-white rounded">
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="validate_sup">
                         @csrf
 
                         <div class="form-group row">

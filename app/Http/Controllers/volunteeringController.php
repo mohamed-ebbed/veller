@@ -13,7 +13,22 @@ class volunteeringController extends Controller
      */
     public function index()
     {
-        //
+        $volunteeringModel = new Model("volunteering");
+        $values = "*";
+
+        $conditions = array(
+            "volunteering.post_id = Opportunity.post_id",
+            "opportunity.posted_by = user_account.id"
+        );
+
+        $tojoin = array(
+            "Opportunity",
+            "user_account"
+        );
+
+        $posts = $volunteeringModel->select($values , $conditions , $tojoin);
+
+        return view("volunteering.index" , compact('posts'));
     }
 
     /**
@@ -32,7 +47,7 @@ class volunteeringController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         $request->validate([
             "post_id" => "required",
@@ -40,14 +55,15 @@ class volunteeringController extends Controller
         ]);
         $model = new Model("volunteering");
         $requestData = $request->all();
-        $id = $requestData["post_id"];
         $p_exp = "'".$requestData["previous_experince"]."'";
         
         $values = array(
             "post_id" => $id,
             "previous_experince" => $p_exp
         );
+
         $model->insert($values);
+        show($id);
     }
 
     /**
@@ -58,7 +74,11 @@ class volunteeringController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = new Model("volunteering");
+        $values = array('*');
+        $conditions = array('Internship.post_id = '.$id);
+        $data = $model->select($values, $conditions);
+        return view("volunteering.show/".$id, compact('data'));
     }
 
     /**
@@ -69,7 +89,11 @@ class volunteeringController extends Controller
      */
     public function edit($id)
     {
-        //
+        $model = new Model("volunteering");
+        $values = array('*');
+        $conditions = array('Internship.post_id = '.$id);
+        $data = $model->select($values, $conditions);
+        return view("volunteering.edit/".$id, compact('data'));
     }
 
     /**
@@ -86,16 +110,17 @@ class volunteeringController extends Controller
             "previous_experince" => "required"
         ]);
         $model = new Model("volunteering");
+
         $requestData = $request->all();
-        $id = $requestData["post_id"];
         $p_exp = "'".$requestData["previous_experince"]."'";
         
         $values = array(
-            "post_id" => $id,
             "previous_experince" => $p_exp
         );
         $conditions = array("id = ".$id);
         $model->update($values,$conditions);
+
+        show($id);
     }
 
     /**
@@ -109,5 +134,6 @@ class volunteeringController extends Controller
         $model = new Model("volunteering");
         $conditions = array("id = " . $id);
         $model->delete($conditions);
+        return redirect("volunteering.index")->with("status" , "Volunteering deleted successfully");
     }
 }
