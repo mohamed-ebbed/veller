@@ -6,6 +6,13 @@
 	active
 @endsection
 
+@section('mainstyle')
+  @include('inc.mainstyle')
+@endsection
+@section('mainscript')
+  @include('inc.mainscript')
+@endsection
+
 @section('postsArea')
 	<div class="list-group">
 		@if ($posts->num_rows != 0)
