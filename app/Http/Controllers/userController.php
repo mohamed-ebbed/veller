@@ -61,19 +61,17 @@ class userController extends Controller
             "resume" => "required",
             "profile_picture" => "required",
             "gender" => "required",
+            "year" => "required",
             "day" => "required",
             "month" => "required",
             "resume" => "required",
-            "start_date" => "required",
-            "end_date" => "required",
-            "degree" => "required",
-            "institution" => "required",
+            "education" => "required",
             "interests" => "required"
         ]);
         
+        
         $model = new Model("user_account");
         $requestData = $request->all();
-        $id = $requestData["id"];
         $name = "'".$requestData["name"]."'";
         $email = "'" . $requestData["email"] . "'";
         $country = "'" . $requestData["country"] . "'";
@@ -84,6 +82,13 @@ class userController extends Controller
         $about = "'" . $requestData["about"] . "'";
         $profile_picture = "'" . $requestData["profile_picture"] . "'";
 
+        $columns=array('MAX(id) as last_id');
+        $result = $model->select($columns);
+        $id=$result->fetch_assoc()["last_id"];
+        if($id == NULL)
+            $id=1;
+        else
+            $id++;
         $values = array(
             "id" => $id,
             "name" => $name,
@@ -96,11 +101,10 @@ class userController extends Controller
             "phone_number" => $phone_number,
             "about" => $about
         );
-
         $model->insert($values);
-        applicantController::store($request);
-        return redirect("users")->with("status" , "User added successfully");
-        
+        $appc=new applicantController();
+        $appc->store($request,$id);
+        return redirect("welcome")->with("status" , "User added successfully");   
     }
 
     /**
@@ -125,7 +129,21 @@ class userController extends Controller
      */
     public function edit($id)
     {
-        return view("users.edit");
+        $model1 = new Model("user_account");
+        $model2 = new Model("applicant");
+        $model3 = new Model("interests");
+        $model4 = new Model("education");
+        $conditions = array("id = " . $id);
+        $user = $model1->select("*" , $conditions);
+        $applicant = $model2->select("*" , $conditions);
+        $conditions = array("applicant_id = " . $id);
+        $interests = $model3->select("*" , $conditions);
+        $education = $model4->select("*" , $conditions);
+        $user=$user->fetch_assoc();
+        $applicant=$applicant->fetch_assoc();
+        $interests=$interests->fetch_assoc();
+        $education=$education->fetch_assoc();
+        return view("users.edit")->with("user",$user)->with("applicant",$applicant)->with("ints",$interests)->with("edu",$education);
     }
 
     /**
@@ -149,19 +167,16 @@ class userController extends Controller
             "resume" => "required",
             "profile_picture" => "required",
             "gender" => "required",
+            "year"  =>"required",
             "day" => "required",
             "month" => "required",
             "resume" => "required",
-            "start_date" => "required",
-            "end_date" => "required",
-            "degree" => "required",
-            "institution" => "required",
+            "education" => "required",
             "interests" => "required"
         ]);
 
         $model = new Model("user_account");
         $requestData = $request->all();
-        $id = $requestData["id"];
         $name = "'".$requestData["name"]."'";
         $email = "'" . $requestData["email"] . "'";
         $country = "'" . $requestData["country"] . "'";
@@ -186,8 +201,9 @@ class userController extends Controller
 
         $conditions = array("id = ".$id);
         $model->update($values , $conditions);
-        applicantController::update($request,$id);
-        return redirect("users/".$id)->with("status" , "User updated successfully");
+        $appc=new applicantController();
+        $appc->update($request,$id);
+        //return redirect("users/".$id)->with("status" , "User updated successfully");
     }
 
     /*

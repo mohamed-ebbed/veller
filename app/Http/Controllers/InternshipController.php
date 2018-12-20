@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model;
 
 class InternshipController extends Controller
 {
@@ -36,7 +37,7 @@ class InternshipController extends Controller
      */
     public function create()
     {
-        //
+        return view('opportunity.types.intern');
     }
 
     /**
@@ -45,18 +46,24 @@ class InternshipController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        $request->validate([
-            "post_id" => "required",
-            "specialization" => "required",
-            "paid" => "required"
-        ]);
-
-        $model = new Model("Internship");
+        $model = new Model("internship");
         $requestData = $request->all();
-        $model->insert($requestData);
-        return redirect("Internship")->with("status" , "Internship added successfully");
+        $paid = "'".$requestData["ipaid"]."'";
+        $spec = "'" . $requestData["ispecialization"] . "'";
+        if($paid == "'yes'"){
+            $paid = 1;
+        }
+        else{
+            $paid = 0;
+        }
+        $values = array(
+        "post_id" => $id,
+        "specialization" => $spec,
+        "paid" => $paid
+        );
+        $model->insert($values);
     }
 
     /**
@@ -80,7 +87,7 @@ class InternshipController extends Controller
      */
     public function edit($id)
     {
-        return view("Internship.edit");
+        //return view('opportunity.types.eintern');
     }
 
     /**
@@ -92,17 +99,25 @@ class InternshipController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            "post_id" => "required",
-            "specialization" => "required",
-            "paid" => "required"
-        ]);
-
-        $model = new Model("Internship");
+        
+        $model = new Model("internship");
         $requestData = $request->all();
+        $paid = "'".$requestData["ipaid"]."'";
+        $spec = "'" . $requestData["ispecialization"] . "'";
+        if($paid == "'yes'"){
+            $paid = 1;
+        }
+        else{
+            $paid = 0;
+        }
+        $values = array(
+        "post_id" => $id,
+        "specialization" => $spec,
+        "paid" => $paid
+        );
         $conditions = array("post_id = ".$id);
         $model->update($requestData , $conditions);
-        return redirect("Internship/".$id)->with("status" , "Internship updated successfully");
+       // return redirect("Internship/".$id)->with("status" , "Internship updated successfully");
     }
 
     /**

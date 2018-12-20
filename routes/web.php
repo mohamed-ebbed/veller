@@ -37,16 +37,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource("support_tickets" , "supportTicketController");
 Route::resource("users" , "userController");
-Route::resource("contests" , "contestController")->except(["show" , "create" , "edit"]);
 Route::resource("supervisors" , "supervisorController");
 
 Route::resource("education" , "educationController")->except(["index","show" , "create" , "edit"]);
 Route::resource("applicant" , "applicantController")->except(["index","show" , "create" , "edit"]);
-Route::resource("volunteering" , "volunteeringController")->except(["index","show" , "create" , "edit"]);
-Route::resource("scholarship" , "scholarshipController")->except(["index","show" , "create" , "edit"]);
+
+Route::resource("contests" , "contestController")->except(["show" , "index" ,"store","edit"]);
+Route::resource("vol" , "volunteeringController")->except(["index","show" ,"store","edit"]);
+Route::resource("scholar" , "scholarshipController")->except(["index","show" ,"store","edit"]);
+Route::resource("intern" , "internshipController")->except(["index","show" ,"store","edit"]);
+Route::resource("exchange" , "exchangeController")->except(["index","show" ,"store","edit"]);
+
 Route::resource("org" , "organizationController");
-Route::resource("scholarship" , "scholarshipController")->except(["index","show" , "create" , "edit"]);
-
-
-
-
+Route::resource("opportunity","opportunityController");

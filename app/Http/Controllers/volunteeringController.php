@@ -15,7 +15,6 @@ class volunteeringController extends Controller
     {
         //
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -23,7 +22,7 @@ class volunteeringController extends Controller
      */
     public function create()
     {
-        //
+            return view('opportunity.types.vol');
     }
 
     /**
@@ -32,24 +31,17 @@ class volunteeringController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        $request->validate([
-            "post_id" => "required",
-            "previous_experince" => "required"
-        ]);
         $model = new Model("volunteering");
         $requestData = $request->all();
-        $id = $requestData["post_id"];
-        $p_exp = "'".$requestData["previous_experince"]."'";
-        
+        $p_exp = "'".$requestData["pexp"]."'";
         $values = array(
             "post_id" => $id,
-            "previous_experince" => $p_exp
+            "previous_experience" => $p_exp
         );
         $model->insert($values);
     }
-
     /**
      * Display the specified resource.
      *
@@ -69,7 +61,7 @@ class volunteeringController extends Controller
      */
     public function edit($id)
     {
-        //
+        //return view('opportunity.types.vol');
     }
 
     /**
@@ -81,20 +73,15 @@ class volunteeringController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            "post_id" => "required",
-            "previous_experince" => "required"
-        ]);
+        
         $model = new Model("volunteering");
         $requestData = $request->all();
-        $id = $requestData["post_id"];
-        $p_exp = "'".$requestData["previous_experince"]."'";
-        
+        $p_exp = "'".$requestData["pexp"]."'";
         $values = array(
             "post_id" => $id,
-            "previous_experince" => $p_exp
+            "previous_experience" => $p_exp
         );
-        $conditions = array("id = ".$id);
+        $conditions = array("post_id = ".$id);
         $model->update($values,$conditions);
     }
 

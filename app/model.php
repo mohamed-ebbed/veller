@@ -60,8 +60,8 @@ class Model{
 
 	public function update($values, $conditions){
 		if (!$values) return;
-		$values = implode(", ", $values)
-		$conditions = implode(" AND ", $conditions)
+		$values = implode(", ", $values);
+		$conditions = implode(" AND ", $conditions);
 		$sql = "UPDATE ".$this->tablename." SET ".$values." WHERE ".$conditions;
 		return $this->conn->query($sql);
 	}

@@ -49,7 +49,7 @@ class contestController extends Controller
      */
     public function create()
     {
-        //
+        return view('opportunity.types.contest');
     }
 
     /**
@@ -58,26 +58,18 @@ class contestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        $request->validate([
-            "specialization" => "required",
-            "prizes" => "required"
-        ]);
-
         $model = new Model("contest");
         $requestData = $request->all();
-        $post_id = $requestData["post_id"];
-        $specialization = "'".$requestData["specialization"]."'";
-        $prizes = "'" . $requestData["prizes"] . "'";
+        $prizes = "'".$requestData["prizes"]."'";
+        $spec = "'" . $requestData["cspecialization"] . "'";
         $values = array(
-            "post_id" => $post_id,
-            "specialization" => $specialization,
-            "prizes" => $prizes
+        "post_id" => $id,
+        "prizes" => $prizes,
+        "specialization" => $spec
         );
-
         $model->insert($values);
-        return redirect("contests")->with("status" , "Contest added successfully");
     }
 
     /**
@@ -99,7 +91,7 @@ class contestController extends Controller
      */
     public function edit($id)
     {
-        //
+        //return view('opportunity.types.econtest');
     }
 
     /**
@@ -111,14 +103,10 @@ class contestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            "specialization" => "required",
-            "prizes" => "required"
-        ]);
 
         $model = new Model("contest");
         $requestData = $request->all();
-        $specialization = "'".$requestData["specialization"]."'";
+        $specialization = "'".$requestData["cspecialization"]."'";
         $prizes = "'" . $requestData["prizes"] . "'";
         $values = array(
             "specialization" => $specialization,
@@ -127,7 +115,7 @@ class contestController extends Controller
 
         $conditions = array("post_id = ".$id);
         $model->update($values , $conditions);
-        return redirect("contests/".$id)->with("status" , "Contest updated successfully");
+        //return redirect("contests/".$id)->with("status" , "Contest updated successfully");
     }
 
     /**

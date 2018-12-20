@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Model;
 class InterestsController extends Controller
 {
     /**
@@ -32,12 +32,11 @@ class InterestsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
         
         $model = new Model("interests");
         $requestData = $request->all();
-        $id = $requestData["id"];
         $int = "'".$requestData["interests"]."'";
          $values = array(
             "applicant_id" => $id,
@@ -79,7 +78,6 @@ class InterestsController extends Controller
     {
         $model = new Model("interests");
         $requestData = $request->all();
-        $id = $requestData["id"];
         $int = "'".$requestData["interests"]."'";
          $values = array(
             "applicant_id" => $id,
