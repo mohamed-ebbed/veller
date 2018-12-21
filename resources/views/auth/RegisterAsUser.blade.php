@@ -155,6 +155,7 @@
                                 @endif
                             </div>
                         </div>
+                        
                         <div class="form-group row">
                             <label for="int" class="col-md-4 col-form-label text-md-right">{{ __('Your interests') }}</label>
                             <textarea name="interests" class="form-control" rows="2" style="width: 46%; margin-left: 2%"></textarea>
