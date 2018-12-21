@@ -10,7 +10,7 @@
 @endsection
 @section('content')
 <div class="container" style="margin-top:5%">
-    <h1 style="color:white;">Create Opportunity</h1>
+    <h1 style="color:white;">Edit Opportunity</h1>
     <div class="row justify-content-center ">
         <div class="col-md-8 ">
             <div class="card border border-warning shadow p-3 mb-5 bg-white rounded">
