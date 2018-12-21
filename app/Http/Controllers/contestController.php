@@ -84,7 +84,6 @@ class contestController extends Controller
      */
     public function edit($id)
     {
-        
     }
 
     /**

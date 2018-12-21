@@ -47,12 +47,11 @@ class scholarshipController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
-    {
+    public function store(Request $request,$id)
+    { 
         $model = new Model("scholarship");
 
         $requestData = $request->all();
-
         $spec = "'".$requestData["sspecialization"]."'";
         $paid = "'".$requestData["spaid"]."'";
         $type = "'".$requestData["stype"]."'";
@@ -95,7 +94,6 @@ class scholarshipController extends Controller
      */
     public function edit($id)
     {
-
     }
 
     /**
@@ -110,7 +108,6 @@ class scholarshipController extends Controller
         
         $model = new Model("scholarship");
         $requestData = $request->all();
-
         $spec = "'".$requestData["sspecialization"]."'";
         $paid = "'".$requestData["spaid"]."'";
         $type = "'".$requestData["stype"]."'";

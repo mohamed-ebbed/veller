@@ -214,6 +214,7 @@ class opportunityController extends Controller
         $requirements = "'" . $requestData["requirements"] . "'";
 
         $conditions = array("post_id = ".$id);
+
         $values = array(
             "expiration_date" => $expiration_date,
             "description" => $description,

@@ -65,7 +65,7 @@ class InternshipController extends Controller
         "specialization" => $spec,
         "paid" => $paid
         );
-        $model->insert($values
+        $model->insert($values);
         show($id);
     }
 
@@ -92,7 +92,6 @@ class InternshipController extends Controller
      */
     public function edit($id)
     {
-        
     }
 
     /**

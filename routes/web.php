@@ -47,6 +47,8 @@ Route::resource("applicable_countries" , "ApplicableCountriesController")->excep
 Route::resource("apply_for" , "ApplyForController")->except(["index","show" , "create" , "edit"]);
 Route::resource("interests" , "InterestsController")->except(["index","show" , "create" , "edit"]);
 
+
+ 
 Route::resource("contests" , "contestController")->except(["show" , "index" ,"store","edit"]);
 Route::resource("vol" , "volunteeringController")->except(["index","show" ,"store","edit"]);
 Route::resource("scholar" , "scholarshipController")->except(["index","show" ,"store","edit"]);

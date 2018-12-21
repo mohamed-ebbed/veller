@@ -50,7 +50,6 @@ class exchangeController extends Controller
      */
     public function store(Request $request,$id)
     {
-        //        
         $model = new Model("exchange_program");
         $requestData = $request->all();
         $spec = "'".$requestData["especialization"]."'";
@@ -104,7 +103,6 @@ class exchangeController extends Controller
         
         $model = new Model("Exchange_Program");
         $requestData = $request->all();
-
         $spec = "'".$requestData["especialization"]."'";
         $values = array(
             "specialization" => $spec

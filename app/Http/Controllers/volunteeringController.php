@@ -46,7 +46,8 @@ class volunteeringController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+
+    public function store(Request $request,$id)
     {
         $model = new Model("volunteering");
         $requestData = $request->all();
@@ -82,7 +83,6 @@ class volunteeringController extends Controller
      */
     public function edit($id)
     {
-
     }
 
     /**
