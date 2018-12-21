@@ -16,6 +16,18 @@ class applicantController extends Controller
     public function index()
     {
         //
+        $id=1;
+        $conditions = array("applicant.id = " . $id);
+        $model = new Model("applicant");
+        $values = array(
+          // "id",
+            "day",
+            "month",
+            "resume",
+            "country"
+        );
+        $users = $model->select($values,$conditions);
+        return view("applicant")->with('user',$users);
     }
 
     /**
@@ -43,6 +55,7 @@ class applicantController extends Controller
         $gender = "'".$requestData["gender"]."'";
         $day = "'".$requestData["day"]."'";
         $month = "'".$requestData["month"]."'";
+        $year = "'".$requestData["year"]."'";
         $res = "'".$requestData["resume"]."'";
         
         $values = array(
@@ -50,6 +63,7 @@ class applicantController extends Controller
             "gender" => $start_Date,
             "day" => $end_Date,
             "month" => $degree,
+            "year" => $year,
             "resume" => $res
         );
         $model->insert($values);
@@ -94,6 +108,7 @@ class applicantController extends Controller
         $gender = "'".$requestData["gender"]."'";
         $day = "'".$requestData["day"]."'";
         $month = "'".$requestData["month"]."'";
+        $year = "'".$requestData["year"]."'";
         $res = "'".$requestData["resume"]."'";
         
         $values = array(

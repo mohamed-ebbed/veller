@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model;
 use Illuminate\Http\Request;
 use App\Http\Controllers\applicantController;
+use mysqli_functions;
 class userController extends Controller
 {
     
@@ -15,18 +16,21 @@ class userController extends Controller
      */
     public function index()
     {
+        $id=1;
+        $conditions = array("user_account.id = " . $id);
         $model = new Model("user_account");
         $values = array(
-            "id",
+          // "id",
             "name",
             "email",
+            "profile_picture",
             "country",
             "city",
             "zip", 
             "phone_number"
         );
-        $users = $model->select($values);
-        return view("users.index" , compact('users'));
+        $users = $model->select($values,$conditions);
+        return view("applicant")->with('user',$users);
 
     }
 

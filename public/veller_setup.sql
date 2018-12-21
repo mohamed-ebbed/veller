@@ -18,6 +18,7 @@ create table Applicant(
     gender varchar(6) NOT NULL,
     day INT NOT NULL,
     month INT NOT NULL,
+    year INT NOT NULL,
     resume TEXT NOT NULL,
     
     PRIMARY KEY(id),
