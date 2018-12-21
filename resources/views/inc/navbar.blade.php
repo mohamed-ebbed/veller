@@ -25,6 +25,21 @@
                     @if (Route::has('register'))
                     <div class="dropdown">
                           <button class="btn btn-light " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ __('Create Opportunity') }}
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{route('scholar.create')}}">Scholarship</a>
+                            <a class="dropdown-item" href="{{route('intern.create')}}">Internship</a>
+                            <a class="dropdown-item" href="{{route('exchange.create')}}">Exchange_program</a>
+                            <a class="dropdown-item" href="{{route('contests.create')}}">Contest</a>
+                            <a class="dropdown-item" href="{{route('vol.create')}}">Volunteering</a>
+                          </div>
+                    </div>
+                    @endif
+                </li>
+                <li class="nav-item">
+                    <div class="dropdown">
+                          <button class="btn btn-light " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ __('Register As') }}
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -32,7 +47,6 @@
                             <a class="dropdown-item" href="{{route('users.create')}}">Applicant</a>
                           </div>
                     </div>
-                    @endif
                 </li>
                 @else
                 <li class="nav-item dropdown">

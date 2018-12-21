@@ -61,7 +61,6 @@ class Model{
 	}
 
 	public function update($values, $conditions){
-
 		if (!$values){
 			return;
 		}

@@ -46,12 +46,11 @@ class applicantController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
         
         $model = new Model("applicant");
         $requestData = $request->all();
-        $id = $requestData["id"];
         $gender = "'".$requestData["gender"]."'";
         $day = "'".$requestData["day"]."'";
         $month = "'".$requestData["month"]."'";
@@ -59,16 +58,19 @@ class applicantController extends Controller
         $res = "'".$requestData["resume"]."'";
         
         $values = array(
-            "id" => $id,
-            "gender" => $start_Date,
-            "day" => $end_Date,
-            "month" => $degree,
+
+            "id"    => $id,
+            "gender" => $gender,
+            "day" => $day,
+            "month" => $month,
             "year" => $year,
             "resume" => $res
         );
         $model->insert($values);
-        educationController::store($request);
-        interestsController::store($request);
+        $ec=new educationController();
+        //$ec->store($request,$id);
+        $ic=new interestsController();
+        $ic->store($request,$id);
     }
 
     /**
@@ -104,7 +106,6 @@ class applicantController extends Controller
     {
         $model = new Model("applicant");
         $requestData = $request->all();
-        $id = $requestData["id"];
         $gender = "'".$requestData["gender"]."'";
         $day = "'".$requestData["day"]."'";
         $month = "'".$requestData["month"]."'";
@@ -113,15 +114,17 @@ class applicantController extends Controller
         
         $values = array(
             "id" => $id,
-            "gender" => $start_Date,
-            "day" => $end_Date,
-            "month" => $degree,
+            "gender" => $gender,
+            "day" => $day,
+            "month" => $month,
             "resume" => $res
         );
         $conditions = array("id = ".$id);
         $model->update($values,$conditions);
-        educationController::update($request,$id);
-        interestsController::update($request,$id);
+        $ec=new educationController();
+        //$ec->update($request,$id);
+        $ic=new interestsController();
+        $ic->update($request,$id);
     }
 
     /**

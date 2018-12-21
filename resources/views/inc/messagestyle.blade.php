@@ -24,6 +24,7 @@
 
 
 
+
 <!-- Favicon -->   
 	<link href="{{ URL::asset('Ayat_web3/img/favicon.ico') }}" rel="shortcut icon"/>
 
@@ -37,3 +38,4 @@
 	<link rel="stylesheet" href="{{ URL::asset('Ayat_web3/css/owl.carousel.css') }}"/>
 	<link rel="stylesheet" href="{{ URL::asset('Ayat_web3/css/magnific-popup.css') }}"/>
 	<link rel="stylesheet" href="{{ URL::asset('Ayat_web3/css/style.css') }}"/>
+

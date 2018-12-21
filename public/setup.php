@@ -28,10 +28,10 @@ $conn->query($sql);
 $sql = "CREATE table Applicant(
     id INT NOT NULL,
     gender varchar(6) NOT NULL,
+    year INT NOT NULL,
     day INT NOT NULL,
     month INT NOT NULL,
     resume TEXT NOT NULL,
-    
     PRIMARY KEY(id),
     FOREIGN KEY(id) REFERENCES User_account(id) ON DELETE CASCADE ON UPDATE RESTRICT
 )";
@@ -89,6 +89,7 @@ echo $conn->error;
 
 $sql = "CREATE TABLE Opportunity (
 	post_id INT NOT NULL AUTO_INCREMENT,
+	type    VARCHAR(20) NOT NULL,
 	post_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	expiration_date DATE NOT NULL,
 	description TEXT NOT NULL,
