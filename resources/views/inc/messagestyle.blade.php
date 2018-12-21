@@ -18,3 +18,6 @@
 
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('Ayat_web2/css/util.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('Ayat_web2/css/main.css') }}">
+
+<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Hanalei+Fill|Indie+Flower" rel="stylesheet">

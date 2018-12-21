@@ -27,7 +27,6 @@ Route::get('/message', function(){
 	return view('message');
 });
 
-
 //Route::get('/RegisterAsUser', 'HomeController@index');
 Route::get('/', 'HomeController@index')->name('home');
 Route::post('validate_user', ['as' => 'validate_user', 'uses' => 'loginController@user_login']);
@@ -42,6 +41,10 @@ Route::resource("education" , "educationController")->except(["index","show" , "
 Route::resource("applicant" , "applicantController")->except(["index","show" , "create" , "edit"]);
 Route::resource("org" , "organizationController");
 Route::resource("opportunity","opportunityController");
+
+Route::resource("scholarship" , "scholarshipController")->except(["index","show" , "create" , "edit"]);
+
+Route::resource("tableOfMessage" ,"messageController");
 
 Route::resource("applicable_countries" , "ApplicableCountriesController")->except(["index","show" , "create" , "edit"]);
 Route::resource("apply_for" , "ApplyForController")->except(["index","show" , "create" , "edit"]);
