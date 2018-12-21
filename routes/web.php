@@ -57,3 +57,4 @@ Route::get("logout" , "loginController@logout");
 Route::get("user_login" , "loginController@load_user_form");
 Route::get("org_login" , "loginController@load_org_form");
 Route::get("sup_login" , "loginController@load_sup_form");
+Route::resource("organizations" , "organizationController");

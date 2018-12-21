@@ -39,14 +39,12 @@ class applicantController extends Controller
         
         $model = new Model("applicant");
         $requestData = $request->all();
-        $id = $requestData["id"];
         $gender = "'".$requestData["gender"]."'";
         $day = "'".$requestData["day"]."'";
         $month = "'".$requestData["month"]."'";
         $res = "'".$requestData["resume"]."'";
         
         $values = array(
-            "id" => $id,
             "gender" => $start_Date,
             "day" => $end_Date,
             "month" => $degree,
