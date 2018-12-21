@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model;
 
-
 class exchangeController extends Controller
 {
     /**
@@ -40,7 +39,7 @@ class exchangeController extends Controller
      */
     public function create()
     {
-        //
+        return view('opportunity.types.exchange');
     }
 
     /**
@@ -49,23 +48,17 @@ class exchangeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request,$id)
     {
-        //
-        $request->validate([
-            "post_id" => "required",
-            "specialization" => "required"
-        ]);
-        $model = new Model("Exchange_Program");
+        //        
+        $model = new Model("exchange_program");
         $requestData = $request->all();
-        $spec = "'".$requestData["specialization"]."'";
-        
+        $spec = "'".$requestData["especialization"]."'";
         $values = array(
             "post_id" => $id,
             "specialization" => $spec
         );
         $model->insert($values);
-
         show($id);
     }
 
@@ -108,20 +101,15 @@ class exchangeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $request->validate([
-            "post_id" => "required",
-            "specialization" => "required"
-        ]);
+        
         $model = new Model("Exchange_Program");
         $requestData = $request->all();
 
-        $spec = "'".$requestData["specialization"]."'";
-        
+        $spec = "'".$requestData["especialization"]."'";
         $values = array(
             "specialization" => $spec
         );
-        $conditions = array("id = ".$id);
+        $conditions = array("post_id = ".$id);
         $model->update($values,$conditions);
         show($id);
     }

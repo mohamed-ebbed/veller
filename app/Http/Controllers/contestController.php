@@ -39,7 +39,7 @@ class contestController extends Controller
      */
     public function create()
     {
-        //
+        return view('opportunity.types.contest');
     }
 
     /**
@@ -48,24 +48,17 @@ class contestController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request,$id)
     {
-        $request->validate([
-            "specialization" => "required",
-            "prizes" => "required"
-        ]);
-
         $model = new Model("contest");
         $requestData = $request->all();
-
-        $specialization = "'".$requestData["specialization"]."'";
-        $prizes = "'" . $requestData["prizes"] . "'";
+        $prizes = "'".$requestData["prizes"]."'";
+        $spec = "'" . $requestData["cspecialization"] . "'";
         $values = array(
-            "post_id" => $post_id,
-            "specialization" => $specialization,
-            "prizes" => $prizes
+        "post_id" => $id,
+        "prizes" => $prizes,
+        "specialization" => $spec
         );
-
         $model->insert($values);
         show($id);
     }
@@ -91,9 +84,7 @@ class contestController extends Controller
      */
     public function edit($id)
     {
-        $model = new Model("contest");
-        $data = $model->select("*", "contest.post_id = ".$id);
-        return view("contests.edit/".$id, compact('data'));
+        
     }
 
     /**
@@ -105,14 +96,10 @@ class contestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            "specialization" => "required",
-            "prizes" => "required"
-        ]);
 
         $model = new Model("contest");
         $requestData = $request->all();
-        $specialization = "'".$requestData["specialization"]."'";
+        $specialization = "'".$requestData["cspecialization"]."'";
         $prizes = "'" . $requestData["prizes"] . "'";
         $values = array(
             "specialization" => $specialization,

@@ -39,7 +39,7 @@ class InternshipController extends Controller
      */
     public function create()
     {
-        //
+        return view('opportunity.types.intern');
     }
 
     /**
@@ -48,27 +48,24 @@ class InternshipController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request,$id)
     {
-        $request->validate([
-            "post_id" => "required",
-            "specialization" => "required",
-            "paid" => "required"
-        ]);
-
-        $model = new Model("Internship");
+        $model = new Model("internship");
         $requestData = $request->all();
-
-        $spec = "'".$requestData["specialization"]."'";
-        $paid = "'".$requestData["paid"]."'";
-        
+        $paid = "'".$requestData["ipaid"]."'";
+        $spec = "'" . $requestData["ispecialization"] . "'";
+        if($paid == "'yes'"){
+            $paid = 1;
+        }
+        else{
+            $paid = 0;
+        }
         $values = array(
-            "specialization" => $spec,
-            "paid" => $paid
+        "post_id" => $id,
+        "specialization" => $spec,
+        "paid" => $paid
         );
-
-        $model->insert($values);
-
+        $model->insert($values
         show($id);
     }
 
@@ -80,7 +77,7 @@ class InternshipController extends Controller
      */
     public function show($id)
     {
-        $model = new Model("Internship");
+        $model = new Model("internship");
         $values = array('*');
         $conditions = array('Internship.post_id = '.$id);
         $data = $model->select($values, $conditions);
@@ -95,11 +92,7 @@ class InternshipController extends Controller
      */
     public function edit($id)
     {
-        $model = new Model("Internship");
-        $values = array('*');
-        $conditions = array('Internship.post_id = '.$id);
-        $data = $model->select($values, $conditions);
-        return view("internship.edit/".$id, compact('data'));
+        
     }
 
     /**
@@ -111,28 +104,25 @@ class InternshipController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            "post_id" => "required",
-            "specialization" => "required",
-            "paid" => "required"
-        ]);
-
-        $model = new Model("Internship");
-        $requestData = $request->all();
-
-        $spec = "'".$requestData["specialization"]."'";
-        $paid = "'".$requestData["paid"]."'";
         
+        $model = new Model("internship");
+        $requestData = $request->all();
+        $paid = "'".$requestData["ipaid"]."'";
+        $spec = "'" . $requestData["ispecialization"] . "'";
+        if($paid == "'yes'"){
+            $paid = 1;
+        }
+        else{
+            $paid = 0;
+        }
         $values = array(
-            "post_id" => $id,
-            "specialization" => $spec,
-            "paid" => $paid
+        "post_id" => $id,
+        "specialization" => $spec,
+        "paid" => $paid
         );
-
         $conditions = array("post_id = ".$id);
 
         $model->update($requestData , $conditions);
-
         show($id);
     }
 

@@ -38,7 +38,7 @@ class scholarshipController extends Controller
      */
     public function create()
     {
-        //
+        return view('opportunity.types.scholar');
     }
 
     /**
@@ -49,19 +49,19 @@ class scholarshipController extends Controller
      */
     public function store(Request $request, $id)
     {
-        $request->validate([
-            "post_id" => "required",
-            "specialization" => "required",
-            "paid" => "required",
-            "type" => "required"
-        ]);
         $model = new Model("scholarship");
 
         $requestData = $request->all();
-        $spec = "'".$requestData["specialization"]."'";
-        $paid = "'".$requestData["paid"]."'";
-        $type = "'".$requestData["type"]."'";
-        
+
+        $spec = "'".$requestData["sspecialization"]."'";
+        $paid = "'".$requestData["spaid"]."'";
+        $type = "'".$requestData["stype"]."'";
+        if($paid == "'yes'"){
+            $paid = 1;
+        }
+        else{
+            $paid = 0;
+        }
         $values = array(
             "post_id" => $id,
             "specialization" => $spec,
@@ -95,11 +95,7 @@ class scholarshipController extends Controller
      */
     public function edit($id)
     {
-        $model = new Model("Scholarship");
-        $values = array('*');
-        $conditions = array('scholarship.post_id = '.$id);
-        $data = $model->select($values, $conditions);
-        return view("scholarship.edit/".$id, compact('data'));
+
     }
 
     /**
@@ -111,25 +107,25 @@ class scholarshipController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            "post_id" => "required",
-            "specialization" => "required",
-            "paid" => "required",
-            "type" => "required"
-        ]);
+        
         $model = new Model("scholarship");
         $requestData = $request->all();
 
-        $spec = "'".$requestData["specialization"]."'";
-        $paid = "'".$requestData["paid"]."'";
-        $type = "'".$requestData["type"]."'";
-        
+        $spec = "'".$requestData["sspecialization"]."'";
+        $paid = "'".$requestData["spaid"]."'";
+        $type = "'".$requestData["stype"]."'";
+        if($paid == "'yes'"){
+            $paid = 1;
+        }
+        else{
+            $paid = 0;
+        }
         $values = array(
             "specialization" => $spec,
             "paid" => $paid,
             "type" => $type
         );
-        $conditions = array("id = ".$id);
+        $conditions = array("post_id = ".$id);
         $model->update($values,$conditions);
         show($id);
     }

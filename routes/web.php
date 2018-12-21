@@ -41,18 +41,18 @@ Route::resource("supervisors" , "supervisorController");
 Route::resource("education" , "educationController")->except(["index","show" , "create" , "edit"]);
 Route::resource("applicant" , "applicantController")->except(["index","show" , "create" , "edit"]);
 Route::resource("org" , "organizationController");
+Route::resource("opportunity","opportunityController");
 
 Route::resource("applicable_countries" , "ApplicableCountriesController")->except(["index","show" , "create" , "edit"]);
 Route::resource("apply_for" , "ApplyForController")->except(["index","show" , "create" , "edit"]);
 Route::resource("interests" , "InterestsController")->except(["index","show" , "create" , "edit"]);
 
-Route::resource("opportunity" , "opportunityController")->only(["index", "create"]);
- 
-Route::resource("internship" , "InternshipController")->except(["create"]);
-Route::resource("volunteering" , "volunteeringController")->except(["create"]);
-Route::resource("scholarship" , "scholarshipController")->except(["create"]);
-Route::resource("exchange_programs" , "exchangeController")->except(["create"]);
-Route::resource("contests" , "contestController")->except(["create"]);
+Route::resource("contests" , "contestController")->except(["show" , "index" ,"store","edit"]);
+Route::resource("vol" , "volunteeringController")->except(["index","show" ,"store","edit"]);
+Route::resource("scholar" , "scholarshipController")->except(["index","show" ,"store","edit"]);
+Route::resource("intern" , "internshipController")->except(["index","show" ,"store","edit"]);
+Route::resource("exchange" , "exchangeController")->except(["index","show" ,"store","edit"]);
+
 Route::get("logout" , "loginController@logout");
 Route::get("user_login" , "loginController@load_user_form");
 Route::get("org_login" , "loginController@load_org_form");
