@@ -32,16 +32,12 @@ class educationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
         //input names
         $model = new Model("education");
         $requestData = $request->all();
-        $id = $requestData["id"];
-        $start_Date = "'".$requestData["start_date"]."'";
-        $end_Date = "'".$requestData["end_date"]."'";
-        $degree = "'".$requestData["degree"]."'";
-        $inst = "'".$requestData["institution"]."'";
+        $edu = "'".$requestData["education"]."'";
         
         //column names
         $values = array(
@@ -88,11 +84,7 @@ class educationController extends Controller
         
         $model = new Model("education");
         $requestData = $request->all();
-        $id = $requestData["id"];
-        $start_Date = "'".$requestData["start_date"]."'";
-        $end_Date = "'".$requestData["end_date"]."'";
-        $degree = "'".$requestData["degree"]."'";
-        $inst = "'".$requestData["institution"]."'";
+        $edu = "'".$requestData["education"]."'";
         
         $values = array(
             "applicant_id" => $id,
