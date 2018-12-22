@@ -126,6 +126,7 @@ class organizationController extends Controller
      */
     public function edit($id)
     {
+        $id=2;
         $model1 = new Model("user_account");
         $model2 = new Model("organization");
         $conditions = array("id = " . $id);
