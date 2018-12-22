@@ -31,8 +31,8 @@ class userController extends Controller
         $education = $model4->select("*" , $conditions);
         $user=$user->fetch_assoc();
         $applicant=$applicant->fetch_assoc();
-    //   $interests=$interests->fetch_assoc();
-    //    $education=$education->fetch_assoc();
+        //$interests=$interests->fetch_assoc();
+        //$education=$education->fetch_assoc();
         return view("users.show")->with("user",$user)->with("applicant",$applicant)->with("ints",$interests)->with("edu",$education);
 
    /*     $values = array(

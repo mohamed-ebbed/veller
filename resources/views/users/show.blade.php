@@ -26,7 +26,7 @@
 					</div>
 				</div>
 				<div class="col-md-8 text-md-right header-buttons">
-					<a href="/users.edit" class="site-btn">Edit Profile</a>
+					<a href="{{route('users.edit',1)}}" class="site-btn">Edit Profile</a>
 					<a href="/message" class="site-btn">Message</a>
 				</div>
 			</div>
@@ -48,7 +48,7 @@
 							<div class="hero-info">
 								<h2>General Info</h2>
 								<ul>
-									<li><span>Date of Birth</span>{{$applicant["day"]}} / {{$applicant["month"]}} / {{$applicant["year"]}}  </li>
+									<li><span>Date of Birth</span>{{$applicant["day"]}} / {{$applicant["month"]}} /  </li>
 									<li><span>Address</span>{{$user["zip"]}},{{$user["city"]}},{{$user["country"]}}</li>
 									<li><span>E-mail</span>{{$user["email"]}}</li>
 									<li><span>Phone </span>{{$user["phone_number"]}}</li>
