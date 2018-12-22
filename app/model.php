@@ -70,6 +70,13 @@ class Model{
 		return $this->conn->query($sql);
 	}
 
+	public function ExcuteQuery($sql){
+		if (!$sql){
+			return 0;
+		}
+		$counter =  mysqli_query($this->conn, $sql);
+		return mysqli_fetch_object($counter);
+	}
 
 	function __destruct(){
 		$this->conn->close();

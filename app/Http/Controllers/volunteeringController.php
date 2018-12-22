@@ -13,8 +13,7 @@ class volunteeringController extends Controller
      */
     public function index()
     {
-        $volunteeringModel = new Model("volunteering");
-        $values = "*";
+        $Model = new Model("volunteering");
 
         $conditions = array(
             "volunteering.post_id = Opportunity.post_id",
@@ -26,9 +25,23 @@ class volunteeringController extends Controller
             "user_account"
         );
 
-        $posts = $volunteeringModel->select($values , $conditions , $tojoin);
+        $posts = $Model->select("*" , $conditions , $tojoin);
 
-        return view("volunteering.index" , compact('posts'));
+        $AllCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity;");
+        $InternsCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Internship';");
+        $ScholarCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Scholarship';");
+        $ContestsCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Contest';");
+        $VolCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Volunteering';");
+        $ExchCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Exchange';");
+        
+        $countArray = array('AllCount' => $AllCount,
+                            'InternsCount' => $InternsCount,
+                            'ScholarCount' => $ScholarCount,
+                            'ContestsCount' => $ContestsCount,
+                            'VolCount' => $VolCount,
+                            'ExchCount' => $ExchCount);
+
+        return view("volunteering.index" , compact('posts', 'countArray'));
     }
     /**
      * Show the form for creating a new resource.

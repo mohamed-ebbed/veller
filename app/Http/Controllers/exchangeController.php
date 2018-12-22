@@ -15,8 +15,7 @@ class exchangeController extends Controller
     public function index()
     {
         $Model = new Model("Exchange_Program");
-        $values = "*";
-
+        
         $conditions = array(
             "Exchange_Program.post_id = Opportunity.post_id",
             "opportunity.posted_by = user_account.id"
@@ -27,9 +26,23 @@ class exchangeController extends Controller
             "user_account"
         );
 
-        $posts = $Model->select($values , $conditions , $tojoin);
+        $posts = $Model->select("*" , $conditions , $tojoin);
 
-        return view("exchange_program.index" , compact('posts'));
+        $AllCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity;");
+        $InternsCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Internship';");
+        $ScholarCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Scholarship';");
+        $ContestsCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Contest';");
+        $VolCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Volunteering';");
+        $ExchCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Exchange';");
+        
+        $countArray = array('AllCount' => $AllCount,
+                            'InternsCount' => $InternsCount,
+                            'ScholarCount' => $ScholarCount,
+                            'ContestsCount' => $ContestsCount,
+                            'VolCount' => $VolCount,
+                            'ExchCount' => $ExchCount);
+
+        return view("exchange_program.index" , compact('posts', 'countArray'));
     }
 
     /**

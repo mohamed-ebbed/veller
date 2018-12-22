@@ -15,7 +15,6 @@ class contestController extends Controller
     public function index()
     {
         $contestModel = new Model("Contest");
-        $values = "*";
 
         $conditions = array(
             "contest.post_id = opportunity.post_id",
@@ -27,9 +26,23 @@ class contestController extends Controller
             "user_account"
         );
 
-        $posts = $contestModel->select($values , $conditions , $tables);
+        $posts = $contestModel->select("*" , $conditions , $tables);
 
-        return view("contests.index" , compact('posts'));
+        $AllCount = (array) $contestModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity;");
+        $InternsCount = (array) $contestModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Internship';");
+        $ScholarCount = (array) $contestModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Scholarship';");
+        $ContestsCount = (array) $contestModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Contest';");
+        $VolCount = (array) $contestModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Volunteering';");
+        $ExchCount = (array) $contestModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Exchange';");
+        
+        $countArray = array('AllCount' => $AllCount,
+                            'InternsCount' => $InternsCount,
+                            'ScholarCount' => $ScholarCount,
+                            'ContestsCount' => $ContestsCount,
+                            'VolCount' => $VolCount,
+                            'ExchCount' => $ExchCount);
+
+        return view("contests.index" , compact('posts', 'countArray'));
     }
 
     /**
