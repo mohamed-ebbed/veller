@@ -15,7 +15,7 @@
             <div class="card border border-warning shadow p-3 mb-5 bg-white rounded">
 
                 <div class="card-body">
-                    <form method="POST" action="{{route('org.update',1)}}" enctype="multipart/form-data">
+                    <form method="POST" action="{{route('org.update',$org['id'])}}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>

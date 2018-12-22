@@ -14,7 +14,7 @@
         <div class="col-md-8 ">
             <div class="card border border-warning shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
-                    <form method="POST" action="{{route('users.update',1)}}" enctype="multipart/form-data">
+                    <form method="POST" action="{{route('users.update',$user['id'])}}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
