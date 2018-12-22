@@ -27,12 +27,8 @@ Route::get('/message', function(){
 	return view('message');
 });
 
-Route::get('/applicant', function(){
-	return view('users.show');
-});
-Route::get('/org', function(){
-	return view('orgs.show');
-});
+Route::get('/applicant','userController@index');
+Route::get('/org', 'organizationController@index');
 
 
 
