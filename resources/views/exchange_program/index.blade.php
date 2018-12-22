@@ -14,7 +14,7 @@
 				<a href="{{route('exchange_programs.show', $post['id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
 					<p>{{$post["name"]}}</p>
 					<p>{{$post["title"]}}</p>
-					<p>{{$post["expiration_date"]}}</p>
+					<p>{{$post["post_date"] }}</p>
 				</a>		
 			@endwhile	
 		@else

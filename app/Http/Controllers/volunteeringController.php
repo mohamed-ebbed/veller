@@ -69,9 +69,13 @@ class volunteeringController extends Controller
     public function show($id)
     {
         $model = new Model("volunteering");
-        $values = array('*');
-        $conditions = array('Internship.post_id = '.$id);
-        $data = $model->select($values, $conditions);
+        $values = array('title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'previous_experience');
+        $conditions = array('volunteering.post_id = '.$id,
+                            'volunteering.post_id = opportunity.post_id',
+                            'opportunity.posted_by = User_account.id');
+        $tojoin = array('opportunity', 'User_account');
+        $dataObj = $model->select($values, $conditions, $tojoin);
+        $data = $dataObj->fetch_assoc();
         return view("volunteering.show", compact('data'));
     }
 

@@ -80,9 +80,14 @@ class scholarshipController extends Controller
     public function show($id)
     {
         $model = new Model("Scholarship");
-        $values = array('*');
-        $conditions = array('scholarship.post_id = '.$id);
-        $data = $model->select($values, $conditions);
+        $values = array('title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'specialization', 'scholarship.type ScholarType', 'paid');
+        $conditions = array('Scholarship.post_id = '.$id,
+                            'Scholarship.post_id = opportunity.post_id',
+                            'opportunity.posted_by = User_account.id');
+        $tojoin = array('opportunity', 'User_account');
+
+        $dataObj = $model->select($values, $conditions, $tojoin);
+        $data = $dataObj->fetch_assoc();
         return view("scholarship.show", compact('data'));
     }
 

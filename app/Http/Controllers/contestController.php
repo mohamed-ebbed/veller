@@ -72,7 +72,14 @@ class contestController extends Controller
     public function show($id)
     {
         $model = new Model("contest");
-        $data = $model->select("*", "contest.post_id = ".$id);
+        $values = array('title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'specialization', 'prizes');
+        $conditions = array('contest.post_id = '.$id,
+                            'contest.post_id = opportunity.post_id',
+                            'opportunity.posted_by = User_account.id');
+        $tojoin = array('opportunity', 'User_account');
+
+        $dataObj = $model->select($values, $conditions, $tojoin);
+        $data = $dataObj->fetch_assoc();
         return view("contests.show", compact('data'));
     }
 

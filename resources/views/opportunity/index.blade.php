@@ -15,31 +15,31 @@
 					<a href="{{route('scholarship.show', $post['id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
 						<p>{{$post["name"]}}</p>
 						<p>{{$post["title"]}}</p>
-						<p>{{$post["expiration_date"]}}</p>
+						<p>{{ $post["post_date"] }}</p>
 					</a>
 				@elseif ($post["type"] == "Internship")
 					<a href="{{route('internship.show', $post['id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
 						<p>{{$post["name"]}}</p>
 						<p>{{$post["title"]}}</p>
-						<p>{{$post["expiration_date"]}}</p>
+						<p>{{ $post["post_date"] }}</p>
 					</a>
 				@elseif ($post["type"] == "Volunteering")
 					<a href="{{route('volunteering.show', $post['id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
 						<p>{{$post["name"]}}</p>
 						<p>{{$post["title"]}}</p>
-						<p>{{$post["expiration_date"]}}</p>
+						<p>{{ $post["post_date"]  }}</p>
 					</a>
-				@elseif ($post["type"] == "Exchange Program")
+				@elseif ($post["type"] == "Exchange")
 					<a href="{{route('exchange_programs.show', $post['id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
 						<p>{{$post["name"]}}</p>
 						<p>{{$post["title"]}}</p>
-						<p>{{$post["expiration_date"]}}</p>
+						<p>{{ $post["post_date"]  }}</p>
 					</a>
 				@elseif ($post["type"] == "Contest")
 					<a href="{{route('contests.show', $post['id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
 						<p>{{$post["name"]}}</p>
 						<p>{{$post["title"]}}</p>
-						<p>{{$post["expiration_date"]}}</p>
+						<p>{{$post["post_date"]}}</p>
 					</a>
 				@endif		
 			@endwhile	

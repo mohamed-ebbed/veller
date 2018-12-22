@@ -70,9 +70,16 @@ class exchangeController extends Controller
     public function show($id)
     {
         $model = new Model("Exchange_Program");
-        $values = array('*');
-        $conditions = array('Exchange_Program.post_id = '.$id);
-        $data = $model->select($values, $conditions);
+        $values = array('title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'specialization');
+        $conditions = array('Exchange_Program.post_id = '.$id,
+                        'Opportunity.post_id = '.$id,
+                        'opportunity.posted_by = User_account.id');
+        
+        $tojoin = array('Opportunity',
+                        'User_account');
+
+        $dataObj = $model->select($values, $conditions, $tojoin);
+        $data = $dataObj->fetch_assoc();
         return view("exchange_program.show", compact('data'));
     }
 

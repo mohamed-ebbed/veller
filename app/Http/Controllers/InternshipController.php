@@ -77,9 +77,14 @@ class InternshipController extends Controller
     public function show($id)
     {
         $model = new Model("internship");
-        $values = array('*');
-        $conditions = array('Internship.post_id = '.$id);
-        $data = $model->select($values, $conditions);
+        $values = array('title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'specialization', 'paid');
+        $conditions = array('Internship.post_id = '.$id,
+                            'Internship.post_id = opportunity.post_id',
+                            'opportunity.posted_by = User_account.id');
+        $tojoin = array('opportunity', 'User_account');
+
+        $dataObj = $model->select($values, $conditions, $tojoin);
+        $data = $dataObj->fetch_assoc();
         return view("internship.show", compact('data'));
     }
 
