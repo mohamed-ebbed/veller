@@ -73,7 +73,7 @@ class contestController extends Controller
     {
         $model = new Model("contest");
         $data = $model->select("*", "contest.post_id = ".$id);
-        return view("contests.show/".$id, compact('data'));
+        return view("contests.show", compact('data'));
     }
 
     /**

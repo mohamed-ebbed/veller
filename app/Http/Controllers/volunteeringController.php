@@ -72,7 +72,7 @@ class volunteeringController extends Controller
         $values = array('*');
         $conditions = array('Internship.post_id = '.$id);
         $data = $model->select($values, $conditions);
-        return view("volunteering.show/".$id, compact('data'));
+        return view("volunteering.show", compact('data'));
     }
 
     /**

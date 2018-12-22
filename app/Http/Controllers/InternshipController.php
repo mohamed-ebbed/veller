@@ -28,7 +28,6 @@ class InternshipController extends Controller
         );
 
         $posts = $internstsModel->select($values , $conditions , $tojoin);
-
         return view("internship.index" , compact('posts'));
     }
 
@@ -81,7 +80,7 @@ class InternshipController extends Controller
         $values = array('*');
         $conditions = array('Internship.post_id = '.$id);
         $data = $model->select($values, $conditions);
-        return view("internship.show/".$id, compact('data'));
+        return view("internship.show", compact('data'));
     }
 
     /**

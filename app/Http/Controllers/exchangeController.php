@@ -88,7 +88,7 @@ class exchangeController extends Controller
         $values = array('*');
         $conditions = array('Exchange_Program.post_id = '.$id);
         $data = $model->select($values, $conditions);
-        return view("exchange_program.edit/".$id, compact('data'));
+        return view("exchange_program.edit", compact('data'));
     }
 
     /**

@@ -1,3 +1,3 @@
-@extends('layouts.opporunitiesShowLayout')
+@extends('layouts.opportunityShowLayout')
 
 <title>Veller | Scholarship</title>

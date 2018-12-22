@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 use App\Model;
 
 use Illuminate\Http\Request;
-use App\Model;
 use App\Http\Controllers\contestController;
 use App\Http\Controllers\exchangeController;
 use App\Http\Controllers\InternshipController;
 use App\Http\Controllers\scholarshipController;
 use App\Http\Controllers\volunteeringController;
+
 class opportunityController extends Controller
 {
     /**
@@ -246,7 +246,6 @@ class opportunityController extends Controller
             $con=new volunteeringController();
             $con->update($request,$id);
         }
-        //return redirect("opportunity/".$id)->with("status" , "opportunity updated successfully");
     }
 
     /**

@@ -83,7 +83,7 @@ class scholarshipController extends Controller
         $values = array('*');
         $conditions = array('scholarship.post_id = '.$id);
         $data = $model->select($values, $conditions);
-        return view("scholarship.show/".$id, compact('data'));
+        return view("scholarship.show", compact('data'));
     }
 
     /**
