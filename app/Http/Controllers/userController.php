@@ -79,7 +79,7 @@ class userController extends Controller
             "phone_number" => "required",
             "about" => "required",
             "resume" => "required",
-            "profile_picture" => "required",
+            "profile_picture" => "image|nullable|max:1999",
             "gender" => "required",
             "year" => "required",
             "day" => "required",
@@ -100,7 +100,22 @@ class userController extends Controller
         $password = "'" . $requestData["password"] . "'";
         $phone_number = "'" . $requestData["phone_number"] . "'";
         $about = "'" . $requestData["about"] . "'";
-        $profile_picture = "'" . $requestData["profile_picture"] . "'";
+        if($request->hasFile('profile_picture')){
+            //get file name with extention
+            $fileNameWithExt = $request->file('profile_picture')->getClientOriginalName();
+            // just file name
+            $fileName = pathinfo($fileNameWithExt,PATHINFO_FILENAME);
+            // just ext
+            $fileExt = $request->file('profile_picture')->getClientOriginalExtension();
+            //to store
+            $fileNameToStore = $fileName . '_'.time().'.'.$fileExt;
+            //upload
+            $path = $request->file('profile_picture')->storeAs('public/profile_pictures',$fileNameToStore);
+        }
+        else
+        {
+            $fileNameToStore = 'noimage.jpg';
+        }
 
         $columns=array('MAX(id) as last_id');
         $result = $model->select($columns);
@@ -113,7 +128,7 @@ class userController extends Controller
             "id" => $id,
             "name" => $name,
             "email" => $email,
-            "profile_picture" => $profile_picture,
+            "profile_picture" => $fileNameToStore,
             "country" => $country,
             "city" => $city,
             "zip" => $zip,
