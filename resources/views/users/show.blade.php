@@ -26,7 +26,7 @@
 					</div>
 				</div>
 				<div class="col-md-8 text-md-right header-buttons">
-					<a href="#" class="site-btn">Edit Profile</a>
+					<a href="{{route('users.edit',1)}}" class="site-btn">Edit Profile</a>
 					<a href="/message" class="site-btn">Message</a>
 				</div>
 			</div>
