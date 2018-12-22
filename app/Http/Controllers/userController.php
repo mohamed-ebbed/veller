@@ -16,11 +16,27 @@ class userController extends Controller
      */
     public function index()
     {
-        $id=1;
-        $conditions = array("user_account.id = " . $id);
-        $model = new Model("user_account");
-        $values = array(
-          // "id",
+        $id=2;
+      //  $conditions = array("user_account.id = " . $id);
+        $model1 = new Model("user_account");
+        $model2 = new Model("applicant");
+        $model3 = new Model("interests");
+        $model4 = new Model("education");
+
+        $conditions = array("id = " . $id);
+        $user = $model1->select("*" , $conditions);
+        $applicant = $model2->select("*" , $conditions);
+        $conditions = array("applicant_id = " . $id);
+        $interests = $model3->select("*" , $conditions);
+        $education = $model4->select("*" , $conditions);
+        $user=$user->fetch_assoc();
+        $applicant=$applicant->fetch_assoc();
+    //   $interests=$interests->fetch_assoc();
+    //    $education=$education->fetch_assoc();
+        return view("users.show")->with("user",$user)->with("applicant",$applicant)->with("ints",$interests)->with("edu",$education);
+
+   /*     $values = array(
+            "id",
             "name",
             "email",
             "profile_picture",
@@ -30,7 +46,7 @@ class userController extends Controller
             "phone_number"
         );
         $users = $model->select($values,$conditions);
-        return view("applicant")->with('user',$users);
+        return view("applicant")->with('user',$users); */
 
     }
 

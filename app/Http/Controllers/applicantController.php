@@ -16,18 +16,6 @@ class applicantController extends Controller
     public function index()
     {
         //
-        $id=1;
-        $conditions = array("applicant.id = " . $id);
-        $model = new Model("applicant");
-        $values = array(
-          // "id",
-            "day",
-            "month",
-            "resume",
-            "country"
-        );
-        $users = $model->select($values,$conditions);
-        return view("applicant")->with('user',$users);
     }
 
     /**
@@ -117,6 +105,7 @@ class applicantController extends Controller
             "gender" => $gender,
             "day" => $day,
             "month" => $month,
+            "year" => $year,
             "resume" => $res
         );
         $conditions = array("id = ".$id);

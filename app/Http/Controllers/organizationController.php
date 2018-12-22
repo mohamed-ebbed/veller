@@ -15,6 +15,15 @@ class organizationController extends Controller
     public function index()
     {
         //
+         $id = 2;
+        $model1 = new Model("user_account");
+        $model2 = new Model("organization");
+        $conditions = array("id = " . $id);
+        $user = $model1->select("*" , $conditions);
+        $org = $model2->select("*" , $conditions);
+        $user=$user->fetch_assoc();
+        $org=$org->fetch_assoc();
+        return view("orgs.show")->with("user",$user)->with("org",$org);
     }
 
     /**

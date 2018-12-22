@@ -28,8 +28,12 @@ Route::get('/message', function(){
 });
 
 Route::get('/applicant', function(){
-	return view('applicant');
+	return view('users.show');
 });
+Route::get('/org', function(){
+	return view('orgs.show');
+});
+
 
 
 //Route::get('/RegisterAsUser', 'HomeController@index');
@@ -50,7 +54,7 @@ Route::resource("opportunity","opportunityController");
 Route::resource("scholarship" , "scholarshipController")->except(["index","show" , "create" , "edit"]);
 
 Route::resource("tableOfMessage" ,"messageController");
-Route::resource("applicant" ,"userController");
+//Route::resource("users.show" ,"userController");
 
 Route::resource("applicable_countries" , "ApplicableCountriesController")->except(["index","show" , "create" , "edit"]);
 Route::resource("apply_for" , "ApplyForController")->except(["index","show" , "create" , "edit"]);
