@@ -95,7 +95,10 @@ class contestController extends Controller
         $data = $dataObj->fetch_assoc();
 
         $applicants = (array) $model->ExcuteQuery("SELECT COUNT(*) FROM Apply_For WHERE Apply_For.post_id = ".$id.";");
-        return view("contests.show", compact('data', 'applicants'));
+
+        $tags = $model->select(array("tag"), array("Tags.post_id = contest.post_id", "contest.post_id = ".$id), array("Tags"));
+        
+        return view("contests.show", compact('data', 'applicants', 'tags'));
     }
 
     /**

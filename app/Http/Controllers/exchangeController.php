@@ -96,7 +96,10 @@ class exchangeController extends Controller
 
         $applicants = (array) $model->ExcuteQuery("SELECT COUNT(*) FROM Apply_For WHERE Apply_For.post_id = ".$id.";");
         
-        return view("exchange_program.show", compact('data', 'applicants'));
+        $tags = $model->select(array("tag"), array("Tags.post_id = Exchange_Program.post_id", "Tags.post_id = ".$id), array("Tags"));
+        
+        $applcableCountries = $model->select(array("country"), array("Applicable_Countries.post_id = Exchange_Program.post_id", 'exchange_program.post_id = '.$id), array("Applicable_Countries"));
+        return view("exchange_program.show", compact('data', 'applicants', 'tags', 'applcableCountries'));
     }
 
     /**

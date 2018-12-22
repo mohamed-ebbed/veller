@@ -89,8 +89,12 @@ class volunteeringController extends Controller
         $tojoin = array('opportunity', 'User_account');
         $dataObj = $model->select($values, $conditions, $tojoin);
         $data = $dataObj->fetch_assoc();
+        
         $applicants = (array) $model->ExcuteQuery("SELECT COUNT(*) FROM Apply_For WHERE Apply_For.post_id = ".$id.";");
-        return view("volunteering.show", compact('data', 'applicants'));
+        
+        $tags = $model->select(array("tag"), array("Tags.post_id = volunteering.post_id", "Tags.post_id = ".$id), array("Tags"));
+        
+        return view("volunteering.show", compact('data', 'applicants', 'tags'));
     }
 
     /**

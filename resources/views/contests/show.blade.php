@@ -4,7 +4,9 @@
 
 @section('addedInfo')
 	<h4 class="headers">Specialization</h4>
-	<p>{{ $data["specialization"] }}</p>
+	<ol style="list-style-type:none;">
+	<li><h4>{{ $data["specialization"] }}</h4></li>
+	</ol>
 
 	@if ($data["prizes"])
 		<h2 class="headers">Pizes </h2>
