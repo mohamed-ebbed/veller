@@ -56,12 +56,25 @@
 
 	<h5 class="headers">Expiration Date: <p class="inlineData">{{ $data["expiration_date"] }}</p></h5>
 	
-	<h5 class="headers">Place: <p class="inlineData">{{$data["oppCity"]}} , {{ $data["oppCountry"] }} </p></h5>
+	<h5 class="headers">Place: <p class="inlineData">
+		@if ($data["oppCity"])
+			{{$data["oppCity"]}}, 
+		@endif
+		@if ($data["oppCountry"])
+			{{$data["oppCountry"]}}
+		@endif
+		@if (!$data["oppCity"] && !$data["oppCountry"])
+			online
+		@endif
+	</p></h5>
 
 	<h5 class="headers">Duration: <p class="inlineData">{{ $data["duration"] }}</p></h5>
 	
 	<h5 class="headers">{{ $data["funded"] }}</h5>
 	
 	<button style="position: relative; margin-top: 20px; margin-left: 45%;" type="button" class="btn btn-secondary">Apply</button>
+	<h5><span style="position: relative; display: block; margin-top: 15px; margin-left: auto; margin-right: auto; padding: 5px;" class="badge badge-secondary">
+		Number of Applicants that already applied: {{implode($applicants)}}
+	</span></h5>
 </div>
 @endsection
