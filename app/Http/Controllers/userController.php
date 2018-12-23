@@ -100,6 +100,21 @@ class userController extends Controller
         $password = "'" . $requestData["password"] . "'";
         $phone_number = "'" . $requestData["phone_number"] . "'";
         $about = "'" . $requestData["about"] . "'";
+        $values = ["email"];
+        $conditions = ["email = ".$email];
+        $old_user = $model->select($values , $conditions);
+        if($old_user->num_rows != 0){
+            return redirect()->back()->with("status" , "User already exists");
+        }
+        $columns=array('MAX(id) as last_id');
+        $result = $model->select($columns);
+        $id=$result->fetch_assoc()["last_id"];
+        if($id == NULL){
+            $id=1;
+        }
+        else{
+            $id++;
+        }
         if($request->hasFile('profile_picture')){
             //get file name with extention
             $fileNameWithExt = $request->file('profile_picture')->getClientOriginalName();
@@ -108,27 +123,19 @@ class userController extends Controller
             // just ext
             $fileExt = $request->file('profile_picture')->getClientOriginalExtension();
             //to store
-            $fileNameToStore = $fileName . '_'.time().'.'.$fileExt;
+            $fileNameToStore = $id .'.'.$fileExt;
             //upload
-            $path = $request->file('profile_picture')->storeAs('public/profile_pictures',$fileNameToStore);
+            $path = $request->file('profile_picture')->storeAs('public/applicants/profile_pictures',$fileNameToStore);
         }
         else
         {
-            $fileNameToStore = 'noimage.jpg';
+            $fileNameToStore = 'default.jpg';
         }
-
-        $columns=array('MAX(id) as last_id');
-        $result = $model->select($columns);
-        $id=$result->fetch_assoc()["last_id"];
-        if($id == NULL)
-            $id=1;
-        else
-            $id++;
         $values = array(
             "id" => $id,
             "name" => $name,
             "email" => $email,
-            "profile_picture" => $fileNameToStore,
+            "profile_picture" => "'" . $fileNameToStore . "'",
             "country" => $country,
             "city" => $city,
             "zip" => $zip,

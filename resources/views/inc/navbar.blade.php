@@ -28,11 +28,11 @@
                             {{ __('Create Opportunity') }}
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{route('scholar.create')}}">Scholarship</a>
-                            <a class="dropdown-item" href="{{route('intern.create')}}">Internship</a>
-                            <a class="dropdown-item" href="{{route('exchange.create')}}">Exchange_program</a>
+                            <a class="dropdown-item" href="{{route('scholarship.create')}}">Scholarship</a>
+                            <a class="dropdown-item" href="{{route('internship.create')}}">Internship</a>
+                            <a class="dropdown-item" href="{{route('exchange_programs.create')}}">Exchange_program</a>
                             <a class="dropdown-item" href="{{route('contests.create')}}">Contest</a>
-                            <a class="dropdown-item" href="{{route('vol.create')}}">Volunteering</a>
+                            <a class="dropdown-item" href="{{route('volunteering.create')}}">Volunteering</a>
                           </div>
                     </div>
                     @endif

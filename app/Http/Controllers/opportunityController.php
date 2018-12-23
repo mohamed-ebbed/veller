@@ -9,6 +9,7 @@ use App\Http\Controllers\exchangeController;
 use App\Http\Controllers\InternshipController;
 use App\Http\Controllers\scholarshipController;
 use App\Http\Controllers\volunteeringController;
+
 class opportunityController extends Controller
 {
     /**
@@ -25,8 +26,22 @@ class opportunityController extends Controller
         $tojoin = array("user_account");
 
         $posts = $opportunityModel->select("*" , $conditions , $tojoin);
+
+        $AllCount = (array) $opportunityModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity;");
+        $InternsCount = (array) $opportunityModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Internship';");
+        $ScholarCount = (array) $opportunityModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Scholarship';");
+        $ContestsCount = (array) $opportunityModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Contest';");
+        $VolCount = (array) $opportunityModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Volunteering';");
+        $ExchCount = (array) $opportunityModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Exchange';");
         
-        return view("opportunity.index" , compact('posts'));
+        $countArray = array('AllCount' => $AllCount,
+                            'InternsCount' => $InternsCount,
+                            'ScholarCount' => $ScholarCount,
+                            'ContestsCount' => $ContestsCount,
+                            'VolCount' => $VolCount,
+                            'ExchCount' => $ExchCount);
+
+        return view("opportunity.index", compact("posts", "countArray"));
     }
 
     /**
@@ -245,7 +260,6 @@ class opportunityController extends Controller
             $con=new volunteeringController();
             $con->update($request,$id);
         }
-        //return redirect("opportunity/".$id)->with("status" , "opportunity updated successfully");
     }
 
     /**

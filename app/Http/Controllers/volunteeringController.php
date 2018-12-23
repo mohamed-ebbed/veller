@@ -13,8 +13,7 @@ class volunteeringController extends Controller
      */
     public function index()
     {
-        $volunteeringModel = new Model("volunteering");
-        $values = "*";
+        $Model = new Model("volunteering");
 
         $conditions = array(
             "volunteering.post_id = Opportunity.post_id",
@@ -26,9 +25,23 @@ class volunteeringController extends Controller
             "user_account"
         );
 
-        $posts = $volunteeringModel->select($values , $conditions , $tojoin);
+        $posts = $Model->select("*" , $conditions , $tojoin);
 
-        return view("volunteering.index" , compact('posts'));
+        $AllCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity;");
+        $InternsCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Internship';");
+        $ScholarCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Scholarship';");
+        $ContestsCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Contest';");
+        $VolCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Volunteering';");
+        $ExchCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Exchange';");
+        
+        $countArray = array('AllCount' => $AllCount,
+                            'InternsCount' => $InternsCount,
+                            'ScholarCount' => $ScholarCount,
+                            'ContestsCount' => $ContestsCount,
+                            'VolCount' => $VolCount,
+                            'ExchCount' => $ExchCount);
+
+        return view("volunteering.index" , compact('posts', 'countArray'));
     }
     /**
      * Show the form for creating a new resource.
@@ -68,10 +81,19 @@ class volunteeringController extends Controller
     public function show($id)
     {
         $model = new Model("volunteering");
-        $values = array('*');
-        $conditions = array('Internship.post_id = '.$id);
-        $data = $model->select($values, $conditions);
-        return view("volunteering.show/".$id, compact('data'));
+        $values = array('title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'previous_experience');
+        $conditions = array('volunteering.post_id = '.$id,
+                            'volunteering.post_id = opportunity.post_id',
+                            'opportunity.posted_by = User_account.id');
+        $tojoin = array('opportunity', 'User_account');
+        $dataObj = $model->select($values, $conditions, $tojoin);
+        $data = $dataObj->fetch_assoc();
+        
+        $applicants = (array) $model->ExcuteQuery("SELECT COUNT(*) FROM Apply_For WHERE Apply_For.post_id = ".$id.";");
+        
+        $tags = $model->select(array("tag"), array("Tags.post_id = volunteering.post_id", "Tags.post_id = ".$id), array("Tags"));
+        
+        return view("volunteering.show", compact('data', 'applicants', 'tags'));
     }
 
     /**
