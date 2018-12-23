@@ -29,7 +29,7 @@
           @endif
           @endif
                 @if(isset($logged_type))
-                @if($logged_type === 'org')
+                @if($logged_type === "org")
                 <li class="nav-item">
                     <div class="dropdown">
                           <button class="btn btn-light " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -46,8 +46,8 @@
                 </li>
                 @endif
                 @endif
-                @if(isset($name))
-                @if($name === "")
+                @if(isset($logged_type))
+                @if(!$logged_type)
                 <li class="nav-item">
                     <div class="dropdown">
                           <button class="btn btn-light " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
