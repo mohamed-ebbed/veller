@@ -26,7 +26,7 @@
 					</div>
 				</div>
 				<div class="col-md-8 text-md-right header-buttons">
-					<a href="{{route('users.edit',1)}}" class="site-btn">Edit Profile</a>
+					<a href="{{route('users.edit',$id)}}" class="site-btn">Edit Profile</a>
 					<a href="/message" class="site-btn">Message</a>
 				</div>
 			</div>
@@ -67,26 +67,6 @@
 	</section>
 	<!-- Hero section end -->
 
-	<!-- Social links section start -->
-	<div class="social-section">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-xl-10 offset-xl-1">
-					<div class="social-link-warp">
-						<div class="social-links">
-							<a href=""><i class="fa fa-pinterest"></i></a>
-							<a href=""><i class="fa fa-linkedin"></i></a>
-							<a href=""><i class="fa fa-instagram"></i></a>
-							<a href=""><i class="fa fa-facebook"></i></a>
-							<a href=""><i class="fa fa-twitter"></i></a>
-						</div>
-						<h2 class="hidden-md hidden-sm">My Social Profiles</h2>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>	
-	<!-- Social links section end -->
 
 	<!-- Resume section start -->
 	<section class="resume-section with-bg spad">
