@@ -82,8 +82,8 @@ class InterestsController extends Controller
         $requestData = $request->all();
         $int = "'".$requestData["interests"]."'";
          $values = array(
-            "applicant_id" => $id,
-            "interest" => $int
+            "applicant_id = ".$id,
+            "interest = ".$int
         );
         $conditions = array("applicant_id = ".$id);
         $model->update($values , $conditions);

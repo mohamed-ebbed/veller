@@ -10,14 +10,14 @@
 @endsection
 
 @section('back')
-    style = "background-color: #f05f20; font-family: "indie Flower","Courier New", Courier, monospace;"
+  style="background-image:url('{{ URL::asset('Ayat_web/img/header.jpg') }}'); background-size:cover;"
 @endsection    
 
 @section('content')
 <!--<div class="test"> -->
   	      <div class="container">
   	   		
-	        <h1 class="masthead mb-auto" style="margin:70px;"> Recieving messages </h1>      
+	        <h1 class="masthead mb-auto" style="margin:70px; color:white"> Recieving messages </h1>      
 	 	    <table class="table" style="font-family: "indie Flower","Courier New", Courier, monospace;">
 	 	    	<tr class="text table-light">
 	 	    		<th>Email</th>
@@ -27,7 +27,7 @@
 	 	    	<tbody>
 	        @if($Rmessage->num_rows)
 				  @while($row = $Rmessage->fetch_assoc())
-                      <tr style='background-color: red'>
+                      <tr style='background-color: white'>
 				        <td>{{$row["email"]}}</td>
 				        <td>{{$row["content"]}}</td>
 				        <td>{{$row["sent_at"]}}</td>
@@ -44,7 +44,7 @@
 		    </table>
 
 
-		    <h1 class="masthead mb-auto" style="margin:70px;"> Sending messages </h1>      
+		    <h1 class="masthead mb-auto" style="margin:70px;color:white"> Sending messages </h1>      
 	 	    <table class="table" id="send_messages">
 	 	    	<tr class="table-light">
 	 	    		<th>Email</th>

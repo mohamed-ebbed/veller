@@ -126,8 +126,8 @@ class volunteeringController extends Controller
         $requestData = $request->all();
         $p_exp = "'".$requestData["pexp"]."'";
         $values = array(
-            "post_id" => $id,
-            "previous_experience" => $p_exp
+            "post_id = ". $id,
+            "previous_experience = ".$p_exp
         );
         $conditions = array("post_id = ".$id);
         $model->update($values,$conditions);

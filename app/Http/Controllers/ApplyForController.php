@@ -89,18 +89,7 @@ class ApplyForController extends Controller
      */
     public function update(Request $request, $id, $postID)
     {
-        $request->validate([
-            "id" => "required",
-            "post_id" => "required"
-        ]);
-
-        $model = new Model("Apply_For");
-        $data = $request->all();
-        $conditions = array(
-            "id = ".$id,
-            "post_id = ".$postID
-        );
-        $model->update($data, $conditions);
+        
     }
 
     /**

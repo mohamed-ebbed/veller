@@ -255,13 +255,13 @@ class opportunityController extends Controller
         $conditions = array("post_id = ".$id);
 
         $values = array(
-            "expiration_date" => $expiration_date,
-            "description" => $description,
-            "country" => $country,
-            "city" => $city,
-            "duration" => $duration,
-            "funded" => $funded,
-            "requirements" => $requirements,
+            "expiration_date = ".$expiration_date,
+            "description = ".$description,
+            "country = ".$country,
+            "city = ".$city,
+            "duration = ".$duration,
+            "funded = ".$funded,
+            "requirements = ".$requirements,
         );
         $model->update($values,$conditions);
         

@@ -16,6 +16,7 @@
             <div class="card border border-warning shadow p-3 mb-5 bg-white rounded">
                 <div class="card-body">
                     <form method="POST" action="{{route('opportunity.update')}}">
+                        @method('put')
                         @csrf
                         <input hidden name="user_id" type="number" value="3">
                         <div class="form-group row">

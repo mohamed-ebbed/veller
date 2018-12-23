@@ -144,9 +144,9 @@ class scholarshipController extends Controller
             $paid = 0;
         }
         $values = array(
-            "specialization" => $spec,
-            "paid" => $paid,
-            "type" => $type
+            "specialization = ".$spec,
+            "paid = ". $paid,
+            "type = ".$type
         );
         $conditions = array("post_id = ".$id);
         $model->update($values,$conditions);

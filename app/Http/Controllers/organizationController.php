@@ -116,7 +116,7 @@ class organizationController extends Controller
             "type" => $type
         );
         $model2->insert($values);
-        return redirect("/login")->with("status" , "Organization added successfully");   
+        return redirect("org_login")->with("success" , "Organization added successfully");   
     }
 
     /**
@@ -127,10 +127,17 @@ class organizationController extends Controller
      */
     public function show($id)
     {
-        $model = new Model("user_account");
+        $model1 = new Model("user_account");
+        $model2 = new Model("organization");
+        $model3 = new Model("opportunity");
         $conditions = array("id = " . $id);
-        $user = $model->select("*" , $conditions);
-        return view("orgs.show" , compact('user'));
+        $user = $model1->select("*" , $conditions);
+        $org = $model2->select("*" , $conditions);
+        $conditions = array("posted_by = ".$id);
+        $op = $model3->select("*",$conditions);
+        $user=$user->fetch_assoc();
+        $org=$org->fetch_assoc();
+        return view("orgs.show")->with("user",$user)->with("org",$org)->with("oppo",$op);
     }
 
     /**
@@ -186,15 +193,15 @@ class organizationController extends Controller
 
         $conditions = array("id = ".$id);
         $values = array(
-            "id" => $id,
-            "name" => $name,
-            "email" => $email,
-            "country" => $country,
-            "city" => $city,
-            "zip" => $zip,
-            "password" => $password,
-            "phone_number" => $phone_number,
-            "about" => $about
+            "id = ".$id,
+            "name = ".$name,
+            "email = ".$email,
+            "country = ".$country,
+            "city = ".$city,
+            "zip = ". $zip,
+            "password = ".$password,
+            "phone_number = ".$phone_number,
+            "about = ".$about
         );
         $model->update($values,$conditions);
 
@@ -203,9 +210,9 @@ class organizationController extends Controller
         $type = "'".$requestData["type"]."'";
         
         $values = array(
-            "id" => $id,
-            "field" => $field,
-            "type" => $type
+            "id = ".$id,
+            "field = ".$field,
+            "type = ".$type
         );
         $model1->update($values,$conditions);
     }

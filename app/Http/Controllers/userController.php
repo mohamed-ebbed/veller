@@ -240,15 +240,15 @@ class userController extends Controller
 
 
         $values = array(
-            "id" => $id,
-            "name" => $name,
-            "email" => $email,
-            "country" => $country,
-            "city" => $city,
-            "zip" => $zip,
-            "password" => $password,
-            "phone_number" => $phone_number,
-            "about" => $about
+            "id = ". $id,
+            "name = ".$name,
+            "email = ".$email,
+            "country = ".$country,
+            "city = ".$city,
+            "zip = ".$zip,
+            "password = ".$password,
+            "phone_number = ".$phone_number,
+            "about = ".$about
         );
 
         $conditions = array("id = ".$id);

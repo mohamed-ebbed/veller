@@ -141,9 +141,9 @@ class InternshipController extends Controller
             $paid = 0;
         }
         $values = array(
-        "post_id" => $id,
-        "specialization" => $spec,
-        "paid" => $paid
+        "post_id = ".$id,
+        "specialization = ".$spec,
+        "paid = ".$paid
         );
         $conditions = array("post_id = ".$id);
 

@@ -135,7 +135,7 @@ class exchangeController extends Controller
         $requestData = $request->all();
         $spec = "'".$requestData["especialization"]."'";
         $values = array(
-            "specialization" => $spec
+            "specialization = ".$spec
         );
         $conditions = array("post_id = ".$id);
         $model->update($values,$conditions);
