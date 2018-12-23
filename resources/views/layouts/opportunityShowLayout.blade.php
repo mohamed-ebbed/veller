@@ -80,8 +80,12 @@
 	<h5 class="headers">Duration: <p class="inlineData">{{ $data["duration"] }}</p></h5>
 	
 	<h5 class="headers">{{ $data["funded"] }}</h5>
-
-	<button style="position: relative; margin-top: 20px; margin-left: 45%;" type="button" class="btn btn-secondary">Apply</button>
+	<form method="post" action="{{route('apply_for.store')}}">
+	@csrf
+	<input hidden name="post_id" value = "{{$data['post_id']}}">
+	<input hidden name="id" value = "{{$logged_id}}">"
+	<button type = "submit" style="position: relative; margin-top: 20px; margin-left: 45%;" type="button" class="btn btn-secondary">Apply</button>
+	</form>
 	<h5><span style="position: relative; display: block; margin-top: 15px; margin-left: auto; margin-right: auto; padding: 5px;" class="badge badge-secondary">
 		Number of Applicants that already applied: {{implode($applicants)}}
 	</span></h5>
