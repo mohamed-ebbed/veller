@@ -37,17 +37,16 @@ class tagsController extends Controller
     {
         //
         $request->validate([
-            "post_id" => "required",
-            "tag" => "required"
+            "tags" => "required"
         ]);
         $model = new Model("Tags");
         $requestData = $request->all();
-        $tags = "'".$requestData["tags"]."'";
+        $tags = $requestData["tags"];
         $tags = array_unique(explode("," , $tags));
         foreach($tags as $tag){
             $values = array(
                 "post_id" => $id,
-                "tag" => $tag
+                "tag" => "'".$tag."'"
             );
             $model->insert($values);
         }
