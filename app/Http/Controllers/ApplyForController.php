@@ -38,9 +38,9 @@ class ApplyForController extends Controller
         $request->validate([
             "id" => "required",
             "post_id" => "required"
-        ])
+        ]);
 
-        $model = new Model("Apply_For")
+        $model = new Model("Apply_For");
         $data = $request->all();
         $model->insert($data);
     }

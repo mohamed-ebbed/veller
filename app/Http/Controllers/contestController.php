@@ -128,7 +128,6 @@ class contestController extends Controller
             "specialization" => $specialization,
             "prizes" => $prizes
         );
-
         $conditions = array("post_id = ".$id);
         $model->update($values , $conditions);
     }
