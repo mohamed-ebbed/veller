@@ -15,3 +15,13 @@
 
 <script src="{{ URL::asset('Ayat_web2/js/map-custom.js') }}"></script>
 <script src="{{ URL::asset('Ayat_web2/js/main.js') }}"></script>
+
+
+
+<!--====== Javascripts & Jquery ======-->
+	<script src="{{ URL::asset('Ayat_web3/js/jquery-2.1.4.min.js') }}"></script>
+	<script src="{{ URL::asset('Ayat_web3/js/bootstrap.min.js') }}"></script>
+	<script src="{{ URL::asset('Ayat_web3/js/owl.carousel.min.js') }}"></script>
+	<script src="{{ URL::asset('Ayat_web3/js/magnific-popup.min.js') }}"></script>
+	<script src="{{ URL::asset('Ayat_web3/js/circle-progress.min.js') }}"></script>
+	<script src="{{ URL::asset('Ayat_web3/js/main.js') }}"></script>

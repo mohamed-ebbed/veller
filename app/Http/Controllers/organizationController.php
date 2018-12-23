@@ -15,6 +15,15 @@ class organizationController extends Controller
     public function index()
     {
         //
+        $id = 2;
+        $model1 = new Model("user_account");
+        $model2 = new Model("organization");
+        $conditions = array("id = " . $id);
+        $user = $model1->select("*" , $conditions);
+        $org = $model2->select("*" , $conditions);
+        $user=$user->fetch_assoc();
+        $org=$org->fetch_assoc();
+        return view("orgs.show")->with("user",$user)->with("org",$org);
     }
 
     /**
@@ -60,7 +69,22 @@ class organizationController extends Controller
         $password = "'" . $requestData["password"] . "'";
         $phone_number = "'" . $requestData["number"] . "'";
         $about = "'" . $requestData["about"] . "'";
-        $profile_picture = "'" . $requestData["profile_picture"] . "'";
+        if($request->hasFile('profile_picture')){
+            //get file name with extention
+            $fileNameWithExt = $request->file('profile_picture')->getClientOriginalName();
+            // just file name
+            $fileName = pathinfo($fileNameWithExt,PATHINFO_FILENAME);
+            // just ext
+            $fileExt = $request->file('profile_picture')->getClientOriginalExtension();
+            //to store
+            $fileNameToStore = $fileName . '_'.time().'.'.$fileExt;
+            //upload
+            $path = $request->file('profile_picture')->storeAs('public/profile_pictures',$fileNameToStore);
+        }
+        else
+        {
+            $fileNameToStore = 'noimage.jpg';
+        }
 
         $columns=array('MAX(id) as last_id');
         $result = $model->select($columns);
@@ -73,7 +97,7 @@ class organizationController extends Controller
             "id" => $id,
             "name" => $name,
             "email" => $email,
-            "profile_picture" => $profile_picture,
+            "profile_picture" => $fileNameToStore,
             "country" => $country,
             "city" => $city,
             "zip" => $zip,
