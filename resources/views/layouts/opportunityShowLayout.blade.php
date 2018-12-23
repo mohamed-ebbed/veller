@@ -16,17 +16,21 @@
 <style>
 #showContainer {
 	position: relative;
+	font-family: 'Comic Sans MS', cursive, sans-serif;
 	color:#212529;
 	background-color: #FFFFFF;
 	padding-top: 20px;
 	padding-bottom: 20px;
+	border-radius: 20px;
 }
 
 .headers {
+	font-family: 'Comic Sans MS', cursive, sans-serif;
 	color: #F05F40;
 }
 
 #orgTitle {
+	font-family: 'Comic Sans MS', cursive, sans-serif;
 	display: inline-block;
 	padding: 5px;
 	color: #3333cc; 
@@ -42,7 +46,7 @@
 </style>
 
 <div class="container" id="showContainer" style="block;">
-	<h1>{{ $data["title"] }}</h1>
+	<h1 style="font-family: 'Comic Sans MS', cursive, sans-serif;">{{ $data["title"] }}</h1>
 	
 	<a href=""><h3 id="orgTitle">{{ $data["name"] }}</h3></a>
 
@@ -83,7 +87,7 @@
 	<form method="post" action="{{route('apply_for.store')}}">
 	@csrf
 	<input hidden name="post_id" value = "{{$data['post_id']}}">
-	<input hidden name="id" value = "{{$logged_id}}">"
+	<input hidden name="id" value = "{{$logged_id}}">
 	@if($logged_type === "applicant")
 	<button type = "submit" style="position: relative; margin-top: 20px; margin-left: 45%;" type="button" class="btn btn-secondary">Apply</button>
 	@else
