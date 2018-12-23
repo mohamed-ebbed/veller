@@ -108,7 +108,11 @@ class scholarshipController extends Controller
         $applicants = (array) $model->ExcuteQuery("SELECT COUNT(*) FROM Apply_For WHERE Apply_For.post_id = ".$id.";");
         
         $tags = $model->select(array("tag"), array("Tags.post_id = Scholarship.post_id", "Tags.post_id = ".$id), array("Tags"));
-        
+        /*
+        $temp_model = new Model("Apply_For");
+        $conditions = array("post_id = ".$id);
+        $users = $temp_model->select("*",$conditions);
+        */
         return view("scholarship.show", compact('data', 'applicants', 'tags' , 'logged_type' , 'logged_id' , 'name'));
     }
 

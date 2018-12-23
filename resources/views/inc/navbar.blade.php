@@ -15,17 +15,29 @@
         </li>
       @endif
       @endif
+        @if(isset($logged_type))
+        @if($logged_type)
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="{{route('support_tickets.create')}}">contact us</a>
         </li>
+        @endif
+        @endif 
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="/opportunity">Opportunities</a>
           @if(isset($logged_type))
           @if(!$logged_type)
-            </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="user_login">{{ __('Login') }}</a>
-            </li>
+            <li class="nav-item">
+                    <div class="dropdown">
+                          <button class="btn btn-light " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ __('Login') }}
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="/org_login">org_login</a>
+                            <a class="dropdown-item" href="/sup_login">sup_login</a>
+                            <a class="dropdown-item" href="/user_login">user_login</a>
+                          </div>
+                    </div>
+                </li>
           @endif
           @endif
                 @if(isset($logged_type))
@@ -67,21 +79,31 @@
                 </li>
                 @endif
                 @endif
-                <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        <span class="caret"></span>
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href= "/logout">
-                            {{ __('Logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
+                @if(isset($logged_type))
+                @if($logged_type)
+                <li class="nav-item">
+                    <div class="dropdown">
+                          <button class="btn btn-light " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ __('profile') }}
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            @if(isset($logged_type))
+                            @if($logged_type == "applicant")
+                                <a class="dropdown-item" href="{{route('users.show',$logged_id)}}">Profile</a>
+                            @endif
+                            @if($logged_type == "org")
+                                <a class="dropdown-item" href="{{route('org.show',$logged_id)}}">Profile</a>
+                            @endif
+                            @if($logged_type == "sup")
+                                <a class="dropdown-item" href="{{route('supervisors.show',$logged_id)}}">Profile</a>
+                            @endif
+                            @endif
+                            <a class="dropdown-item" href="/logout">logout</a>
+                          </div>
                     </div>
                 </li>
+                @endif
+                @endif
             </ul>
       </div>
   </div>
