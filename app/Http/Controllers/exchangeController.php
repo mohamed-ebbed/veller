@@ -27,7 +27,7 @@ class exchangeController extends Controller
             "user_account"
         );
 
-        $posts = $Model->select("*" , $conditions , $tojoin);
+        $posts = $Model->select("*" , $conditions , $tojoin, NULL, array("post_date DESC"));
 
         $AllCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity;");
         $InternsCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Internship';");
@@ -135,7 +135,7 @@ class exchangeController extends Controller
         $requestData = $request->all();
         $spec = "'".$requestData["especialization"]."'";
         $values = array(
-            "specialization" => $spec
+            "specialization = ".$spec
         );
         $conditions = array("post_id = ".$id);
         $model->update($values,$conditions);

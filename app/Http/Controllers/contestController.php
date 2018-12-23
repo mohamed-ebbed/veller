@@ -27,7 +27,7 @@ class contestController extends Controller
             "user_account"
         );
 
-        $posts = $contestModel->select("*" , $conditions , $tables);
+        $posts = $contestModel->select("*" , $conditions , $tables, NULL, array("post_date DESC"));
 
         $AllCount = (array) $contestModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity;");
         $InternsCount = (array) $contestModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Internship';");
@@ -130,8 +130,8 @@ class contestController extends Controller
         $specialization = "'".$requestData["cspecialization"]."'";
         $prizes = "'" . $requestData["prizes"] . "'";
         $values = array(
-            "specialization" => $specialization,
-            "prizes" => $prizes
+            "specialization = ". $specialization,
+            "prizes = ".$prizes
         );
         $conditions = array("post_id = ".$id);
         $model->update($values , $conditions);

@@ -109,7 +109,47 @@
 			</div>
 		</div>
 	</section>
-	<!-- Resume section end -->
+	<div class="list-group">
+		@if ($oppo->num_rows != 0)
+			@while($op = $oppo->fetch_assoc())
+				@if($op["type"] == "scholarship")
+					<a href="{{route('scholarship.show', $post['post_id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
+						<p>{{$op["name"]}}</p>
+						<p>{{$op["title"]}}</p>
+						<p>{{ $op["post_date"] }}</p>
+					</a>
+				@elseif ($op["type"] == "internship")
+					<a href="{{route('internship.show', $post['post_id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
+						<p>{{$op["name"]}}</p>
+						<p>{{$op["title"]}}</p>
+						<p>{{ $op["post_date"] }}</p>
+					</a>
+				@elseif ($op["type"] == "volunteering")
+					<a href="{{route('volunteering.show', $post['post_id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
+						<p>{{$op["name"]}}</p>
+						<p>{{$op["title"]}}</p>
+						<p>{{ $op["post_date"]  }}</p>
+					</a>
+				@elseif ($op["type"] == "exchange")
+					<a href="{{route('exchange_programs.show', $post['post_id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
+						<p>{{$op["name"]}}</p>
+						<p>{{$op["title"]}}</p>
+						<p>{{ $op["post_date"]  }}</p>
+					</a>
+				@elseif ($op["type"] == "contest")
+					<a href="{{route('contests.show', $post['post_id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
+						<p>{{$op["name"]}}</p>
+						<p>{{$op["title"]}}</p>
+						<p>{{$op["post_date"]}}</p>
+					</a>
+				@endif		
+			@endwhile	
+		@else
+			<div class="jumbotron">
+				<p>Sorry! There is no opportunities at the moment.</p>
+			</div>
+		@endif
+	</div>
 @endsection	
 
 

@@ -14,7 +14,17 @@
 	<div id="preloder">
 		<div class="loader"></div>
 	</div>
-	
+	<!-- Header section start -->
+	<header class="header-section">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12 text-md-right header-buttons">
+					<a href="{{route('supervisors.create')}}" class="site-btn">Add Supervisor</a>
+					<a href="{{route('supervisors.edit',{{$id}})}}" class="site-btn">Edit Supervisor</a>
+				</div>
+			</div>
+		</div>
+	</header>
 	<section class="hero-section spad">
 		<div class="container-fluid">
 			<div class="row">
@@ -49,11 +59,13 @@
 	 	    	<tbody>
 	        @if($users->num_rows)
 				  @while($row = $users->fetch_assoc())
-                      <tr >
+                      <tr style='background-color: white'>
 				        <td>{{$row["name"]}}</td>
 				        <td>{{$row["email"]}}</td>
 				        <td>
     	                    <form method="POST" action="{{route('users.destroy',$row['id'])}}">
+    	                    	@method('delete')
+    	                    	@csrf
     	                    	<div class="form-group row mb-0  align-items-center justify-content-center">
 		                            <div class="col-md-6 offset-md-4" style="margin-bottom: 2%">
 		                                <button type="submit" class="btn btn-danger">

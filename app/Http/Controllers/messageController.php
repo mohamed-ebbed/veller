@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\model;
 use mysqli_functions;
+use App\CustomAuth;
 class messageController extends Controller
 {
     /**
@@ -15,8 +16,12 @@ class messageController extends Controller
     public function index()
     {
         //
-        $id=CustomAuth::WholsHere();
-
+        $auth = new CustomAuth();
+        $id = $auth->WhoIsHere();
+        if($id == 0){
+            return redirect("user_login")->with("status" , "please log in");
+        }
+        
         $model = new Model("message");
         $conditions = array("recieved_by = " . $id , "user_account.id = message.sent_by");
         $columns = array('email','content','sent_at');
@@ -51,21 +56,24 @@ class messageController extends Controller
     {
         //
         $request->validate([
-            "sent_at" => "required",
             "content" => "required",
             "recieved_by" => "required"
         ]);
+        $auth = new CustomAuth();
+        $sent_by = $auth->WhoIsHere();
+        if($sent_by == 0){
+            return redirect("user_login")->with("status" , "please log in");
+        }
         $model = new Model("message");
         $requestData = $request->all();
-        $sent_by = CustomAuth::WholsHere();
-        $sent_at = "'".date("Y-m-d h:i:sa")."'";
+        $sent_at = "'".date("Y-m-d h:i:s")."'";
         $content = "'".$requestData["content"]."'";
 
-        $recieved_Email = $requestData["recieved_by"];
+        $recieved_Email = "'".$requestData["recieved_by"]."'";
         $model1 = new Model("user_account");
         $conditions = ["email = ".$recieved_Email];
         $values = ["id"];
-        $Id = $model1->select($value , $conditions);
+        $Id = $model1->select($values , $conditions)->fetch_assoc()["id"];
 
         $recieved_by = $Id;
         
@@ -75,7 +83,9 @@ class messageController extends Controller
             "content" => $content,
             "recieved_by" => $recieved_by
         );
+
         $model->insert($values);
+        return redirect("tableOfMessage")->with("status" , "sent successfully");
     }
 
     /**
@@ -135,10 +145,10 @@ class messageController extends Controller
         $content = "'".$requestData["content"]."'";
         
         $values = array(
-            "sent_at" => $sent_at,
-            "sent_by" => $sent_by,
-            "content" => $content,
-            "recieved_by" => $recieved_by
+            "sent_at = ".$sent_at,
+            "sent_by = ".$sent_by,
+            "content = ".$content,
+            "recieved_by = ".$recieved_by
         );
         $conditions = array("sent_by = ".$sent_by);
         $model->update($values,$conditions);

@@ -90,7 +90,9 @@ class ApplicableCountriesController extends Controller
         $data = $request->all();
         $countries=$data["country"];
         $values=explode(',', $countries);
-        foreach($countries as $c)
+        $conditions = array("post_id = ".$id);
+        $model->delete($conditions);
+        foreach($countries as $country)
         {
             $v=array(
                 "post_id" => $id,
@@ -98,8 +100,6 @@ class ApplicableCountriesController extends Controller
             );
             $model->insert($v);
         }
-        $conditions = array("post_id = ".$id, "country = ".$country);
-        $model->update($data, $conditions);
     }
 
     /**

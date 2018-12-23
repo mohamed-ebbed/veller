@@ -26,7 +26,7 @@ class volunteeringController extends Controller
             "user_account"
         );
 
-        $posts = $Model->select("*" , $conditions , $tojoin);
+        $posts = $Model->select("*" , $conditions , $tojoin, NULL, array("post_date DESC"));
 
         $AllCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity;");
         $InternsCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Internship';");
@@ -126,8 +126,8 @@ class volunteeringController extends Controller
         $requestData = $request->all();
         $p_exp = "'".$requestData["pexp"]."'";
         $values = array(
-            "post_id" => $id,
-            "previous_experience" => $p_exp
+            "post_id = ". $id,
+            "previous_experience = ".$p_exp
         );
         $conditions = array("post_id = ".$id);
         $model->update($values,$conditions);

@@ -102,12 +102,12 @@ class applicantController extends Controller
         $res = "'".$requestData["resume"]."'";
         
         $values = array(
-            "id" => $id,
-            "gender" => $gender,
-            "day" => $day,
-            "month" => $month,
-            "year" => $year,
-            "resume" => $res
+            "id = " .$id,
+            "gender = ".$gender,
+            "day = ".$day,
+            "month = " .$month,
+            "year = ".$year,
+            "resume = ".$res
         );
         $conditions = array("id = ".$id);
         $model->update($values,$conditions);

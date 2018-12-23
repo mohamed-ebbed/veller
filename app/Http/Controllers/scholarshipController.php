@@ -26,7 +26,7 @@ class scholarshipController extends Controller
             "user_account"
         );
 
-        $posts = $Model->select("*" , $conditions , $tojoin);
+        $posts = $Model->select("*" , $conditions , $tojoin, NULL, array("post_date DESC"));
 
         $AllCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity;");
         $InternsCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Internship';");
@@ -144,9 +144,9 @@ class scholarshipController extends Controller
             $paid = 0;
         }
         $values = array(
-            "specialization" => $spec,
-            "paid" => $paid,
-            "type" => $type
+            "specialization = ".$spec,
+            "paid = ". $paid,
+            "type = ".$type
         );
         $conditions = array("post_id = ".$id);
         $model->update($values,$conditions);

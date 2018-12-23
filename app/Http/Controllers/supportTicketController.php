@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model;
+use App\CustomAuth;
 
 class supportTicketController extends Controller
 {
@@ -55,14 +56,16 @@ class supportTicketController extends Controller
         $request->validate([
             'content' => 'required'
         ]);
-        
+        $auth = new CustomAuth();
         $model = new Model("support_tickets");
         $requestData = $request->all();
         $content = "'".$requestData["content"]."'";
-        $sent_at = "'".date("Y-m-d h:i:sa")."'";
-        $sent_by = CustomAuth::WholsHere() ;
+        $sent_at = "'".date("Y-m-d h:i:s")."'";
+        $sent_by = $auth->WhoIsHere();
+        if(!$sent_by){
+            return redirect("/")->with("status" , "please log in");
+        }
         $solved = 0;
-        $solved_by = null;
 
         $columns=array('MAX(ticket_id) as last_id');
         $result = $model->select($columns);
@@ -82,11 +85,9 @@ class supportTicketController extends Controller
             "sent_by" => $sent_by,
             "content" => $content,
             "solved" => $solved,
-            "solved_by" => $solved_by
         );
-
         $model->insert($values);
-        return redirect("support_tickets")->with('status' , 'ticket added successfully');
+        return redirect("/")->with('status' , 'ticket added successfully');
     }
 
     /**
