@@ -71,7 +71,6 @@ class volunteeringController extends Controller
         );
 
         $model->insert($values);
-        show($id);
     }
     /**
      * Display the specified resource.

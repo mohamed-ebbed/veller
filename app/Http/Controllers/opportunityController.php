@@ -9,6 +9,7 @@ use App\Http\Controllers\exchangeController;
 use App\Http\Controllers\InternshipController;
 use App\Http\Controllers\scholarshipController;
 use App\Http\Controllers\volunteeringController;
+use App\CustomAuth;
 
 class opportunityController extends Controller
 {
@@ -40,6 +41,7 @@ class opportunityController extends Controller
                             'ContestsCount' => $ContestsCount,
                             'VolCount' => $VolCount,
                             'ExchCount' => $ExchCount);
+
 
         return view("opportunity.index", compact("posts", "countArray"));
     }
@@ -74,6 +76,13 @@ class opportunityController extends Controller
             "tags" => "required"
         ]);
         $model = new Model("opportunity");
+        $auth = new CustomAuth();
+        $logged_type = $auth->loggedInType();
+        $logged_id = $auth->WhoIsHere();
+        if($logged_type != "org"){
+            return redirect("/");
+        }
+        $user_id = $logged_id;
         $requestData = $request->all();
         $title = "'".$requestData["title"]."'";
         $description = "'" . $requestData["description"] . "'";
@@ -94,34 +103,8 @@ class opportunityController extends Controller
             $id++;
         $expiration_date=date("Y-m-d");
         $d=date("Y-m-d");
-        $user_id=3;
         $type = $requestData["temp"];
         $stype="";
-        if($type=="1"){
-            $con=new contestController();
-            $stype="contest";
-            $con->store($request,$id);
-        }
-        else if($type=="2"){
-            $con=new exchangeController();
-            $stype="exchange_program";
-            $con->store($request,$id);
-        }
-        else if($type=="3"){
-            $con=new InternshipController();
-            $stype="internship";
-            $con->store($request,$id);
-        }
-        else if($type=="4"){
-            $con=new scholarshipController();
-            $stype="scholarship";
-            $con->store($request,$id);
-        }
-        else if($type=="5"){
-            $con=new volunteeringController();
-            $stype="volunteering";
-            $con->store($request,$id);
-        }
         $values = array(
             "post_id" => $id,
             "type"    => $stype,
@@ -133,10 +116,41 @@ class opportunityController extends Controller
             "duration" => $duration,
             "funded" => $funded,
             "requirements" => $requirements,
-            "posted_by" => $user_id
+            "posted_by" => $user_id,
+            "title" => $title
         );
-        $model->insert($values);
-        return redirect("welcome")->with("status" , "Opportunity added successfully");
+        if($type=="1"){
+            $con=new contestController();
+            $values["type"] ="'contest'";
+            $model->insert($values);
+            $con->store($request,$id);
+        }
+        else if($type=="2"){
+            $con=new exchangeController();
+            $values["type"]= "'exchange'";
+            $model->insert($values);
+            $con->store($request,$id);
+        }
+        else if($type=="3"){
+            $con=new InternshipController();
+            $values["type"]="'internship'";
+            $model->insert($values);
+            $con->store($request,$id);
+        }
+        else if($type=="4"){
+            $con=new scholarshipController();
+            $values["type"]="'scholarship'";
+            $model->insert($values);
+            $con->store($request,$id);
+        }
+        else if($type=="5"){
+            $con=new volunteeringController();
+            $values["type"]="'volunteering'";
+            $model->insert($values);
+            $con->store($request,$id);
+        }
+
+        return redirect("/")->with("status" , "Opportunity added successfully");
     }
 
     /**

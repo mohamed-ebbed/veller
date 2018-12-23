@@ -79,7 +79,6 @@ class InternshipController extends Controller
         "paid" => $paid
         );
         $model->insert($values);
-        show($id);
     }
 
     /**

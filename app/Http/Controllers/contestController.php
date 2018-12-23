@@ -73,7 +73,6 @@ class contestController extends Controller
         "specialization" => $spec
         );
         $model->insert($values);
-        show($id);
     }
 
     /**

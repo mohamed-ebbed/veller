@@ -9,7 +9,7 @@
 	</ol>
 	
 	<h4 class="headers">For: </h4>
-	<p>{{ $data["scholarType"] }}</p>
+	<p>{{ $data["ScholarType"] }}</p>
 
 	@if ($data["paid"])
 		<h5 class="headers">Paid: <p class="inlineData">Yes</p></h5>
