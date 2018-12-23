@@ -84,7 +84,11 @@
 	@csrf
 	<input hidden name="post_id" value = "{{$data['post_id']}}">
 	<input hidden name="id" value = "{{$logged_id}}">"
+	@if($logged_type === "applicant")
 	<button type = "submit" style="position: relative; margin-top: 20px; margin-left: 45%;" type="button" class="btn btn-secondary">Apply</button>
+	@else
+	<a href = "/user_login" style="position: relative; margin-top: 20px; margin-left: 45%;" class="btn btn-secondary">Apply</a>
+	@endif
 	</form>
 	<h5><span style="position: relative; display: block; margin-top: 15px; margin-left: auto; margin-right: auto; padding: 5px;" class="badge badge-secondary">
 		Number of Applicants that already applied: {{implode($applicants)}}
