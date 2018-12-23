@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model;
+use App\CustomAuth;
 
 class supervisorController extends Controller
 {
@@ -57,8 +58,19 @@ class supervisorController extends Controller
         $city = "'" . $requestData["city"] . "'";
         $zip = $requestData["zip"];
         $password = "'" . $requestData["password"] . "'";
-        $phone_number = $requestData["phone_number"];
+        $phone_number =  $requestData["phone_number"];
+        $values = ["MAX(id) as last_id"];
+        $last_id = $model->select($values);
+        if($last_id->num_rows == 0){
+            $id =0;
+        }
+        else{
+            $id = $last_id->fetch_assoc()["last_id"]+1;
+        }
+
+
         $values = array(
+            "id" => $id,
             "name" => $name,
             "email" => $email,
             "phone_number" => $phone_number,
@@ -80,6 +92,7 @@ class supervisorController extends Controller
      */
     public function show($id)
     {
+        $auth = new CustomAuth();
         $model = new Model("supervisor");
         $conditions = array("id = ".$id);
         $sup = $model->select("*" , $conditions);
@@ -131,13 +144,13 @@ class supervisorController extends Controller
         $password = "'" . $requestData["password"] . "'";
         $phone_number = $requestData["phone_number"];
         $values = array(
-            "name" => $name,
-            "email" => $email,
-            "phone_number" => $phone_number,
-            "country" => $country,
-            "city" => $city,
-            "zip" => $zip,
-            "password" => $password,
+            "name = $name",
+            "email = $email",
+            "phone_number = $phone_number",
+            "country = $country",
+            "city = $city",
+            "zip = $zip",
+            "password = $password",
         );
         $conditions = array("id = ".$id);
         $model->update($values , $conditions);
