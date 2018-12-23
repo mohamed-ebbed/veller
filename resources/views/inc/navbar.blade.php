@@ -8,13 +8,6 @@
     
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
-      @if(isset($logged_type))
-      @if($logged_type === "applicant")
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="#">Applications</a>
-        </li>
-      @endif
-      @endif
         @if(isset($logged_type))
         @if($logged_type)
         <li class="nav-item">
