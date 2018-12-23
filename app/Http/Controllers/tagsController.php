@@ -33,7 +33,7 @@ class tagsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request , $id)
     {
         //
         $request->validate([
@@ -42,14 +42,16 @@ class tagsController extends Controller
         ]);
         $model = new Model("Tags");
         $requestData = $request->all();
-        $id = $requestData["post_id"];
-        $tag = "'".$requestData["tag"]."'";
-        
-        $values = array(
-            "post_id" => $id,
-            "tag" => $tag
-        );
-        $model->insert($values);
+        $tags = "'".$requestData["tags"]."'";
+        $tags = array_unique(explode("," , $tags));
+        foreach($tags as $tag){
+            $values = array(
+                "post_id" => $id,
+                "tag" => $tag
+            );
+            $model->insert($values);
+        }
+
     }
 
     /**

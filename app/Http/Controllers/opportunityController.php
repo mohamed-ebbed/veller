@@ -9,6 +9,7 @@ use App\Http\Controllers\exchangeController;
 use App\Http\Controllers\InternshipController;
 use App\Http\Controllers\scholarshipController;
 use App\Http\Controllers\volunteeringController;
+use App\Http\Controllers\tagsController;
 use App\CustomAuth;
 
 class opportunityController extends Controller
@@ -119,35 +120,45 @@ class opportunityController extends Controller
             "posted_by" => $user_id,
             "title" => $title
         );
+        $tc = new tagsController();
         if($type=="1"){
             $con=new contestController();
             $values["type"] ="'contest'";
             $model->insert($values);
             $con->store($request,$id);
+            $tc->store($request , $id);
         }
         else if($type=="2"){
             $con=new exchangeController();
             $values["type"]= "'exchange'";
             $model->insert($values);
             $con->store($request,$id);
+            $tc->store($request , $id);
+
         }
         else if($type=="3"){
             $con=new InternshipController();
             $values["type"]="'internship'";
             $model->insert($values);
             $con->store($request,$id);
+            $tc->store($request , $id);
+
         }
         else if($type=="4"){
             $con=new scholarshipController();
             $values["type"]="'scholarship'";
             $model->insert($values);
             $con->store($request,$id);
+            $tc->store($request , $id);
+
         }
         else if($type=="5"){
             $con=new volunteeringController();
             $values["type"]="'volunteering'";
             $model->insert($values);
             $con->store($request,$id);
+            $tc->store($request , $id);
+
         }
 
         return redirect("/")->with("status" , "Opportunity added successfully");
