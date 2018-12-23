@@ -164,7 +164,7 @@ class userController extends Controller
         $education = $model4->select("*" , $conditions);
         $user=$user->fetch_assoc();
         $applicant=$applicant->fetch_assoc();
-        return view("users.show")->with("user",$user)->with("applicant",$applicant)->with("ints",$interests)->with("edu",$education);
+        return view("users.show")->with("user",$user)->with("applicant",$applicant)->with("ints",$interests)->with("edu",$education)->with("id",$id);
     }
 
     /**
