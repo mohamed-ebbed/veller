@@ -54,6 +54,8 @@ Route::resource("scholarship" , "scholarshipController")->except(["edit"]);
 Route::resource("exchange_programs" , "exchangeController")->except(["edit"]);
 Route::resource("contests" , "contestController")->except(["edit"]);
 
+Route::resource("statistics", "statisticsController")->only(["index"]);
+
 Route::get("logout" , "loginController@logout");
 Route::get("user_login" , "loginController@load_user_form");
 Route::get("org_login" , "loginController@load_org_form");
