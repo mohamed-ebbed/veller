@@ -108,7 +108,7 @@ class userController extends Controller
             // just ext
             $fileExt = $request->file('profile_picture')->getClientOriginalExtension();
             //to store
-            $fileNameToStore = $fileName . '_'.time().'.'.$fileExt;
+            $fileNameToStore = "'".$fileName . '_'.time().'.'.$fileExt."'";
             //upload
             $path = $request->file('profile_picture')->storeAs('public/profile_pictures',$fileNameToStore);
         }
@@ -120,10 +120,12 @@ class userController extends Controller
         $columns=array('MAX(id) as last_id');
         $result = $model->select($columns);
         $id=$result->fetch_assoc()["last_id"];
-        if($id == NULL)
+        if($id == NULL){
             $id=1;
-        else
+        }
+        else{
             $id++;
+        }
         $values = array(
             "id" => $id,
             "name" => $name,
