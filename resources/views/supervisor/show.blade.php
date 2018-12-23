@@ -14,7 +14,17 @@
 	<div id="preloder">
 		<div class="loader"></div>
 	</div>
-	
+	<!-- Header section start -->
+	<header class="header-section">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12 text-md-right header-buttons">
+					<a href="{{route('supervisors.create')}}" class="site-btn">Add Supervisor</a>
+					<a href="{{route('supervisors.edit',{{$id}})}}" class="site-btn">Edit Supervisor</a>
+				</div>
+			</div>
+		</div>
+	</header>
 	<section class="hero-section spad">
 		<div class="container-fluid">
 			<div class="row">
@@ -27,10 +37,9 @@
 							<div class="hero-info">
 								<h2>General Info</h2>
 								<ul>
-									<li><span>Address</span>{{$user["zip"]}},{{$user["city"]}},{{$user["country"]}}</li>
-									<li><span>E-mail</span>{{$user["email"]}}</li>
-									<li><span>Phone </span>{{$user["phone_number"]}}</li>
-									<li><span>Solved issues Number </span>{{$user["support_ticket_count"]}}</li>
+									<li><span>Address</span>{{$sup["zip"]}},{{$sup["city"]}},{{$sup["country"]}}</li>
+									<li><span>E-mail</span>{{$sup["email"]}}</li>
+									<li><span>Phone </span>{{$sup["phone_number"]}}</li>
 								</ul>
 							</div>
 						</div>
@@ -50,11 +59,13 @@
 	 	    	<tbody>
 	        @if($users->num_rows)
 				  @while($row = $users->fetch_assoc())
-                      <tr style='background-color: red'>
+                      <tr style='background-color: white'>
 				        <td>{{$row["name"]}}</td>
 				        <td>{{$row["email"]}}</td>
 				        <td>
     	                    <form method="POST" action="{{route('users.destroy',$row['id'])}}">
+    	                    	@method('delete')
+    	                    	@csrf
     	                    	<div class="form-group row mb-0  align-items-center justify-content-center">
 		                            <div class="col-md-6 offset-md-4" style="margin-bottom: 2%">
 		                                <button type="submit" class="btn btn-danger">
@@ -78,31 +89,7 @@
 		    </table>
 
 
-		    <h1 class="masthead mb-auto" style="margin:70px;"> Support Tickets </h1>      
-	 	    <table class="table" id="send_messages">
-	 	    	<tr class="table-light">
-	 	    		<th>Email</th>
-	 	    		<th>Content</th>
-	 	    		<th>Sent at</th>
-	 	    	</tr>
-	 	    	<tbody>
-	        @if($Smessage->num_rows)
-				  @while($row = $Smessage->fetch_assoc())
-                      <tr class="table-light">
-				        <td>{{$row["email"]}}</td>
-				        <td>{{$row["content"]}}</td>
-				        <td>{{$row["sent_at"]}}</td>
-				      </tr>
-				  @endwhile
-		    @else
-		        <tr class="table-light">
-			        <td>Empty</td>
-			        <td>there is no messages</td>
-			        <td>Empty</td>
-			    </tr>
-			@endif
-				</tbody>
-		    </table>
+		   
 		</div>
 @endsection	
 

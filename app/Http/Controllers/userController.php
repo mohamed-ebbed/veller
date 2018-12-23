@@ -156,10 +156,21 @@ class userController extends Controller
      */
     public function show($id)
     {
-        $model = new Model("user_account");
+      //  $conditions = array("user_account.id = " . $id);
+        $model1 = new Model("user_account");
+        $model2 = new Model("applicant");
+        $model3 = new Model("interests");
+        $model4 = new Model("education");
+
         $conditions = array("id = " . $id);
-        $user = $model->select("*" , $conditions);
-        return view("users.show" , compact('user'));
+        $user = $model1->select("*" , $conditions);
+        $applicant = $model2->select("*" , $conditions);
+        $conditions = array("applicant_id = " . $id);
+        $interests = $model3->select("*" , $conditions);
+        $education = $model4->select("*" , $conditions);
+        $user=$user->fetch_assoc();
+        $applicant=$applicant->fetch_assoc();
+        return view("users.show")->with("user",$user)->with("applicant",$applicant)->with("ints",$interests)->with("edu",$education);
     }
 
     /**
@@ -229,15 +240,15 @@ class userController extends Controller
 
 
         $values = array(
-            "id" => $id,
-            "name" => $name,
-            "email" => $email,
-            "country" => $country,
-            "city" => $city,
-            "zip" => $zip,
-            "password" => $password,
-            "phone_number" => $phone_number,
-            "about" => $about
+            "id = ". $id,
+            "name = ".$name,
+            "email = ".$email,
+            "country = ".$country,
+            "city = ".$city,
+            "zip = ".$zip,
+            "password = ".$password,
+            "phone_number = ".$phone_number,
+            "about = ".$about
         );
 
         $conditions = array("id = ".$id);

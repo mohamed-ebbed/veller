@@ -16,6 +16,7 @@
 
                 <div class="card-body">
                     <form method="POST" action="{{route('org.update',$org['id'])}}" enctype="multipart/form-data">
+                        @method('put')
                         @csrf
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>

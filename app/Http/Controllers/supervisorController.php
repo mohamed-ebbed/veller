@@ -99,7 +99,12 @@ class supervisorController extends Controller
         $sup=$sup->fetch_assoc();
         $model1 = new Model("user_account");
         $users=$model1->select("*");
-        return view("supervisor.show")->with("sup",$sup)->with("users",$users);
+        $id=$auth->WhoIsHere();
+        if($auth->loggedInType() != "sup")
+        {
+            return redirect('/')->with("error","You Are Not Allowed");
+        }
+        return view("supervisor.show")->with("sup",$sup)->with("users",$users)->with("id",$id);
     }
 
     /**
@@ -144,13 +149,13 @@ class supervisorController extends Controller
         $password = "'" . $requestData["password"] . "'";
         $phone_number = $requestData["phone_number"];
         $values = array(
-            "name = $name",
-            "email = $email",
-            "phone_number = $phone_number",
-            "country = $country",
-            "city = $city",
-            "zip = $zip",
-            "password = $password",
+            "name = ".$name,
+            "email = ".$email,
+            "phone_number = ".$phone_number,
+            "country = ".$country,
+            "city = ".$city,
+            "zip = ".$zip,
+            "password = ".$password,
         );
         $conditions = array("id = ".$id);
         $model->update($values , $conditions);

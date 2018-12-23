@@ -125,10 +125,10 @@ class messageController extends Controller
         $content = "'".$requestData["content"]."'";
         
         $values = array(
-            "sent_at" => $sent_at,
-            "sent_by" => $sent_by,
-            "content" => $content,
-            "recieved_by" => $recieved_by
+            "sent_at = ".$sent_at,
+            "sent_by = ".$sent_by,
+            "content = ".$content,
+            "recieved_by = ".$recieved_by
         );
         $conditions = array("sent_by = ".$sent_by);
         $model->update($values,$conditions);
