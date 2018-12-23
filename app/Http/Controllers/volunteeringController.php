@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model;
+use App\CustomAuth;
 class volunteeringController extends Controller
 {
     /**
@@ -81,7 +82,11 @@ class volunteeringController extends Controller
     public function show($id)
     {
         $model = new Model("volunteering");
-        $values = array('title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'previous_experience');
+        $auth = new CustomAuth();
+        $logged_type = $auth->loggedInType();
+        $logged_id = $auth->WhoIsHere();
+        $name = "";
+        $values = array('opportunity.post_id as post_id' , 'title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'previous_experience');
         $conditions = array('volunteering.post_id = '.$id,
                             'volunteering.post_id = opportunity.post_id',
                             'opportunity.posted_by = User_account.id');
@@ -93,7 +98,7 @@ class volunteeringController extends Controller
         
         $tags = $model->select(array("tag"), array("Tags.post_id = volunteering.post_id", "Tags.post_id = ".$id), array("Tags"));
         
-        return view("volunteering.show", compact('data', 'applicants', 'tags'));
+        return view("volunteering.show", compact('data', 'applicants', 'tags' , 'logged_id' , 'logged_type' , 'name'));
     }
 
     /**

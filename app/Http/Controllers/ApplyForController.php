@@ -39,10 +39,23 @@ class ApplyForController extends Controller
             "id" => "required",
             "post_id" => "required"
         ]);
+        $requestData = $request->all();
+        $model = new Model("apply_for");
 
-        $model = new Model("Apply_For");
-        $data = $request->all();
-        $model->insert($data);
+        $values = ["id" , "post_id"];
+        $conditions = ["id = ".$requestData["id"] , "post_id = ".$requestData["post_id"]];
+        $old = $model->select($values , $conditions);
+        if($old->num_rows != 0){
+            return redirect()->back()->with("status" , "Already applied here");
+        }
+        
+        $values = [
+            "id" => $requestData["id"],
+            "post_id" => $requestData["post_id"]
+        ];
+
+        $model->insert($values);
+        return redirect("/opportunity")->with("status" , "Applied successfully");
     }
 
     /**

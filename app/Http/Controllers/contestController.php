@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Model;
+use App\CustomAuth;
 
 use Illuminate\Http\Request;
 
@@ -84,7 +85,11 @@ class contestController extends Controller
     public function show($id)
     {
         $model = new Model("contest");
-        $values = array('title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'specialization', 'prizes');
+        $auth = new CustomAuth();
+        $logged_type = $auth->loggedInType();
+        $logged_id = $auth->WhoIsHere();
+        $name = "";
+        $values = array('opportunity.post_id as post_id' , 'title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'specialization', 'prizes');
         $conditions = array('contest.post_id = '.$id,
                             'contest.post_id = opportunity.post_id',
                             'opportunity.posted_by = User_account.id');
@@ -97,7 +102,7 @@ class contestController extends Controller
 
         $tags = $model->select(array("tag"), array("Tags.post_id = contest.post_id", "contest.post_id = ".$id), array("Tags"));
         
-        return view("contests.show", compact('data', 'applicants', 'tags'));
+        return view("contests.show", compact('data', 'applicants', 'tags' , 'logged_id' , 'logged_type' , 'name'));
     }
 
     /**

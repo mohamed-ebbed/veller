@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model;
+use App\CustomAuth;
 
 class supervisorController extends Controller
 {
@@ -91,11 +92,14 @@ class supervisorController extends Controller
      */
     public function show($id)
     {
+        $auth = new CustomAuth();
         $model = new Model("supervisor");
         $conditions = array("id = ".$id);
-        $supervisor = $model->select("*" , $conditions);
-
-        return view("supervisor.show" , compact("supervisor"));
+        $sup = $model->select("*" , $conditions);
+        $sup=$sup->fetch_assoc();
+        $model1 = new Model("user_account");
+        $users=$model1->select("*");
+        return view("supervisor.show")->with("sup",$sup)->with("users",$users);
     }
 
     /**
