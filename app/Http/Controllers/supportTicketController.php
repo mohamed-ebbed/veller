@@ -149,6 +149,6 @@ class supportTicketController extends Controller
         $model = new Model("support_tickets");
         $conditions = array("ticket_id = " . $id);
         $model->delete($conditions);
-        return redirect("support_tickets")->with('status' , 'ticket deleted successfully');
+        return redirect("/")->with('status' , 'ticket deleted successfully');
     }
 }

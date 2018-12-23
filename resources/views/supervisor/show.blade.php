@@ -105,8 +105,10 @@
 				        <td>{{$row["content"]}}</td>
 				        <td>{{$row["sent_at"]}}</td>
 				        <td>
-				        	<form method="POST" action="{{route('supervisor.destroy',$row['ticket_id'])}}">
-    	                    	<div class="form-group row mb-0  align-items-center justify-content-center">
+				        	<form method="POST" action="{{route('support_tickets.destroy',$row['ticket_id'])}}">
+    	                    	@method("DELETE")
+								@csrf
+								<div class="form-group row mb-0  align-items-center justify-content-center">
 		                            <div class="col-md-6 offset-md-4" style="margin-bottom: 2%">
 		                                <button type="submit" class="btn btn-danger">
 		                                    {{ __('Solve?') }}
