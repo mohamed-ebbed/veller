@@ -97,6 +97,8 @@ class loginController extends Controller
             if(!$type){
                 $auth->login("sup" , $id);
             }
+            return redirect("supervisors")->with("status" , "logged in successfully");
+
         }
         else{
             return redirect("/sup_login")->with("status" , "Wrong login credintals");
