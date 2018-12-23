@@ -20,7 +20,7 @@
 			<div class="row">
 				<div class="col-md-12 text-md-right header-buttons">
 					<a href="{{route('supervisors.create')}}" class="site-btn">Add Supervisor</a>
-					<a href="{{route('supervisors.edit',{{$id}})}}" class="site-btn">Edit Supervisor</a>
+					<a href="{{route('supervisors.edit',$id)}}" class="site-btn">Edit Supervisor</a>
 				</div>
 			</div>
 		</div>
