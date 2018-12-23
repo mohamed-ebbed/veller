@@ -58,8 +58,34 @@ class supportTicketController extends Controller
         
         $model = new Model("support_tickets");
         $requestData = $request->all();
-        $model->insert($requestData);
+        $content = "'".$requestData["content"]."'";
+        $sent_at = "'".date("Y-m-d h:i:sa")."'";
+        $sent_by = CustomAuth::WholsHere() ;
+        $solved = 0;
+        $solved_by = null;
 
+        $columns=array('MAX(ticket_id) as last_id');
+        $result = $model->select($columns);
+        $ticket_id=$result->fetch_assoc()["last_id"];
+        if($ticket_id == NULL){
+            $ticket_id=1;
+        }
+        else{
+            $ticket_id++;
+        }
+
+
+
+        $values = array(
+            "ticket_id" => $ticket_id,
+            "sent_at" => $sent_at,
+            "sent_by" => $sent_by,
+            "content" => $content,
+            "solved" => $solved,
+            "solved_by" => $solved_by
+        );
+
+        $model->insert($values);
         return redirect("support_tickets")->with('status' , 'ticket added successfully');
     }
 

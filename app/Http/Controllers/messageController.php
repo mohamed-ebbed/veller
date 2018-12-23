@@ -52,16 +52,22 @@ class messageController extends Controller
         //
         $request->validate([
             "sent_at" => "required",
-            "sent_by" => "required",
             "content" => "required",
             "recieved_by" => "required"
         ]);
         $model = new Model("message");
         $requestData = $request->all();
-        $sent_by = $requestData["sent_by"];
-        $recieved_by = $requestData["recieved_by"];
+        $sent_by = CustomAuth::WholsHere();
         $sent_at = "'".date("Y-m-d h:i:sa")."'";
         $content = "'".$requestData["content"]."'";
+
+        $recieved_Email = $requestData["recieved_by"];
+        $model1 = new Model("user_account");
+        $conditions = ["email = ".$recieved_Email];
+        $values = ["id"];
+        $Id = $model1->select($value , $conditions);
+
+        $recieved_by = $Id;
         
         $values = array(
             "sent_at" => $sent_at,
