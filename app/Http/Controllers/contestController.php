@@ -60,7 +60,6 @@ class contestController extends Controller
         "specialization" => $spec
         );
         $model->insert($values);
-        show($id);
     }
 
     /**
@@ -107,7 +106,6 @@ class contestController extends Controller
 
         $conditions = array("post_id = ".$id);
         $model->update($values , $conditions);
-        show($id);
     }
 
     /**

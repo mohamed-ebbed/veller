@@ -66,7 +66,6 @@ class InternshipController extends Controller
         "paid" => $paid
         );
         $model->insert($values);
-        show($id);
     }
 
     /**
@@ -122,7 +121,6 @@ class InternshipController extends Controller
         $conditions = array("post_id = ".$id);
 
         $model->update($requestData , $conditions);
-        show($id);
     }
 
     /**

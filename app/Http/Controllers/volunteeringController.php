@@ -58,7 +58,6 @@ class volunteeringController extends Controller
         );
 
         $model->insert($values);
-        show($id);
     }
     /**
      * Display the specified resource.
@@ -105,7 +104,6 @@ class volunteeringController extends Controller
         );
         $conditions = array("post_id = ".$id);
         $model->update($values,$conditions);
-        show($id);
     }
 
     /**
