@@ -32,7 +32,7 @@ class loginController extends Controller
             if(!$type){
                 $auth->login("applicant" , $id);
             }
-            return redirect("/");
+            return redirect("/")->with("status" , "logged in successfully");
         }
         else{
             return redirect("/user_login")->with("status" , "Wrong login credintals");
@@ -84,7 +84,7 @@ class loginController extends Controller
     public function logout(){
         $auth = new CustomAuth();
         $auth->logout();
-        return redirect("/");
+        return redirect("/")->with("status" , "logged out successfully");
     }
 }
 ?>

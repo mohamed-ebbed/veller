@@ -8,21 +8,29 @@
     
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
+      @if(isset($logged_type))
+      @if($logged_type === "applicant")
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="/#about">About</a>
+          <a class="nav-link js-scroll-trigger" href="#">Applications</a>
+        </li>
+      @endif
+      @endif
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/support_ticket">contact us</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="/#services">Services</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="/#contact">Contact</a>
-        </li>
-                @guest
+          <a class="nav-link js-scroll-trigger" href="/opportunity">Opportunities</a>
+          @if(isset($logged_type))
+          @if(!$logged_type)
+            </li>
                 <li class="nav-item">
                     <a class="nav-link" href="user_login">{{ __('Login') }}</a>
-                </li>
+            </li>
+          @endif
+          @endif
+                @if(isset($logged_type))
+                @if($logged_type === 'org')
                 <li class="nav-item">
-                    @if (Route::has('register'))
                     <div class="dropdown">
                           <button class="btn btn-light " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ __('Create Opportunity') }}
@@ -35,8 +43,11 @@
                             <a class="dropdown-item" href="{{route('volunteering.create')}}">Volunteering</a>
                           </div>
                     </div>
-                    @endif
                 </li>
+                @endif
+                @endif
+                @if(isset($name))
+                @if($name === "")
                 <li class="nav-item">
                     <div class="dropdown">
                           <button class="btn btn-light " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -49,15 +60,20 @@
                     </div>
                 </li>
                 @else
+                <li class="nav-item">
+                      <a class="btn btn-light " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Welcome {{$name}}
+                      </a>
+                </li>
+                @endif
+                @endif
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }} <span class="caret"></span>
+                        <span class="caret"></span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
-                                         document.getElementById('logout-form').submit();">
+                        <a class="dropdown-item" href= "/logout">
                             {{ __('Logout') }}
                         </a>
 
@@ -66,7 +82,6 @@
                         </form>
                     </div>
                 </li>
-                @endguest
             </ul>
       </div>
   </div>

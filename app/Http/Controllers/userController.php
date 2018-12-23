@@ -146,7 +146,7 @@ class userController extends Controller
         $model->insert($values);
         $appc=new applicantController();
         $appc->store($request,$id);
-        return redirect("welcome")->with("status" , "User added successfully");   
+        return redirect("user_login")->with("status" , "User added successfully");   
     }
 
     /**
