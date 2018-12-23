@@ -17,6 +17,7 @@
     <div class="row justify-content-center ">
         <div class="col-md-8 ">
             <div class="card border border-warning shadow p-3 mb-5 bg-white rounded">
+                @include('inc.messages')
                 <div class="card-body">
                     <form method="POST" action="{{route('users.store')}}" enctype="multipart/form-data">
                         @csrf
@@ -62,13 +63,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
                         <div class="form-group row">
                             <label for="number" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
 

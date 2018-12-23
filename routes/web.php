@@ -12,15 +12,6 @@
 */
 
 Auth::routes();
-/*
-Route::get('/RegisterAsOrg', function(){
-	return view('auth.RegisterAsOrg');
-});
-Route::get('/RegisterAsUser', function(){
-	return view('auth.RegisterAsUser');
-});
-
-*/
 
 
 Route::get('/message', function(){

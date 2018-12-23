@@ -143,7 +143,6 @@ class InternshipController extends Controller
         $conditions = array("post_id = ".$id);
 
         $model->update($requestData , $conditions);
-        show($id);
     }
 
     /**

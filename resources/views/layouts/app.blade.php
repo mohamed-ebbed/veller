@@ -17,11 +17,7 @@
   <body id="page-top" @yield('back')>
         @include('inc.navbar')
         @yield('content')
-        @if (session('status'))
-      <div class="alert alert-success">
-        {{ session('status') }}
-      </div>
-      @endif
+        
         @yield('mainscript')
         @yield('messageScript')
   </body>

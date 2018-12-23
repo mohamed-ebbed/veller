@@ -17,7 +17,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card border border-warning shadow p-3 mb-5 bg-white rounded">
-
+                @include('inc.messages')
                 <div class="card-body">
                     <form method="POST" action="validate_sup">
                         @csrf

@@ -92,8 +92,8 @@
               Register Now
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="/RegisterAsOrg">Organization</a>
-              <a class="dropdown-item" href="/RegisterAsUser">Applicant</a>
+              <a class="dropdown-item" href="{{route('org.create')}}">Organization</a>
+              <a class="dropdown-item" href="{{route('users.create')}}">Applicant</a>
             </div>
         </div>
       </div>

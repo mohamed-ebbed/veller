@@ -134,7 +134,6 @@ class exchangeController extends Controller
         );
         $conditions = array("post_id = ".$id);
         $model->update($values,$conditions);
-        show($id);
     }
 
     /**

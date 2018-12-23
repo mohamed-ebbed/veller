@@ -182,7 +182,6 @@ $sql = "CREATE TABLE Applicable_Countries (
 $conn->query($sql);
 echo $conn->error;
 
-
 $sql = "CREATE TABLE Apply_For (
 	id INT NOT NULL,
 	post_id INT NOT NULL,
@@ -195,7 +194,7 @@ $conn->query($sql);
 echo $conn->error;
 
 $sql = "CREATE TABLE Supervisor(
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	name VARCHAR(50) NOT NULL,
 	email VARCHAR(50) NOT NULL,
 	phone_number VARCHAR(15) NOT NULL,

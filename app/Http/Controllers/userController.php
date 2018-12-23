@@ -8,7 +8,6 @@ use App\Http\Controllers\applicantController;
 use mysqli_functions;
 class userController extends Controller
 {
-    
     /**
      * Display a listing of the resource.
      *
@@ -104,7 +103,7 @@ class userController extends Controller
         $conditions = ["email = ".$email];
         $old_user = $model->select($values , $conditions);
         if($old_user->num_rows != 0){
-            return redirect()->back()->with("status" , "User already exists");
+            return redirect()->back()->with("error" , "User already exists");
         }
         $columns=array('MAX(id) as last_id');
         $result = $model->select($columns);
@@ -146,7 +145,7 @@ class userController extends Controller
         $model->insert($values);
         $appc=new applicantController();
         $appc->store($request,$id);
-        return redirect("user_login")->with("status" , "User added successfully");   
+        return redirect("user_login")->with("success" , "User added successfully");   
     }
 
     /**
