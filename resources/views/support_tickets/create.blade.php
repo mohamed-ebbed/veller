@@ -1,4 +1,16 @@
 @extends("layouts.app")
+<title>Veller | support_tickets</title>
+
+@section('mainstyle')
+    @include('inc.mainstyle')
+@endsection
+@section('mainscript')
+    @include('inc.mainscript')
+@endsection
+
+@section('back')
+  style="background-image:url('{{ URL::asset('Ayat_web/img/header.jpg') }}'); background-size:cover;"
+@endsection
 
 @section('content')
 <div class="container" style="margin-top:5%">
