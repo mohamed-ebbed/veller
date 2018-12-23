@@ -27,6 +27,10 @@ Route::get('/message', function(){
 	return view('message');
 });
 
+Route::get('/applicant','userController@index');
+Route::get('/org', 'organizationController@index');
+
+
 
 //Route::get('/RegisterAsUser', 'HomeController@index');
 Route::get('/', 'HomeController@index')->name('home');
@@ -42,17 +46,23 @@ Route::resource("education" , "educationController")->except(["index","show" , "
 Route::resource("applicant" , "applicantController")->except(["index","show" , "create" , "edit"]);
 Route::resource("org" , "organizationController");
 
+Route::resource("scholarship" , "scholarshipController")->except(["index","show" , "create" , "edit"]);
+
+Route::resource("tableOfMessage" ,"messageController");
+//Route::resource("users.show" ,"userController");
+
 Route::resource("applicable_countries" , "ApplicableCountriesController")->except(["index","show" , "create" , "edit"]);
 Route::resource("apply_for" , "ApplyForController")->except(["index","show" , "create" , "edit"]);
 Route::resource("interests" , "InterestsController")->except(["index","show" , "create" , "edit"]);
 
-Route::resource("opportunity" , "opportunityController");
+Route::resource("opportunity" , "opportunityController")->except(["show", "create"]);
  
-Route::resource("contests" , "contestController")->except(["show" , "index" ,"store","edit"]);
-Route::resource("vol" , "volunteeringController")->except(["index","show" ,"store","edit"]);
-Route::resource("scholar" , "scholarshipController")->except(["index","show" ,"store","edit"]);
-Route::resource("intern" , "internshipController")->except(["index","show" ,"store","edit"]);
-Route::resource("exchange" , "exchangeController")->except(["index","show" ,"store","edit"]);
+Route::resource("internship" , "InternshipController")->except(["edit"]);
+Route::resource("volunteering" , "volunteeringController")->except(["edit"]);
+Route::resource("scholarship" , "scholarshipController")->except(["edit"]);
+Route::resource("exchange_programs" , "exchangeController")->except(["edit"]);
+Route::resource("contests" , "contestController")->except(["edit"]);
+
 Route::get("logout" , "loginController@logout");
 Route::get("user_login" , "loginController@load_user_form");
 Route::get("org_login" , "loginController@load_org_form");

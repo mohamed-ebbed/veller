@@ -19,7 +19,7 @@
             <div class="card border border-warning shadow p-3 mb-5 bg-white rounded">
 
                 <div class="card-body">
-                    <form method="POST" action="{{route('org.store')}}">
+                    <form method="POST" action="{{route('org.store')}}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group row">

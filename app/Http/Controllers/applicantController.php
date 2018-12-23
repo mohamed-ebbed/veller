@@ -42,13 +42,16 @@ class applicantController extends Controller
         $gender = "'".$requestData["gender"]."'";
         $day = "'".$requestData["day"]."'";
         $month = "'".$requestData["month"]."'";
+        $year = "'".$requestData["year"]."'";
         $res = "'".$requestData["resume"]."'";
         
         $values = array(
+
             "id"    => $id,
             "gender" => $gender,
             "day" => $day,
             "month" => $month,
+            "year" => $year,
             "resume" => $res
         );
         $model->insert($values);
@@ -94,6 +97,7 @@ class applicantController extends Controller
         $gender = "'".$requestData["gender"]."'";
         $day = "'".$requestData["day"]."'";
         $month = "'".$requestData["month"]."'";
+        $year = "'".$requestData["year"]."'";
         $res = "'".$requestData["resume"]."'";
         
         $values = array(
@@ -101,6 +105,7 @@ class applicantController extends Controller
             "gender" => $gender,
             "day" => $day,
             "month" => $month,
+            "year" => $year,
             "resume" => $res
         );
         $conditions = array("id = ".$id);

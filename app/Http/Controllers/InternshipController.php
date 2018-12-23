@@ -14,9 +14,8 @@ class InternshipController extends Controller
      */
     public function index()
     {
-        $internstsModel = new Model("Internship");
-        $values = "*";
-
+        $internsModel = new Model("Internship");
+        
         $conditions = array(
             'Internship.post_id = Opportunity.post_id',
             'opportunity.posted_by = user_account.id'
@@ -27,9 +26,23 @@ class InternshipController extends Controller
             "user_account"
         );
 
-        $posts = $internstsModel->select($values , $conditions , $tojoin);
+        $posts = $internsModel->select("*" , $conditions , $tojoin);
 
-        return view("internship.index" , compact('posts'));
+        $AllCount = (array) $internsModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity;");
+        $InternsCount = (array) $internsModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Internship';");
+        $ScholarCount = (array) $internsModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Scholarship';");
+        $ContestsCount = (array) $internsModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Contest';");
+        $VolCount = (array) $internsModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Volunteering';");
+        $ExchCount = (array) $internsModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Exchange';");
+        
+        $countArray = array('AllCount' => $AllCount,
+                            'InternsCount' => $InternsCount,
+                            'ScholarCount' => $ScholarCount,
+                            'ContestsCount' => $ContestsCount,
+                            'VolCount' => $VolCount,
+                            'ExchCount' => $ExchCount);
+
+        return view("internship.index" , compact('posts', 'countArray'));
     }
 
     /**
@@ -66,6 +79,7 @@ class InternshipController extends Controller
         "paid" => $paid
         );
         $model->insert($values);
+        show($id);
     }
 
     /**
@@ -76,11 +90,20 @@ class InternshipController extends Controller
      */
     public function show($id)
     {
-        $model = new Model("Internship");
-        $values = array('*');
-        $conditions = array('Internship.post_id = '.$id);
-        $data = $model->select($values, $conditions);
-        return view("internship.show/".$id, compact('data'));
+        $model = new Model("internship");
+        $values = array('title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'specialization', 'paid');
+        $conditions = array('Internship.post_id = '.$id,
+                            'Internship.post_id = opportunity.post_id',
+                            'opportunity.posted_by = User_account.id');
+        $tojoin = array('opportunity', 'User_account');
+
+        $dataObj = $model->select($values, $conditions, $tojoin);
+        $data = $dataObj->fetch_assoc();
+        
+        $applicants = (array) $model->ExcuteQuery("SELECT COUNT(*) FROM Apply_For WHERE Apply_For.post_id = ".$id.";");
+        
+        $tags = $model->select(array("tag"), array("Tags.post_id = internship.post_id", "Tags.post_id = ".$id), array("Tags"));
+        return view("internship.show", compact('data', 'applicants', 'tags'));
     }
 
     /**
@@ -91,7 +114,6 @@ class InternshipController extends Controller
      */
     public function edit($id)
     {
-        //return view('opportunity.types.eintern');
     }
 
     /**
@@ -122,7 +144,7 @@ class InternshipController extends Controller
         $conditions = array("post_id = ".$id);
 
         $model->update($requestData , $conditions);
-       // return redirect("Internship/".$id)->with("status" , "Internship updated successfully");
+        show($id);
     }
 
     /**

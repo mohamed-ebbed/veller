@@ -15,8 +15,7 @@ class exchangeController extends Controller
     public function index()
     {
         $Model = new Model("Exchange_Program");
-        $values = "*";
-
+        
         $conditions = array(
             "Exchange_Program.post_id = Opportunity.post_id",
             "opportunity.posted_by = user_account.id"
@@ -27,9 +26,23 @@ class exchangeController extends Controller
             "user_account"
         );
 
-        $posts = $Model->select($values , $conditions , $tojoin);
+        $posts = $Model->select("*" , $conditions , $tojoin);
 
-        return view("exchange_program.index" , compact('posts'));
+        $AllCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity;");
+        $InternsCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Internship';");
+        $ScholarCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Scholarship';");
+        $ContestsCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Contest';");
+        $VolCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Volunteering';");
+        $ExchCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Exchange';");
+        
+        $countArray = array('AllCount' => $AllCount,
+                            'InternsCount' => $InternsCount,
+                            'ScholarCount' => $ScholarCount,
+                            'ContestsCount' => $ContestsCount,
+                            'VolCount' => $VolCount,
+                            'ExchCount' => $ExchCount);
+
+        return view("exchange_program.index" , compact('posts', 'countArray'));
     }
 
     /**
@@ -50,8 +63,6 @@ class exchangeController extends Controller
      */
     public function store(Request $request,$id)
     {
-        //
-        
         $model = new Model("exchange_program");
         $requestData = $request->all();
         $spec = "'".$requestData["especialization"]."'";
@@ -60,7 +71,6 @@ class exchangeController extends Controller
             "specialization" => $spec
         );
         $model->insert($values);
-
         show($id);
     }
 
@@ -73,10 +83,23 @@ class exchangeController extends Controller
     public function show($id)
     {
         $model = new Model("Exchange_Program");
-        $values = array('*');
-        $conditions = array('Exchange_Program.post_id = '.$id);
-        $data = $model->select($values, $conditions);
-        return view("exchange_program.show", compact('data'));
+        $values = array('title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'specialization');
+        $conditions = array('Exchange_Program.post_id = '.$id,
+                        'Opportunity.post_id = '.$id,
+                        'opportunity.posted_by = User_account.id');
+        
+        $tojoin = array('Opportunity',
+                        'User_account');
+
+        $dataObj = $model->select($values, $conditions, $tojoin);
+        $data = $dataObj->fetch_assoc();
+
+        $applicants = (array) $model->ExcuteQuery("SELECT COUNT(*) FROM Apply_For WHERE Apply_For.post_id = ".$id.";");
+        
+        $tags = $model->select(array("tag"), array("Tags.post_id = Exchange_Program.post_id", "Tags.post_id = ".$id), array("Tags"));
+        
+        $applcableCountries = $model->select(array("country"), array("Applicable_Countries.post_id = Exchange_Program.post_id", 'exchange_program.post_id = '.$id), array("Applicable_Countries"));
+        return view("exchange_program.show", compact('data', 'applicants', 'tags', 'applcableCountries'));
     }
 
     /**
@@ -91,7 +114,7 @@ class exchangeController extends Controller
         $values = array('*');
         $conditions = array('Exchange_Program.post_id = '.$id);
         $data = $model->select($values, $conditions);
-        return view("exchange_program.edit/".$id, compact('data'));
+        return view("exchange_program.edit", compact('data'));
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model;
 use Illuminate\Http\Request;
 use App\Http\Controllers\applicantController;
+use mysqli_functions;
 class userController extends Controller
 {
     
@@ -15,18 +16,37 @@ class userController extends Controller
      */
     public function index()
     {
-        $model = new Model("user_account");
-        $values = array(
+        $id=2;
+      //  $conditions = array("user_account.id = " . $id);
+        $model1 = new Model("user_account");
+        $model2 = new Model("applicant");
+        $model3 = new Model("interests");
+        $model4 = new Model("education");
+
+        $conditions = array("id = " . $id);
+        $user = $model1->select("*" , $conditions);
+        $applicant = $model2->select("*" , $conditions);
+        $conditions = array("applicant_id = " . $id);
+        $interests = $model3->select("*" , $conditions);
+        $education = $model4->select("*" , $conditions);
+        $user=$user->fetch_assoc();
+        $applicant=$applicant->fetch_assoc();
+        //$interests=$interests->fetch_assoc();
+        //$education=$education->fetch_assoc();
+        return view("users.show")->with("user",$user)->with("applicant",$applicant)->with("ints",$interests)->with("edu",$education);
+
+   /*     $values = array(
             "id",
             "name",
             "email",
+            "profile_picture",
             "country",
             "city",
             "zip", 
             "phone_number"
         );
-        $users = $model->select($values);
-        return view("users.index" , compact('users'));
+        $users = $model->select($values,$conditions);
+        return view("applicant")->with('user',$users); */
 
     }
 
@@ -59,7 +79,7 @@ class userController extends Controller
             "phone_number" => "required",
             "about" => "required",
             "resume" => "required",
-            "profile_picture" => "required",
+            "profile_picture" => "image|nullable|max:1999",
             "gender" => "required",
             "year" => "required",
             "day" => "required",
@@ -80,20 +100,37 @@ class userController extends Controller
         $password = "'" . $requestData["password"] . "'";
         $phone_number = "'" . $requestData["phone_number"] . "'";
         $about = "'" . $requestData["about"] . "'";
-        $profile_picture = "'" . $requestData["profile_picture"] . "'";
+        if($request->hasFile('profile_picture')){
+            //get file name with extention
+            $fileNameWithExt = $request->file('profile_picture')->getClientOriginalName();
+            // just file name
+            $fileName = pathinfo($fileNameWithExt,PATHINFO_FILENAME);
+            // just ext
+            $fileExt = $request->file('profile_picture')->getClientOriginalExtension();
+            //to store
+            $fileNameToStore = "'".$fileName . '_'.time().'.'.$fileExt."'";
+            //upload
+            $path = $request->file('profile_picture')->storeAs('public/profile_pictures',$fileNameToStore);
+        }
+        else
+        {
+            $fileNameToStore = 'noimage.jpg';
+        }
 
         $columns=array('MAX(id) as last_id');
         $result = $model->select($columns);
         $id=$result->fetch_assoc()["last_id"];
-        if($id == NULL)
+        if($id == NULL){
             $id=1;
-        else
+        }
+        else{
             $id++;
+        }
         $values = array(
             "id" => $id,
             "name" => $name,
             "email" => $email,
-            "profile_picture" => $profile_picture,
+            "profile_picture" => $fileNameToStore,
             "country" => $country,
             "city" => $city,
             "zip" => $zip,

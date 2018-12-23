@@ -89,6 +89,7 @@ echo $conn->error;
 
 $sql = "CREATE TABLE Opportunity (
 	post_id INT NOT NULL AUTO_INCREMENT,
+	type    VARCHAR(20) NOT NULL,
 	post_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	expiration_date DATE NOT NULL,
 	description TEXT NOT NULL,

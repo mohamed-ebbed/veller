@@ -35,7 +35,13 @@ class Model{
 			$sql = $sql . " WHERE " .$conditions;
 		}
 
-		return $this->conn->query($sql);
+		$result = $this->conn->query($sql);
+		if($result){
+			return $result;
+		}
+		else{
+			die($this->conn->error);
+		}
 	}
 
 	public function insert($values){
@@ -48,7 +54,13 @@ class Model{
 		$columns = implode("," , $columns);
 		$toInsert = implode("," , $toInsert);
 		$sql = "INSERT INTO ".$this->tablename. " (". $columns . " ) VALUES ( ". $toInsert . " )";
-		return $this->conn->query($sql);
+		$result = $this->conn->query($sql);
+		if($result){
+			return $result;
+		}
+		else{
+			die($this->conn->error);
+		}
 	}
 
 	public function delete($conditions){
@@ -61,16 +73,28 @@ class Model{
 	}
 
 	public function update($values, $conditions){
-
 		if (!$values){
 			return;
 		}
 		$values = implode(",", $values);
 		$conditions = implode(" AND ", $conditions);
 		$sql = "UPDATE ".$this->tablename." SET ".$values." WHERE ".$conditions;
-		return $this->conn->query($sql);
+		$result = $this->conn->query($sql);
+		if($result){
+			return $result;
+		}
+		else{
+			die($this->conn->error);
+		}
 	}
 
+	public function ExcuteQuery($sql){
+		if (!$sql){
+			return 0;
+		}
+		$counter =  mysqli_query($this->conn, $sql);
+		return mysqli_fetch_object($counter);
+	}
 
 	function __destruct(){
 		$this->conn->close();
