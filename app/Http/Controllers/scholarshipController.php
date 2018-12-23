@@ -13,9 +13,8 @@ class scholarshipController extends Controller
      */
     public function index()
     {
-        $scholarModel = new Model("scholarship");
-        $values = "*";
-
+        $Model = new Model("scholarship");
+        
         $conditions = array(
             "scholarship.post_id = Opportunity.post_id",
             "opportunity.posted_by = user_account.id"
@@ -26,9 +25,23 @@ class scholarshipController extends Controller
             "user_account"
         );
 
-        $posts = $scholarModel->select($values , $conditions , $tojoin);
+        $posts = $Model->select("*" , $conditions , $tojoin);
 
-        return view("scholarship.index" , compact('posts'));
+        $AllCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity;");
+        $InternsCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Internship';");
+        $ScholarCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Scholarship';");
+        $ContestsCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Contest';");
+        $VolCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Volunteering';");
+        $ExchCount = (array) $Model->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Exchange';");
+        
+        $countArray = array('AllCount' => $AllCount,
+                            'InternsCount' => $InternsCount,
+                            'ScholarCount' => $ScholarCount,
+                            'ContestsCount' => $ContestsCount,
+                            'VolCount' => $VolCount,
+                            'ExchCount' => $ExchCount);
+
+        return view("scholarship.index" , compact('posts', 'countArray'));
     }
 
     /**
@@ -80,10 +93,20 @@ class scholarshipController extends Controller
     public function show($id)
     {
         $model = new Model("Scholarship");
-        $values = array('*');
-        $conditions = array('scholarship.post_id = '.$id);
-        $data = $model->select($values, $conditions);
-        return view("scholarship.show/".$id, compact('data'));
+        $values = array('title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'specialization', 'scholarship.type ScholarType', 'paid');
+        $conditions = array('Scholarship.post_id = '.$id,
+                            'Scholarship.post_id = opportunity.post_id',
+                            'opportunity.posted_by = User_account.id');
+        $tojoin = array('opportunity', 'User_account');
+
+        $dataObj = $model->select($values, $conditions, $tojoin);
+        $data = $dataObj->fetch_assoc();
+        
+        $applicants = (array) $model->ExcuteQuery("SELECT COUNT(*) FROM Apply_For WHERE Apply_For.post_id = ".$id.";");
+        
+        $tags = $model->select(array("tag"), array("Tags.post_id = Scholarship.post_id", "Tags.post_id = ".$id), array("Tags"));
+        
+        return view("scholarship.show", compact('data', 'applicants', 'tags'));
     }
 
     /**

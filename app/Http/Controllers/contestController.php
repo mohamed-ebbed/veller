@@ -15,7 +15,6 @@ class contestController extends Controller
     public function index()
     {
         $contestModel = new Model("Contest");
-        $values = "*";
 
         $conditions = array(
             "contest.post_id = opportunity.post_id",
@@ -27,9 +26,23 @@ class contestController extends Controller
             "user_account"
         );
 
-        $posts = $contestModel->select($values , $conditions , $tables);
+        $posts = $contestModel->select("*" , $conditions , $tables);
 
-        return view("contests.index" , compact('posts'));
+        $AllCount = (array) $contestModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity;");
+        $InternsCount = (array) $contestModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Internship';");
+        $ScholarCount = (array) $contestModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Scholarship';");
+        $ContestsCount = (array) $contestModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Contest';");
+        $VolCount = (array) $contestModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Volunteering';");
+        $ExchCount = (array) $contestModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Exchange';");
+        
+        $countArray = array('AllCount' => $AllCount,
+                            'InternsCount' => $InternsCount,
+                            'ScholarCount' => $ScholarCount,
+                            'ContestsCount' => $ContestsCount,
+                            'VolCount' => $VolCount,
+                            'ExchCount' => $ExchCount);
+
+        return view("contests.index" , compact('posts', 'countArray'));
     }
 
     /**
@@ -72,8 +85,20 @@ class contestController extends Controller
     public function show($id)
     {
         $model = new Model("contest");
-        $data = $model->select("*", "contest.post_id = ".$id);
-        return view("contests.show/".$id, compact('data'));
+        $values = array('title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'specialization', 'prizes');
+        $conditions = array('contest.post_id = '.$id,
+                            'contest.post_id = opportunity.post_id',
+                            'opportunity.posted_by = User_account.id');
+        $tojoin = array('opportunity', 'User_account');
+
+        $dataObj = $model->select($values, $conditions, $tojoin);
+        $data = $dataObj->fetch_assoc();
+
+        $applicants = (array) $model->ExcuteQuery("SELECT COUNT(*) FROM Apply_For WHERE Apply_For.post_id = ".$id.";");
+
+        $tags = $model->select(array("tag"), array("Tags.post_id = contest.post_id", "contest.post_id = ".$id), array("Tags"));
+        
+        return view("contests.show", compact('data', 'applicants', 'tags'));
     }
 
     /**
