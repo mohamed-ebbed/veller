@@ -18,7 +18,7 @@ class Model{
 		return $conn;
 	}
 
-	public function select($values, $conditions = NULL , $tables = NULL ){
+	public function select($values, $conditions = NULL , $tables = NULL, $grouping = NULL, $ordering = NULL){
 		$sql = "SELECT ";
 		if($values != "*"){
 			$values = implode("," , $values);
@@ -34,7 +34,15 @@ class Model{
 			$conditions = implode(" and " , $conditions);
 			$sql = $sql . " WHERE " .$conditions;
 		}
-
+		if ($grouping){
+			$grouping = implode(",", $grouping);
+			$sql = $sql." GROUP BY ".$grouping;
+		}
+		if ($ordering){
+			$ordering = implode(",", $ordering);
+			$sql = $sql." ORDER BY ".$ordering;
+		}
+		
 		$result = $this->conn->query($sql);
 		if($result){
 			return $result;

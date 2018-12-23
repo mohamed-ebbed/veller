@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model;
 use App\CustomAuth;
+use App\Http\Controllers\supportTicketController;
+use mysqli_functions;
 
 class supervisorController extends Controller
 {
@@ -99,7 +101,14 @@ class supervisorController extends Controller
         $sup=$sup->fetch_assoc();
         $model1 = new Model("user_account");
         $users=$model1->select("*");
-        return view("supervisor.show")->with("sup",$sup)->with("users",$users);
+
+        $model = new Model("Support_Tickets");
+        $conditions = array("user_account.id = Support_Tickets.sent_by" , "solved = " . 0);
+        $columns = array('email','content','sent_at','ticket_id');
+        $tables = array('user_account');
+        $SMessages = $model->select($columns , $conditions , $tables);
+
+        return view("supervisor.show")->with("sup",$sup)->with("users",$users)->with("Smessage", $SMessages);
     }
 
     /**

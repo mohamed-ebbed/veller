@@ -27,7 +27,7 @@ class opportunityController extends Controller
 
         $tojoin = array("user_account");
 
-        $posts = $opportunityModel->select("*" , $conditions , $tojoin);
+        $posts = $opportunityModel->select("*" , $conditions , $tojoin, NULL, array("post_date DESC"));
 
         $AllCount = (array) $opportunityModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity;");
         $InternsCount = (array) $opportunityModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Internship';");
