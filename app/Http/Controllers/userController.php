@@ -15,7 +15,7 @@ class userController extends Controller
      */
     public function index()
     {
-        $id=2;
+        $id=1;
       //  $conditions = array("user_account.id = " . $id);
         $model1 = new Model("user_account");
         $model2 = new Model("applicant");
