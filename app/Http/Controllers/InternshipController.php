@@ -27,7 +27,7 @@ class InternshipController extends Controller
             "user_account"
         );
 
-        $posts = $internsModel->select("*" , $conditions , $tojoin);
+        $posts = $internsModel->select("*" , $conditions , $tojoin, NULL, array("post_date DESC"));
 
         $AllCount = (array) $internsModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity;");
         $InternsCount = (array) $internsModel->ExcuteQuery("SELECT COUNT(*) FROM Opportunity WHERE type='Internship';");

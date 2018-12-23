@@ -23,7 +23,8 @@
 				<i class="fa fa-close" aria-hidden="true"></i>
 			</button>
 
-			<form class="contact100-form validate-form">
+			<form method = "post" action = "{{route('messages.store')}}" class="contact100-form validate-form">
+			@csrf
 				<span class="contact100-form-title">
 					New Message
 				</span>

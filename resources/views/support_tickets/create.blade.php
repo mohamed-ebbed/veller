@@ -1,4 +1,16 @@
 @extends("layouts.app")
+<title>Veller | support_tickets</title>
+
+@section('mainstyle')
+    @include('inc.mainstyle')
+@endsection
+@section('mainscript')
+    @include('inc.mainscript')
+@endsection
+
+@section('back')
+  style="background-image:url('{{ URL::asset('Ayat_web/img/header.jpg') }}'); background-size:cover;"
+@endsection
 
 @section('content')
 <div class="container" style="margin-top:5%">
@@ -7,9 +19,8 @@
             <div class="card border border-warning shadow p-3 mb-5 bg-white rounded">
 
                 <div class="card-body">
-                    <form method="POST" action="userController@store">
+                    <form method="POST" action="{{route('support_tickets.store')}}">
                         @csrf
-
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">Content</label>
 

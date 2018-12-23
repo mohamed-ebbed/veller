@@ -20,7 +20,7 @@
 			<div class="row">
 				<div class="col-md-12 text-md-right header-buttons">
 					<a href="{{route('supervisors.create')}}" class="site-btn">Add Supervisor</a>
-					<a href="{{route('supervisors.edit',{{$id}})}}" class="site-btn">Edit Supervisor</a>
+					<a href="{{route('supervisors.edit',$id)}}" class="site-btn">Edit Supervisor</a>
 				</div>
 			</div>
 		</div>
@@ -89,8 +89,47 @@
 		    </table>
 
 
-		   
-		</div>
+		    <h1 class="masthead mb-auto" style="margin:70px;"> Support Tickets </h1>      
+	 	    <table class="table" id="send_messages">
+	 	    	<tr class="table-light">
+	 	    		<th>Email</th>
+	 	    		<th>Content</th>
+	 	    		<th>Sent at</th>
+	 	    		<th>Solve </th>
+	 	    	</tr>
+	 	    	<tbody>
+	        @if($Smessage->num_rows)
+				  @while($row = $Smessage->fetch_assoc())
+                      <tr class="table-light">
+				        <td>{{$row["email"]}}</td>
+				        <td>{{$row["content"]}}</td>
+				        <td>{{$row["sent_at"]}}</td>
+				        <td>
+				        	<form method="POST" action="{{route('support_tickets.destroy',$row['ticket_id'])}}">
+    	                    	@method("DELETE")
+								@csrf
+								<div class="form-group row mb-0  align-items-center justify-content-center">
+		                            <div class="col-md-6 offset-md-4" style="margin-bottom: 2%">
+		                                <button type="submit" class="btn btn-danger">
+		                                    {{ __('Solve?') }}
+		                                </button>
+		                            </div>
+		                        </div>
+    	                    </form>
+		                </td>
+				      </tr>
+				  @endwhile
+		    @else
+		        <tr class="table-light">
+			        <td>Empty</td>
+			        <td>there is no messages</td>
+			        <td>Empty</td>
+			        <td> .... </td>
+			    </tr>
+			@endif
+				</tbody>
+		    </table>
+	</div>   
 @endsection	
 
 

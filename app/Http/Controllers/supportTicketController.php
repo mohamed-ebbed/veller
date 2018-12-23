@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model;
+use App\CustomAuth;
 
 class supportTicketController extends Controller
 {
@@ -55,12 +56,38 @@ class supportTicketController extends Controller
         $request->validate([
             'content' => 'required'
         ]);
-        
+        $auth = new CustomAuth();
         $model = new Model("support_tickets");
         $requestData = $request->all();
-        $model->insert($requestData);
+        $content = "'".$requestData["content"]."'";
+        $sent_at = "'".date("Y-m-d h:i:s")."'";
+        $sent_by = $auth->WhoIsHere();
+        if(!$sent_by){
+            return redirect("/")->with("status" , "please log in");
+        }
+        $solved = 0;
 
-        return redirect("support_tickets")->with('status' , 'ticket added successfully');
+        $columns=array('MAX(ticket_id) as last_id');
+        $result = $model->select($columns);
+        $ticket_id=$result->fetch_assoc()["last_id"];
+        if($ticket_id == NULL){
+            $ticket_id=1;
+        }
+        else{
+            $ticket_id++;
+        }
+
+
+
+        $values = array(
+            "ticket_id" => $ticket_id,
+            "sent_at" => $sent_at,
+            "sent_by" => $sent_by,
+            "content" => $content,
+            "solved" => $solved,
+        );
+        $model->insert($values);
+        return redirect("/")->with('status' , 'ticket added successfully');
     }
 
     /**
@@ -122,6 +149,6 @@ class supportTicketController extends Controller
         $model = new Model("support_tickets");
         $conditions = array("ticket_id = " . $id);
         $model->delete($conditions);
-        return redirect("support_tickets")->with('status' , 'ticket deleted successfully');
+        return redirect("/")->with('status' , 'ticket deleted successfully');
     }
 }

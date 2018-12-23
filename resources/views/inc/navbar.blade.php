@@ -16,7 +16,7 @@
       @endif
       @endif
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="/support_ticket">contact us</a>
+          <a class="nav-link js-scroll-trigger" href="{{route('support_tickets.create')}}">contact us</a>
         </li>
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="/opportunity">Opportunities</a>

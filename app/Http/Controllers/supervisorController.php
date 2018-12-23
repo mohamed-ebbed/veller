@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model;
 use App\CustomAuth;
+use App\Http\Controllers\supportTicketController;
+use mysqli_functions;
 
 class supervisorController extends Controller
 {
@@ -93,18 +95,26 @@ class supervisorController extends Controller
     public function show($id)
     {
         $auth = new CustomAuth();
+        $input_id = $id;
         $model = new Model("supervisor");
-        $conditions = array("id = ".$id);
+        $conditions = array("id = ".$input_id);
         $sup = $model->select("*" , $conditions);
         $sup=$sup->fetch_assoc();
         $model1 = new Model("user_account");
         $users=$model1->select("*");
+
+        $model = new Model("Support_Tickets");
+        $conditions = array("user_account.id = Support_Tickets.sent_by" , "solved = " . 0);
+        $columns = array('email','content','sent_at','ticket_id');
+        $tables = array('user_account');
+        $SMessages = $model->select($columns , $conditions , $tables);
         $id=$auth->WhoIsHere();
-        if($auth->loggedInType() != "sup")
+        if($auth->loggedInType() != "sup" || $id != $input_id)
         {
             return redirect('/')->with("error","You Are Not Allowed");
         }
-        return view("supervisor.show")->with("sup",$sup)->with("users",$users)->with("id",$id);
+        return view("supervisor.show")->with("sup",$sup)->with("users",$users)->with("Smessage", $SMessages)->with("id",$id);
+
     }
 
     /**
