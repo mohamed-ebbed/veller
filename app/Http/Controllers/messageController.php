@@ -15,7 +15,7 @@ class messageController extends Controller
     public function index()
     {
         //
-        $id=1;
+        $id=CustomAuth::WholsHere();
 
         $model = new Model("message");
         $conditions = array("recieved_by = " . $id , "user_account.id = message.sent_by");
@@ -87,13 +87,17 @@ class messageController extends Controller
     public function show($id)
     {
         //
-
-        $id=1;
         $model = new Model("message");
-        $conditions = array("sent_by = " . $id);
-        $columns = array('recieved_by','content','sent_at');
-        $user = $model->select($columns , $conditions);
-        return view("message")->with('message',$user);
+        $conditions = array("recieved_by = " . $id , "user_account.id = message.sent_by");
+        $columns = array('email','content','sent_at');
+        $tables = array('user_account');
+        $recieveMessages = $model->select($columns , $conditions , $tables);
+
+        $conditions = array("sent_by = " . $id , "user_account.id = message.recieved_by");
+        $columns = array('email','content','sent_at');
+        $tables = array('user_account');
+        $sendMessages = $model->select($columns , $conditions , $tables);
+        return view("tableOfMessage")->with('Rmessage',$recieveMessages)->with('Smessage',$sendMessages);
     }
 
     /**

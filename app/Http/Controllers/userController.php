@@ -15,8 +15,8 @@ class userController extends Controller
      */
     public function index()
     {
-        $id=1;
-      //  $conditions = array("user_account.id = " . $id);
+       // $id=1;
+        $id=CustomAuth::WholsHere();
         $model1 = new Model("user_account");
         $model2 = new Model("applicant");
         $model3 = new Model("interests");

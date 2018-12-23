@@ -23,6 +23,7 @@
                         @csrf
 
                         <div class="form-group row">
+                            <h2 class=""> if you have any problem please tell us </h2>
                             <label for="name" class="col-md-4 col-form-label text-md-right">Content</label>
 
                             <div class="col-md-6">

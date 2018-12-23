@@ -61,9 +61,10 @@
                 </li>
                 @else
                 <li class="nav-item">
-                      <a class="btn btn-light " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <a class="btn btn-light " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">
                             Welcome {{$name}}
                       </a>
+                      
                 </li>
                 @endif
                 @endif
