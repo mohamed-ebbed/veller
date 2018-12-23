@@ -37,17 +37,21 @@ class educationController extends Controller
         //input names
         $model = new Model("education");
         $requestData = $request->all();
-        $edu = "'".$requestData["education"]."'";
-        
-        //column names
-        $values = array(
-            "applicant_id" => $id,
-            "start_date" => $start_Date,
-            "end_date" => $end_Date,
-            "degree" => $degree,
-            "institution" => $inst
-        );
-        $model->insert($values);
+        $edu = $requestData["education"];
+        $edu = explode("," , $edu);
+        if(count($edu) % 4 == 0){
+            $num_edu = count($edu) / 4;
+            for($i = 0 ; $i < $num_edu ; $i++){         
+                $values = array(
+                    "applicant_id" => $id,
+                    "start_date" => $edu[$i],
+                    "end_date" => $edu[$i+1],
+                    "degree" => "'".$edu[$i+2]."'",
+                    "institution" => "'".$edu[$i+3]."'"
+                );
+                $model->insert($values);
+            }
+        }
     }
 
     /**

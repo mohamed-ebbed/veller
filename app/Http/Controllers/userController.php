@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model;
 use Illuminate\Http\Request;
 use App\Http\Controllers\applicantController;
+use App\Http\Controllers\educatationController;
 use mysqli_functions;
 class userController extends Controller
 {
@@ -144,7 +145,9 @@ class userController extends Controller
         );
         $model->insert($values);
         $appc=new applicantController();
+        $educ = new educationController();
         $appc->store($request,$id);
+        $educ->store($request , $id);
         return redirect("user_login")->with("success" , "User added successfully");   
     }
 
