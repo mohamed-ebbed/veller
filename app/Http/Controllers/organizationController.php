@@ -68,8 +68,6 @@ class organizationController extends Controller
         $password = "'" . $requestData["password"] . "'";
         $phone_number = "'" . $requestData["number"] . "'";
         $about = "'" . $requestData["about"] . "'";
-
-
         $columns=array('MAX(id) as last_id');
         $result = $model->select($columns);
         $id=$result->fetch_assoc()["last_id"];

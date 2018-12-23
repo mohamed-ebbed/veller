@@ -46,6 +46,7 @@ class applicantController extends Controller
         $res = "'".$requestData["resume"]."'";
         
         $values = array(
+
             "id"    => $id,
             "gender" => $gender,
             "day" => $day,
