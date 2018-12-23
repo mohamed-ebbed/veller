@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model;
+use App\CustomAuth;
 
 class InternshipController extends Controller
 {
@@ -79,7 +80,6 @@ class InternshipController extends Controller
         "paid" => $paid
         );
         $model->insert($values);
-        show($id);
     }
 
     /**
@@ -91,7 +91,11 @@ class InternshipController extends Controller
     public function show($id)
     {
         $model = new Model("internship");
-        $values = array('title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'specialization', 'paid');
+        $auth = new CustomAuth();
+        $logged_type = $auth->loggedInType();
+        $logged_id = $auth->WhoIsHere();
+        $name = "";
+        $values = array('opportunity.post_id as post_id' , 'title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'specialization', 'paid');
         $conditions = array('Internship.post_id = '.$id,
                             'Internship.post_id = opportunity.post_id',
                             'opportunity.posted_by = User_account.id');
@@ -103,7 +107,7 @@ class InternshipController extends Controller
         $applicants = (array) $model->ExcuteQuery("SELECT COUNT(*) FROM Apply_For WHERE Apply_For.post_id = ".$id.";");
         
         $tags = $model->select(array("tag"), array("Tags.post_id = internship.post_id", "Tags.post_id = ".$id), array("Tags"));
-        return view("internship.show", compact('data', 'applicants', 'tags'));
+        return view("internship.show", compact('data', 'applicants', 'tags' , 'logged_type' , 'logged_id' , 'name'));
     }
 
     /**
@@ -144,7 +148,6 @@ class InternshipController extends Controller
         $conditions = array("post_id = ".$id);
 
         $model->update($requestData , $conditions);
-        show($id);
     }
 
     /**

@@ -17,6 +17,7 @@
   <body id="page-top" @yield('back')>
         @include('inc.navbar')
         @yield('content')
+        
         @yield('mainscript')
         @yield('messageScript')
   </body>

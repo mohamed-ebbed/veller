@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model;
+use App\CustomAuth;
 
 class supervisorController extends Controller
 {
@@ -28,7 +29,7 @@ class supervisorController extends Controller
      */
     public function create()
     {
-        return view("supervisors.create");
+        return view("auth.SuperVisor");
     }
 
     /**
@@ -51,9 +52,36 @@ class supervisorController extends Controller
 
         $model = new Model("supervisor");
         $requestData = $request->all();
-        $model->insert($requestData);
+        $name = "'".$requestData["name"]."'";
+        $email = "'" . $requestData["email"] . "'";
+        $country = "'" . $requestData["country"] . "'";
+        $city = "'" . $requestData["city"] . "'";
+        $zip = $requestData["zip"];
+        $password = "'" . $requestData["password"] . "'";
+        $phone_number =  $requestData["phone_number"];
+        $values = ["MAX(id) as last_id"];
+        $last_id = $model->select($values);
+        if($last_id->num_rows == 0){
+            $id =0;
+        }
+        else{
+            $id = $last_id->fetch_assoc()["last_id"]+1;
+        }
 
-        return redirect("supervisor")->with("status" , "supervisor added successfully");
+
+        $values = array(
+            "id" => $id,
+            "name" => $name,
+            "email" => $email,
+            "phone_number" => $phone_number,
+            "country" => $country,
+            "city" => $city,
+            "zip" => $zip,
+            "password" => $password,
+            "support_tickets_count" => 0
+        );
+        $model->insert($values);
+        return redirect("sup_login")->with("success" , "supervisor added successfully");
     }
 
     /**
@@ -64,6 +92,7 @@ class supervisorController extends Controller
      */
     public function show($id)
     {
+        $auth = new CustomAuth();
         $model = new Model("supervisor");
         $conditions = array("id = ".$id);
         $supervisor = $model->select("*" , $conditions);
@@ -79,9 +108,12 @@ class supervisorController extends Controller
      */
     public function edit($id)
     {
-        return view("supervisor.edit");
+        $model1 = new Model("supervisor");
+        $conditions = array("id = " . $id);
+        $sup = $model1->select("*" , $conditions);
+        $sup=$sup->fetch_assoc();
+        return view("supervisor.edit")->with("sup",$sup);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -100,12 +132,27 @@ class supervisorController extends Controller
             "zip" => "required",
             "password" => "required"
         ]);
-
         $model = new Model("supervisor");
         $requestData = $request->all();
+        $name = "'".$requestData["name"]."'";
+        $email = "'" . $requestData["email"] . "'";
+        $country = "'" . $requestData["country"] . "'";
+        $city = "'" . $requestData["city"] . "'";
+        $zip = $requestData["zip"];
+        $password = "'" . $requestData["password"] . "'";
+        $phone_number = $requestData["phone_number"];
+        $values = array(
+            "name = $name",
+            "email = $email",
+            "phone_number = $phone_number",
+            "country = $country",
+            "city = $city",
+            "zip = $zip",
+            "password = $password",
+        );
         $conditions = array("id = ".$id);
-        $model->update($requestData , $conditions);
-        return redirect("supervisors/".$id)->with("status" , "Supervisor updated successfully");
+        $model->update($values , $conditions);
+        return redirect("supervisors/".$id)->with("success" , "Supervisor updated successfully");
     }
 
     /**

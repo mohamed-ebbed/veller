@@ -29,10 +29,21 @@ class loginController extends Controller
         if($result->num_rows){
             $id = $result->fetch_assoc()["id"];
             $type = $auth->loggedInType();
-            if(!$type){
-                $auth->login("applicant" , $id);
+            $app_model = new Model("applicant");
+            $values = ["id"];
+            $conditions = ["id = ".$id];
+            $existing = $app_model->select($values , $conditions);
+            if($existing->num_rows){
+                if(!$type){
+                    $auth->login("applicant" , $id);
+                }
+                return redirect("/")->with("status" , "logged in successfully");
+
             }
-            return redirect("/");
+            else{
+                return redirect("/user_login")->with("status" , "Wrong login credintals");
+
+            }
         }
         else{
             return redirect("/user_login")->with("status" , "Wrong login credintals");
@@ -40,7 +51,7 @@ class loginController extends Controller
     }
 
     public function org_login(Request $request){
-        $model = new Model("organization");
+        $model = new Model("user_account");
         $auth = new CustomAuth();
         $credintals = $request->all();
         $email = $credintals["email"];
@@ -49,10 +60,21 @@ class loginController extends Controller
         $values = ["id"];
         $result = $model->select($values , $conditions);
         if($result->num_rows){
+            $values = ["id"];
             $type = $auth->loggedInType();
             $id = $result->fetch_assoc()["id"];
-            if(!$type){
-                $auth->login("org" , $id);
+            $conditions = ["id = ".$id];
+            $org_model = new Model("organization");
+            $existing = $org_model->select($values , $conditions);
+            if($existing->num_rows){
+                if(!$type){
+                    $auth->login("org" , $id);
+                }
+                return redirect("/")->with("status" , "Logged in successfully");
+            }
+            else{
+                return redirect("/org_login")->with("status" , "Wrong login credintals");
+
             }
         }
         else{
@@ -84,7 +106,7 @@ class loginController extends Controller
     public function logout(){
         $auth = new CustomAuth();
         $auth->logout();
-        return redirect("/");
+        return redirect("/")->with("status" , "logged out successfully");
     }
 }
 ?>

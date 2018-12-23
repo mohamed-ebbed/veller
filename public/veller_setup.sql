@@ -60,7 +60,7 @@ CREATE TABLE interests(
     applicant_id INT NOT NULL,
     interest varchar(20) NOT NULL,
     PRIMARY KEY(applicant_id),
-    FOREIGN KEY(applicant_id) references applicant(id)
+    FOREIGN KEY(applicant_id) references applicant(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -138,7 +138,7 @@ CREATE TABLE Apply_For (
 	id INT NOT NULL,
 	post_id INT NOT NULL,
 	PRIMARY KEY(id, post_id),
-	FOREIGN KEY (id) REFERENCES Applicant,
+	FOREIGN KEY (id) REFERENCES Applicant ON DELETE CASCADE ON UPDATE RESTRICT,
 	FOREIGN KEY (post_id) REFERENCES Opportunity ON DELETE CASCADE ON UPDATE RESTRICT
 );
 

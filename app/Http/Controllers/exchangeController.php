@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model;
+use App\CustomAuth;
 
 class exchangeController extends Controller
 {
@@ -71,7 +72,6 @@ class exchangeController extends Controller
             "specialization" => $spec
         );
         $model->insert($values);
-        show($id);
     }
 
     /**
@@ -82,8 +82,12 @@ class exchangeController extends Controller
      */
     public function show($id)
     {
+        $auth = new CustomAuth();
+        $logged_type = $auth->loggedInType();
+        $logged_id = $auth->WhoIsHere();
+        $name = "";
         $model = new Model("Exchange_Program");
-        $values = array('title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'specialization');
+        $values = array('exchange_program.post_id as post_id' ,'title', 'name', 'description', 'requirements', 'expiration_date', 'opportunity.city oppCity', 'opportunity.country oppCountry', 'duration', 'funded', 'specialization' , 'posted_by');
         $conditions = array('Exchange_Program.post_id = '.$id,
                         'Opportunity.post_id = '.$id,
                         'opportunity.posted_by = User_account.id');
@@ -99,7 +103,7 @@ class exchangeController extends Controller
         $tags = $model->select(array("tag"), array("Tags.post_id = Exchange_Program.post_id", "Tags.post_id = ".$id), array("Tags"));
         
         $applcableCountries = $model->select(array("country"), array("Applicable_Countries.post_id = Exchange_Program.post_id", 'exchange_program.post_id = '.$id), array("Applicable_Countries"));
-        return view("exchange_program.show", compact('data', 'applicants', 'tags', 'applcableCountries'));
+        return view("exchange_program.show", compact('data', 'applicants', 'tags', 'applcableCountries' , 'logged_id' , 'logged_type' , 'name'));
     }
 
     /**
@@ -135,7 +139,6 @@ class exchangeController extends Controller
         );
         $conditions = array("post_id = ".$id);
         $model->update($values,$conditions);
-        show($id);
     }
 
     /**
