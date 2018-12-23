@@ -8,6 +8,13 @@
     
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
+      @if(isset($logged_type))
+      @if($logged_type === "sup")
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="/statistics">stat</a>
+        </li>
+      @endif
+      @endif
         @if(isset($logged_type))
         @if($logged_type)
         <li class="nav-item">
