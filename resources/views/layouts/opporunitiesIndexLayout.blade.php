@@ -14,7 +14,7 @@
 @section('content')
 
 <div class="container">
-	<div class="card" style="height: 100%; color:#212529; background-color: #FFFFFF;">
+	<div class="card" style="height: auto; color:#212529; background-color: #FFFFFF;">
 		<div class="card-header">
 			<ul class="nav nav-tabs card-header-tabs">
 				<li class="nav-item">
