@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use App\Model;
 
 use Illuminate\Http\Request;
-use App\Model;
 use App\Http\Controllers\contestController;
 use App\Http\Controllers\exchangeController;
 use App\Http\Controllers\InternshipController;
