@@ -95,8 +95,9 @@ class supervisorController extends Controller
     public function show($id)
     {
         $auth = new CustomAuth();
+        $input_id = $id;
         $model = new Model("supervisor");
-        $conditions = array("id = ".$id);
+        $conditions = array("id = ".$input_id);
         $sup = $model->select("*" , $conditions);
         $sup=$sup->fetch_assoc();
         $model1 = new Model("user_account");
@@ -108,7 +109,7 @@ class supervisorController extends Controller
         $tables = array('user_account');
         $SMessages = $model->select($columns , $conditions , $tables);
         $id=$auth->WhoIsHere();
-        if($auth->loggedInType() != "sup")
+        if($auth->loggedInType() != "sup" || $id != $input_id)
         {
             return redirect('/')->with("error","You Are Not Allowed");
         }
