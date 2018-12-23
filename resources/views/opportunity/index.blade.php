@@ -6,40 +6,46 @@
 	active
 @endsection
 
+@section('mainstyle')
+  @include('inc.mainstyle')
+@endsection
+@section('mainscript')
+  @include('inc.mainscript')
+@endsection
+
 @section('postsArea')
 	<div class="list-group">
 		@if ($posts->num_rows != 0)
-			<h5 style="color: #212529;">Number of opportunities: {{$posts->num_rows}}</h5>
 			@while($post = $posts->fetch_assoc())
-				@if($post["type"] == "Scholarship")
-					<a href="{{route('scholarship.show', $post['id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
+				@if($post["type"] == "scholarship")
+					<a href="{{route('scholarship.show', $post['post_id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
 						<p>{{$post["name"]}}</p>
 						<p>{{$post["title"]}}</p>
-						<p>{{$post["expiration_date"]}}</p>
+						<p>{{ $post["post_date"] }}</p>
 					</a>
-				@elseif ($post["type"] == "Internship")
-					<a href="{{route('internship.show', $post['id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
+				@elseif ($post["type"] == "internship")
+					<a href="{{route('internship.show', $post['post_id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
 						<p>{{$post["name"]}}</p>
 						<p>{{$post["title"]}}</p>
-						<p>{{$post["expiration_date"]}}</p>
+						<p>{{ $post["post_date"] }}</p>
 					</a>
-				@elseif ($post["type"] == "Volunteering")
-					<a href="{{route('volunteering.show', $post['id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
+				@elseif ($post["type"] == "volunteering")
+					<a href="{{route('volunteering.show', $post['post_id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
 						<p>{{$post["name"]}}</p>
 						<p>{{$post["title"]}}</p>
-						<p>{{$post["expiration_date"]}}</p>
+						<p>{{ $post["post_date"]  }}</p>
 					</a>
-				@elseif ($post["type"] == "Exchange Program")
-					<a href="{{route('exchange_programs.show', $post['id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
+				@elseif ($post["type"] == "exchange")
+					<a href="{{route('exchange_programs.show', $post['post_id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
 						<p>{{$post["name"]}}</p>
 						<p>{{$post["title"]}}</p>
-						<p>{{$post["expiration_date"]}}</p>
+						<p>{{ $post["post_date"]  }}</p>
 					</a>
-				@elseif ($post["type"] == "Contest")
-					<a href="{{route('contests.show', $post['id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
+				@elseif ($post["type"] == "contest")
+					<a href="{{route('contests.show', $post['post_id'] ) }}" class="list-group-item list-group-item-action list-group-item-dark">
 						<p>{{$post["name"]}}</p>
 						<p>{{$post["title"]}}</p>
-						<p>{{$post["expiration_date"]}}</p>
+						<p>{{$post["post_date"]}}</p>
 					</a>
 				@endif		
 			@endwhile	

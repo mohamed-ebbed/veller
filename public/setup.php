@@ -22,7 +22,7 @@ $sql = "CREATE TABLE User_account(
     about TEXT NOT NULL,
     
     PRIMARY KEY (id)
-)";
+) ENGINE=InnoDB ";
 $conn->query($sql);
 
 $sql = "CREATE table Applicant(
@@ -34,7 +34,7 @@ $sql = "CREATE table Applicant(
     resume TEXT NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY(id) REFERENCES User_account(id) ON DELETE CASCADE ON UPDATE RESTRICT
-)";
+) ENGINE=InnoDB";
 
 $conn->query($sql);
 
@@ -45,7 +45,7 @@ $sql = "CREATE TABLE Organization(
     
     PRIMARY KEY(id),
     FOREIGN KEY(id) REFERENCES User_account(id) ON DELETE CASCADE ON UPDATE RESTRICT
-)";
+) ENGINE=InnoDB";
 
 $conn->query($sql);
 
@@ -58,7 +58,7 @@ $sql = "CREATE table message(
     PRIMARY KEY(sent_at),
     FOREIGN KEY(sent_by) REFERENCES user_account(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY(recieved_by) REFERENCES user_account(id) ON DELETE CASCADE ON UPDATE RESTRICT
-)";
+) ENGINE=InnoDB";
 
 $conn->query($sql);
 
@@ -71,7 +71,7 @@ $sql = "CREATE table education(
     
     PRIMARY KEY(applicant_id),
     FOREIGN KEY(applicant_id) REFERENCES applicant(id) ON DELETE CASCADE ON UPDATE RESTRICT
-);";
+)ENGINE=InnoDB;";
 
 $conn->query($sql);
 echo $conn->error;
@@ -79,9 +79,9 @@ echo $conn->error;
 $sql = "CREATE TABLE interests(
     applicant_id INT NOT NULL,
     interest varchar(20) NOT NULL,
-    PRIMARY KEY(applicant_id),
-    FOREIGN KEY(applicant_id) references applicant(id)
-)";
+    PRIMARY KEY(applicant_id , interest),
+    FOREIGN KEY(applicant_id) references applicant(id) ON DELETE CASCADE ON UPDATE RESTRICT
+)ENGINE=InnoDB";
 
 $conn->query($sql);
 echo $conn->error;
@@ -89,7 +89,6 @@ echo $conn->error;
 
 $sql = "CREATE TABLE Opportunity (
 	post_id INT NOT NULL AUTO_INCREMENT,
-	type    VARCHAR(20) NOT NULL,
 	post_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	expiration_date DATE NOT NULL,
 	description TEXT NOT NULL,
@@ -103,7 +102,7 @@ $sql = "CREATE TABLE Opportunity (
 	title VARCHAR(50) NOT NULL,
 	PRIMARY KEY (post_id),
 	FOREIGN KEY (posted_by) REFERENCES Organization(id) ON DELETE CASCADE ON UPDATE RESTRICT
-)";
+)ENGINE=InnoDB";
 
 $conn->query($sql);
 echo $conn->error;
@@ -113,8 +112,8 @@ CREATE TABLE Volunteering(
 	post_id	INT NOT NULL,
 	previous_experience TEXT NOT NULL,
 	PRIMARY KEY (post_id),
-	FOREIGN KEY (post_id) REFERENCES Opportunity ON DELETE CASCADE ON UPDATE RESTRICT
-)";
+	FOREIGN KEY (post_id) REFERENCES Opportunity(post_id) ON DELETE CASCADE ON UPDATE RESTRICT
+)ENGINE=InnoDB";
 
 $conn->query($sql);
 echo $conn->error;
@@ -124,8 +123,8 @@ $sql = "CREATE TABLE Contest(
 	prizes TEXT,
 	specialization VARCHAR(50) NOT NULL,
 	PRIMARY KEY (post_id),
-	FOREIGN KEY (post_id) REFERENCES Opportunity ON DELETE CASCADE ON UPDATE RESTRICT
-)";
+	FOREIGN KEY (post_id) REFERENCES Opportunity(post_id) ON DELETE CASCADE ON UPDATE RESTRICT
+)ENGINE=InnoDB";
 
 $conn->query($sql);
 echo $conn->error;
@@ -135,8 +134,8 @@ $sql = "CREATE TABLE Internship(
 	specialization VARCHAR(50) NOT NULL,
 	paid BIT NOT NULL DEFAULT 0,
 	PRIMARY KEY (post_id),
-	FOREIGN KEY (post_id) REFERENCES Opportunity ON DELETE CASCADE ON UPDATE RESTRICT
-)";
+	FOREIGN KEY (post_id) REFERENCES Opportunity(post_id) ON DELETE CASCADE ON UPDATE RESTRICT
+)ENGINE=InnoDB";
 
 $conn->query($sql);
 echo $conn->error;
@@ -145,8 +144,8 @@ $sql = "CREATE TABLE Exchange_Program(
 	post_id INT NOT NULL,
 	specialization VARCHAR(50) NOT NULL,
 	PRIMARY KEY (post_id),
-	FOREIGN KEY (post_id) REFERENCES Opportunity ON DELETE CASCADE ON UPDATE RESTRICT
-)";
+	FOREIGN KEY (post_id) REFERENCES Opportunity(post_id) ON DELETE CASCADE ON UPDATE RESTRICT
+)ENGINE=InnoDB";
 
 $conn->query($sql);
 echo $conn->error;
@@ -157,8 +156,8 @@ $sql = "CREATE TABLE Scholarship (
 	paid BIT NOT NULL DEFAULT 0,
 	type VARCHAR(20),
 	PRIMARY KEY (post_id),
-	FOREIGN KEY (post_id) REFERENCES Opportunity ON DELETE CASCADE ON UPDATE RESTRICT
-)";
+	FOREIGN KEY (post_id) REFERENCES Opportunity(post_id) ON DELETE CASCADE ON UPDATE RESTRICT
+)ENGINE=InnoDB";
 
 $conn->query($sql);
 echo $conn->error;
@@ -167,8 +166,8 @@ $sql = "CREATE TABLE Tags(
 	post_id INT NOT NULL,
 	tag VARCHAR(20) NOT NULL,
 	PRIMARY KEY(post_id, tag),
-	FOREIGN KEY (post_id) REFERENCES Opportunity ON DELETE CASCADE ON UPDATE RESTRICT
-)";
+	FOREIGN KEY (post_id) REFERENCES Opportunity(post_id) ON DELETE CASCADE ON UPDATE RESTRICT
+)ENGINE=InnoDB";
 
 $conn->query($sql);
 echo $conn->error;
@@ -177,26 +176,25 @@ $sql = "CREATE TABLE Applicable_Countries (
 	post_id INT NOT NULL,
 	country VARCHAR(30) NOT NULL,
 	PRIMARY KEY (post_id, country),
-	FOREIGN KEY (post_id) REFERENCES Exchange_Program ON DELETE CASCADE ON UPDATE RESTRICT
-)";
+	FOREIGN KEY (post_id) REFERENCES Exchange_Program(post_id) ON DELETE CASCADE ON UPDATE RESTRICT
+)ENGINE=InnoDB";
 
 $conn->query($sql);
 echo $conn->error;
-
 
 $sql = "CREATE TABLE Apply_For (
 	id INT NOT NULL,
 	post_id INT NOT NULL,
 	PRIMARY KEY(id, post_id),
-	FOREIGN KEY (id) REFERENCES Applicant,
-	FOREIGN KEY (post_id) REFERENCES Opportunity ON DELETE CASCADE ON UPDATE RESTRICT
-)";
+	FOREIGN KEY (id) REFERENCES Applicant(id) ON DELETE CASCADE ON UPDATE RESTRICT,
+	FOREIGN KEY (post_id) REFERENCES Opportunity(post_id) ON DELETE CASCADE ON UPDATE RESTRICT
+)ENGINE=InnoDB";
 
 $conn->query($sql);
 echo $conn->error;
 
 $sql = "CREATE TABLE Supervisor(
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
 	name VARCHAR(50) NOT NULL,
 	email VARCHAR(50) NOT NULL,
 	phone_number VARCHAR(15) NOT NULL,
@@ -206,7 +204,7 @@ $sql = "CREATE TABLE Supervisor(
 	password VARCHAR(100) NOT NULL,
 	support_tickets_count INT NOT NULL DEFAULT 0,
 	PRIMARY KEY (id)	
-)";
+)ENGINE=InnoDB";
 $conn->query($sql);
 echo $conn->error;
 
@@ -218,9 +216,9 @@ $sql = "CREATE TABLE Support_Tickets(
 	solved_by INT,
 	sent_by INT,
 	PRIMARY KEY (ticket_id),
-	FOREIGN KEY (solved_by) REFERENCES Supervisor ON DELETE SET NULL ON UPDATE RESTRICT,
-	FOREIGN KEY (sent_by) REFERENCES User_Account ON DELETE SET NULL ON UPDATE RESTRICT
-)";
+	FOREIGN KEY (solved_by) REFERENCES Supervisor(id) ON DELETE SET NULL ON UPDATE RESTRICT,
+	FOREIGN KEY (sent_by) REFERENCES User_Account(id) ON DELETE SET NULL ON UPDATE RESTRICT
+)ENGINE=InnoDB";
 
 $conn->query($sql);
 echo $conn->error;

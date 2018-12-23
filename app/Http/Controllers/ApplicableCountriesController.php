@@ -33,16 +33,23 @@ class ApplicableCountriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
         $request->validate([
-            "post_id" => "required",
             "country" => "required"
-        ])
-
+        ]);
         $model = new Model("Applicable_Countries");
         $data = $request->all();
-        $model->insert($data);
+        $countries=$data["country"];
+        $values=explode(',', $countries);
+        foreach($countries as $country)
+        {
+            $v=array(
+                "post_id" => $id,
+                "country" => $country
+            );
+            $model->insert($v);
+        }
     }
 
     /**
@@ -77,12 +84,20 @@ class ApplicableCountriesController extends Controller
     public function update(Request $request, $id, $country)
     {
         $request->validate([
-            "post_id" => "required",
             "country" => "required"
-        ])
-
+        ]);
         $model = new Model("Applicable_Countries");
         $data = $request->all();
+        $countries=$data["country"];
+        $values=explode(',', $countries);
+        foreach($countries as $c)
+        {
+            $v=array(
+                "post_id" => $id,
+                "country" => $country
+            );
+            $model->insert($v);
+        }
         $conditions = array("post_id = ".$id, "country = ".$country);
         $model->update($data, $conditions);
     }
