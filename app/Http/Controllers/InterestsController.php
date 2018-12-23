@@ -37,12 +37,14 @@ class InterestsController extends Controller
         
         $model = new Model("interests");
         $requestData = $request->all();
-        $int = "'".$requestData["interests"]."'";
-         $values = array(
-            "applicant_id" => $id,
-            "interest" => $int
-        );
-        $model->insert($values);
+        $interests = explode("," , $requestData["interests"]);
+        foreach($interests as $int){
+            $values = array(
+                "applicant_id" => $id,
+                "interest" => "'".$int."'"
+            );
+            $model->insert($values);
+        }
     }
 
     /**
