@@ -15,8 +15,15 @@ class userController extends Controller
      */
     public function index()
     {
-       // $id=1;
-        $id=CustomAuth::WholsHere();
+        $id=1;
+      //  $id=CustomAuth::WholsHere();
+       // $auth = new CustomAuth();
+      //  $id = $auth->WhoIsHere();
+       // if($id == 0){
+       //     return redirect("user_login")->with("status" , "please log in");
+       // }
+
+
         $model1 = new Model("user_account");
         $model2 = new Model("applicant");
         $model3 = new Model("interests");
@@ -33,19 +40,6 @@ class userController extends Controller
         //$interests=$interests->fetch_assoc();
         //$education=$education->fetch_assoc();
         return view("users.show")->with("user",$user)->with("applicant",$applicant)->with("ints",$interests)->with("edu",$education);
-
-   /*     $values = array(
-            "id",
-            "name",
-            "email",
-            "profile_picture",
-            "country",
-            "city",
-            "zip", 
-            "phone_number"
-        );
-        $users = $model->select($values,$conditions);
-        return view("applicant")->with('user',$users); */
 
     }
 

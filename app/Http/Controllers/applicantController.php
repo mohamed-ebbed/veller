@@ -26,7 +26,6 @@ class applicantController extends Controller
     public function create()
     {
         //
-        return view("users.show");
     }
 
     /**
