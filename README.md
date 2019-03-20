@@ -7,4 +7,4 @@ There is some statistics about the data on the website as well.
 
 The website is not free of bugs just yet though. If anyone is interested to look up through the project and maybe try to fix some of the bugs, you can contact any of the origianl contributors; Mohamed Ramzy, Mohamed Ahmed, Radwa Khattab, or Ayat Mostafa.
 
-We used PHP Laravel, Bootstrap, CSS, HTML and Javascript.
+We used PHP Laravel, Bootstrap, CSS, HTML, Javascript and SQL for database creating and queries.
